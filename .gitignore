@@ -46,7 +46,6 @@ Thumbs.db
 # Pass google
 **/src/main/resources/application.properties
 
-Add-Content .gitignore "`nShopEasy/node_modules"
 ShopEasy/node_modules/
 
 ShopEasy/.angular/

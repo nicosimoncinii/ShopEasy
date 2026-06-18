@@ -2,7 +2,9 @@ package it.shopeasy.shopeasy.model;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "prodotti")
 public class Prodotto {
@@ -43,52 +45,24 @@ public class Prodotto {
     }
 
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getDescrizione() {
-        return descrizione;
     }
 
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
     }
 
-    public Double getPrezzo() {
-        return prezzo;
-    }
-
     public void setPrezzo(Double prezzo) {
         this.prezzo = prezzo;
-    }
-
-    public Integer getQuantita() {
-        return quantita;
     }
 
     public void setQuantita(Integer quantita) {
         this.quantita = quantita;
     }
 
-    public String getImmagine() {
-        return immagine;
-    }
-
     public void setImmagine(String immagine) {
         this.immagine = immagine;
-    }
-
-    public Categoria getCategoria() {
-        return categoria;
     }
 
     public void setCategoria(Categoria categoria) {

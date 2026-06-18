@@ -1,0 +1,63 @@
+.products-page {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  h2 {
+    font-size: 2rem;
+    color: var(--text-color); /* <-- Dinamico */
+    margin-bottom: 25px;
+    font-family: Arial, sans-serif;
+    transition: color 0.3s;
+  }
+}
+
+.products-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.product-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg-card); /* <-- Dinamico */
+  padding: 15px 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s;
+
+  .product-info {
+    font-family: Arial, sans-serif;
+    font-size: 1.1rem;
+    color: var(--text-color); /* <-- Dinamico */
+    transition: color 0.3s;
+
+    .product-price {
+      color: #1bcf8c; /* Mantiene il verde brillante sia in light che dark */
+      font-weight: bold;
+      margin-left: 10px;
+    }
+  }
+
+  .add-to-cart-btn {
+    background-color: #1bcf8c;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, opacity 0.2s;
+
+    &:hover {
+      background-color: #15a36f;
+    }
+
+    &:active {
+      opacity: 0.9;
+    }
+  }
+}

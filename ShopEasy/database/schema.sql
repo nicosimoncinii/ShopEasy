@@ -1,0 +1,79 @@
+CREATE DATABASE IF NOT EXISTS ShopEasy;
+USE ShopEasy;
+
+CREATE TABLE PRODOTTO (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(100) NOT NULL,
+  descrizione TEXT,
+  prezzo DECIMAL(10,2) NOT NULL,
+  quantita INT DEFAULT 0,
+  immagine VARCHAR(255),
+  categoria_id INT,
+  FOREIGN KEY (categoria_id) REFERENCES CATEGORIA(id)
+);
+
+CREATE TABLE WISHLIST (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  utente_id INT,
+  FOREIGN KEY (utente_id) REFERENCES UTENTE(id)
+);
+
+CREATE TABLE WISHLIST_PRODOTTO (
+  wishlist_id INT,
+  prodotto_id INT,
+  PRIMARY KEY (wishlist_id, prodotto_id),
+  FOREIGN KEY (wishlist_id) REFERENCES WISHLIST(id),
+  FOREIGN KEY (prodotto_id) REFERENCES PRODOTTO(id)
+);
+
+CREATE TABLE ORDINE (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  data DATETIME DEFAULT CURRENT_TIMESTAMP,
+  totale DECIMAL(10,2) NOT NULL,
+  stato VARCHAR(50) NOT NULL,
+  utente_id INT,
+  FOREIGN KEY (utente_id) REFERENCES UTENTE(id)
+);
+
+CREATE DATABASE IF NOT EXISTS ShopEasy;
+USE ShopEasy;
+
+CREATE TABLE UTENTE
+{
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(50) NOT NULL,
+    cognome VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    indirizzo VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    language_preference VARCHAR(10) NOT NULL DEFAULT 'it',
+    theme_preference VARCHAR(10) NOT NULL DEFAULT 'light',
+    ruolo INT DEFAULT 0,
+    FOREIGN KEY(ruolo) REFERENCES RUOLO(id),
+    stato ENUM('attivo', 'disabilitato') NOT NULL DEFAULT 'attivo',
+};
+
+CREATE TABLE DETTAGLIO_ORDINE
+{
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    prodotto_id INT NOT NULL,
+    FOREIGN KEY(prodotto_id) REFERENCES PRODOTTO(id),
+    ordine_id INT NOT NULL,
+    FOREIGN KEY(ordine_id) REFERENCES ORDINE(id),
+    quantita INT NOT NULL,
+    prezzo DECIMAL(10, 2) NOT NULL,
+    
+};
+
+CREATE TABLE RUOLO
+{
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(50) NOT NULL UNIQUE,
+
+}
+CREATE TABLE CATEGORIA
+{
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(50) NOT NULL UNIQUE,
+    
+};

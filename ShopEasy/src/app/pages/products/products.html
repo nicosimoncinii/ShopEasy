@@ -1,7 +1,17 @@
-<h1>Prodotti</h1>
-@for (prodotto of prodotti; track prodotto.nome) {
-  <div>
-    <span>{{ prodotto.nome }} - {{ prodotto.prezzo }}€</span>
-    <button (click)="aggiungiAlCarrello(prodotto)">Aggiungi al carrello</button>
+<div class="products-page">
+  <h2>{{ langService.traduci('prodottiTitolo') }}</h2>
+
+  <div class="products-list">
+    <div *ngFor="let prodotto of prodottiVisualizzati" class="product-row">
+      <div class="product-info">
+        <span class="product-name">
+          <strong>{{ prodotto.nome }}</strong>
+          <span class="product-price">{{ prodotto.prezzo }}</span>
+        </span>
+      </div>
+      <button class="add-to-cart-btn">
+        {{ langService.traduci('aggiungi') }}
+      </button>
+    </div>
   </div>
-}
+</div>

@@ -1,0 +1,36 @@
+CREATE DATABASE IF NOT EXISTS ShopEasy;
+USE ShopEasy;
+
+CREATE TABLE PRODOTTO (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(100) NOT NULL,
+  descrizione TEXT,
+  prezzo DECIMAL(10,2) NOT NULL,
+  quantita INT DEFAULT 0,
+  immagine VARCHAR(255),
+  categoria_id INT,
+  FOREIGN KEY (categoria_id) REFERENCES CATEGORIA(id)
+);
+
+CREATE TABLE WISHLIST (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  utente_id INT,
+  FOREIGN KEY (utente_id) REFERENCES UTENTE(id)
+);
+
+CREATE TABLE WISHLIST_PRODOTTO (
+  wishlist_id INT,
+  prodotto_id INT,
+  PRIMARY KEY (wishlist_id, prodotto_id),
+  FOREIGN KEY (wishlist_id) REFERENCES WISHLIST(id),
+  FOREIGN KEY (prodotto_id) REFERENCES PRODOTTO(id)
+);
+
+CREATE TABLE ORDINE (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  data DATETIME DEFAULT CURRENT_TIMESTAMP,
+  totale DECIMAL(10,2) NOT NULL,
+  stato VARCHAR(50) NOT NULL,
+  utente_id INT,
+  FOREIGN KEY (utente_id) REFERENCES UTENTE(id)
+);

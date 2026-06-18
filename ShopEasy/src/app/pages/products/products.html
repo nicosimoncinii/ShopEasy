@@ -1,0 +1,7 @@
+<h1>Prodotti</h1>
+@for (prodotto of prodotti; track prodotto.nome) {
+  <div>
+    <span>{{ prodotto.nome }} - {{ prodotto.prezzo }}€</span>
+    <button (click)="aggiungiAlCarrello(prodotto)">Aggiungi al carrello</button>
+  </div>
+}

@@ -1,6 +1,7 @@
 package it.shopeasy.shopeasy.service;
 
 import it.shopeasy.shopeasy.model.Wishlist;
+import it.shopeasy.shopeasy.model.Wishlist;
 import it.shopeasy.shopeasy.repository.WishlistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ public class WishlistService {
     @Autowired
     private WishlistRepository wishlistRepository;
 
-    public List<Wishlist> prendiTuttiUtenti(){
+    public List<Wishlist> prendiTuttiWishlist(){
         return wishlistRepository.findAll();
     }
 
@@ -25,5 +26,19 @@ public class WishlistService {
     public void cancellaWishlist(Long id)
     {
         wishlistRepository.deleteById(id);
+    }
+
+    public Wishlist salvaWishlist(Wishlist wishlist) {
+
+        return wishlistRepository.save(wishlist);
+    }
+
+    public Wishlist aggiornaWishlist(Long id, Wishlist nuovoWishlist) {
+        Wishlist wishlist = prendiWishlistPerId(id);
+
+        wishlist.setUtente(nuovoWishlist.getUtente());
+
+
+        return salvaWishlist(wishlist);
     }
 }

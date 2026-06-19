@@ -1,9 +1,10 @@
 package it.shopeasy.shopeasy.service;
 
+import it.shopeasy.shopeasy.model.Ordine;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import it.shopeasy.shopeasy.model.Ordine;
+
 import it.shopeasy.shopeasy.repository.OrdineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,9 +18,7 @@ public class OrdineService {
     private OrdineRepository ordineRepository;
 
 
-    public Ordine creaOrdine(Ordine ordine) {
-        return ordineRepository.save(ordine);
-    }
+
 
     public List<Ordine> prendiTuttiOrdini() {
         return ordineRepository.findAll();
@@ -34,4 +33,21 @@ public class OrdineService {
         ordineRepository.deleteById(id);
     }
 
+    public Ordine salvaOrdine(Ordine ordine) {
+
+        return ordineRepository.save(ordine);
+    }
+
+    public Ordine aggiornaOrdine(Long id, Ordine nuovoOrdine) {
+        Ordine ordine = prendiOrdinePerId(id);
+
+        ordine.setUtente(nuovoOrdine.getUtente());
+        ordine.setData(nuovoOrdine.getData());
+        ordine.setStato(nuovoOrdine.getStato());
+        ordine.setTotale(ordine.getTotale());
+
+
+        return salvaOrdine(ordine);
+    }
+    
 }

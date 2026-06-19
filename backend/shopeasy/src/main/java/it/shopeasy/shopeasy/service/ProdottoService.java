@@ -29,4 +29,26 @@ public class ProdottoService {
     {
         prodottoRepository.deleteById(id);
     }
+
+
+    public Prodotto salvaProdotto(Prodotto prodotto) {
+
+        return prodottoRepository.save(prodotto);
+    }
+
+    public Prodotto aggiornaProdotto(Long id, Prodotto nuovoProdotto) {
+        Prodotto prodotto = prendiProdottoPerId(id);
+
+        prodotto.setNome(nuovoProdotto.getNome());
+        prodotto.setPrezzo(nuovoProdotto.getPrezzo());
+        prodotto.setDescrizione(nuovoProdotto.getDescrizione());
+        prodotto.setCategoria(nuovoProdotto.getCategoria());
+        prodotto.setImmagine(nuovoProdotto.getImmagine());
+
+        return salvaProdotto(prodotto);
+    }
+
+
+
+
 }

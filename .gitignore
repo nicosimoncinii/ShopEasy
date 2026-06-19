@@ -44,8 +44,9 @@ __screenshots__/
 Thumbs.db
 
 # Pass google
-**/src/main/resources/application.properties
+
 
 ShopEasy/node_modules/
 
 ShopEasy/.angular/
+target/ 

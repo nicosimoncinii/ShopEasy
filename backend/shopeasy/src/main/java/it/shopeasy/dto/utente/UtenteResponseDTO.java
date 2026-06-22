@@ -1,5 +1,6 @@
 package it.shopeasy.dto.utente;
 
-public class UtenteUpdateRequest {
+public class UtenteResponseDTO {
     
 }
+    

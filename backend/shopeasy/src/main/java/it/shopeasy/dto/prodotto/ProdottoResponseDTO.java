@@ -1,5 +1,5 @@
 package it.shopeasy.dto.prodotto;
 
-public class ProdottoRequest {
+public class ProdottoResponseDTO {
     
 }

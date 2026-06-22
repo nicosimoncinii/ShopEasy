@@ -16,9 +16,6 @@ public class JwtService {
     private final long durata = 1000 * 60 * 60;
 
 
-    public String generaToken(Utente utente) {
-        return Jwts.builder()
-                .setSubject(utente.getEmail());
-    }
+
 
 }

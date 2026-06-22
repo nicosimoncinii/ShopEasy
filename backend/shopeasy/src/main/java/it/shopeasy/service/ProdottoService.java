@@ -35,16 +35,16 @@ public class ProdottoService {
 
     public Prodotto aggiornaProdotto(Long id, Prodotto nuovoProdotto) {
         Prodotto prodotto = prendiProdottoPerId(id);
-        nuovoProdotto.setId(prodotto.getId());
+
+
         prodotto.setNome(nuovoProdotto.getNome());
         prodotto.setPrezzo(nuovoProdotto.getPrezzo());
         prodotto.setDescrizione(nuovoProdotto.getDescrizione());
         prodotto.setCategoria(nuovoProdotto.getCategoria());
         prodotto.setImmagine(nuovoProdotto.getImmagine());
 
-        return salvaProdotto(nuovoProdotto);
+        return salvaProdotto(prodotto);
     }
-
 
 
 

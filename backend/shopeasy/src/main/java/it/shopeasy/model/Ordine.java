@@ -1,5 +1,6 @@
 package it.shopeasy.model;
 
+import it.shopeasy.enums.StatoOrdine;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -19,7 +20,7 @@ public class Ordine {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String stato;
+    private StatoOrdine stato;
 
     @ManyToOne
     @JoinColumn(name = "utente_id")
@@ -31,7 +32,7 @@ public class Ordine {
 
     public Ordine(LocalDateTime data,
                   Double totale,
-                  String stato,
+                  StatoOrdine stato,
                   Utente utente) {
 
         this.data = data;
@@ -61,11 +62,11 @@ public class Ordine {
         this.totale = totale;
     }
 
-    public String getStato() {
+    public StatoOrdine getStato() {
         return stato;
     }
 
-    public void setStato(String stato) {
+    public void setStato(StatoOrdine stato) {
         this.stato = stato;
     }
 

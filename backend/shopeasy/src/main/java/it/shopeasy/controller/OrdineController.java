@@ -28,7 +28,8 @@ public class OrdineController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Ordine> prendiOrdinePerId(@PathVariable Long id) {
-        return ResponseEntity.ok(service.prendiOrdinePerId(id));
+
+            return ResponseEntity.ok(service.prendiOrdinePerId(id));
     }
 
 

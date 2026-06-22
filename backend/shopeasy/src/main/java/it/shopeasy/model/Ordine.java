@@ -4,6 +4,8 @@ import it.shopeasy.enums.StatoOrdine;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "ordine")
@@ -14,6 +16,9 @@ public class Ordine {
     private Long id;
 
     private LocalDateTime data;
+
+    @OneToMany(mappedBy = "ordine", cascade = CascadeType.ALL)
+    private List<DettaglioOrdine> dettagli = new ArrayList<>();
 
     @Column(nullable = false)
     private Double totale;
@@ -78,4 +83,11 @@ public class Ordine {
         this.utente = utente;
     }
 
+    public List<DettaglioOrdine> getDettagli() {
+        return dettagli;
+    }
+    
+    public void setDettagli(List<DettaglioOrdine> dettagli) {
+        this.dettagli = dettagli;
+    }
 }

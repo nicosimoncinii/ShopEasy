@@ -38,13 +38,13 @@ public class Utente {
 
     @ManyToOne
     @JoinColumn(name = "stato_id")
-    private StatoOrdine stato;
+    private String stato;
 
     public Utente() {
     }
 
     public Utente(String nome, String cognome, String email, String password, String telefono, 
-                  String indirizzo, String languagePreference, String themePreference, Ruolo ruolo, StatoOrdine stato) {
+                  String indirizzo, String languagePreference, String themePreference, Ruolo ruolo, String stato) {
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;

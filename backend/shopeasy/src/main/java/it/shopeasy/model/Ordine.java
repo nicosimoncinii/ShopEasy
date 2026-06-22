@@ -14,10 +14,12 @@ public class Ordine {
 
     private LocalDateTime data;
 
+    @Column(nullable = false)
     private Double totale;
 
     @Enumerated(EnumType.STRING)
-    private StatoOrdine stato;
+    @Column(nullable = false)
+    private String stato;
 
     @ManyToOne
     @JoinColumn(name = "utente_id")
@@ -29,7 +31,7 @@ public class Ordine {
 
     public Ordine(LocalDateTime data,
                   Double totale,
-                  StatoOrdine stato,
+                  String stato,
                   Utente utente) {
 
         this.data = data;
@@ -59,11 +61,11 @@ public class Ordine {
         this.totale = totale;
     }
 
-    public StatoOrdine getStato() {
+    public String getStato() {
         return stato;
     }
 
-    public void setStato(StatoOrdine stato) {
+    public void setStato(String stato) {
         this.stato = stato;
     }
 

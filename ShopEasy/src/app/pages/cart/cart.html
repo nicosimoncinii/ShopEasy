@@ -1,1 +1,43 @@
-
+<div class="cart-page">
+    <h2>{{ traduzioni.carrelloTitolo }}</h2>
+  
+    @if (items.length === 0) {
+      <div class="cart-empty">
+        <p>{{ traduzioni.carrelloVuoto }}</p>
+        <a routerLink="/prodotti" class="continua-btn">{{ traduzioni.continuaShopping }}</a>
+      </div>
+    } @else {
+      <div class="cart-content">
+        <div class="cart-items">
+          @for (item of items; track item.id) {
+            <div class="cart-row">
+              <div class="item-info">
+                <span class="item-name">{{ item.nome }}</span>
+                <span class="item-unit-price">{{ item.prezzo }}€ / pz</span>
+              </div>
+              <div class="item-controls">
+                <button class="qty-btn" (click)="cartService.diminuisci(item.id)">−</button>
+                <span class="qty-value">{{ item.quantita }}</span>
+                <button class="qty-btn" (click)="cartService.aumenta(item.id)">+</button>
+              </div>
+              <div class="item-subtotal">
+                {{ item.prezzo * item.quantita }}€
+              </div>
+              <button class="remove-btn" (click)="cartService.rimuovi(item.id)">✕</button>
+            </div>
+          }
+        </div>
+  
+        <div class="cart-summary">
+          <div class="summary-row totale-row">
+            <span>{{ traduzioni.totale }}</span>
+            <span class="totale-prezzo">{{ totale }}€</span>
+          </div>
+          <button class="procedi-btn" routerLink="/checkout">
+            {{ traduzioni.procedi }} →
+          </button>
+          <a routerLink="/prodotti" class="continua-link">{{ traduzioni.continuaShopping }}</a>
+        </div>
+      </div>
+    }
+  </div>

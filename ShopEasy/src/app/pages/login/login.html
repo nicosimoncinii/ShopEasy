@@ -1,0 +1,246 @@
+<div class="login-page">
+  <div class="login-card">
+
+    <div class="tab-switcher">
+      <button class="tab-btn" [class.active]="vista === 'login'" (click)="cambiaVista('login')">
+        {{ traduzioni.tabLogin }}
+      </button>
+      <button class="tab-btn" [class.active]="vista === 'register'" (click)="cambiaVista('register')">
+        {{ traduzioni.tabReg }}
+      </button>
+      <div class="tab-indicator" [class.right]="vista === 'register'"></div>
+    </div>
+
+    @if (vista === 'login') {
+      <div class="form-wrapper">
+        <h2 class="form-title">{{ traduzioni.loginTitolo }}</h2>
+        <p class="form-subtitle">{{ traduzioni.loginSub }}</p>
+
+        @if (loginSuccess) {
+          <div class="alert alert-success">{{ traduzioni.loginSuccesso }}</div>
+        }
+        @if (loginError) {
+          <div class="alert alert-error">{{ loginError }}</div>
+        }
+
+        <div class="form-group" [class.has-error]="loginEmailTouched && !loginEmailValida" [class.has-success]="loginEmailTouched && loginEmailValida">
+          <label class="form-label">Email</label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="5" width="18" height="14" rx="2"/>
+                <path d="M3 7l9 6 9-6"/>
+              </svg>
+            </span>
+            <input type="email" [(ngModel)]="loginEmail" name="loginEmail"
+              placeholder="nome@esempio.com"
+              (blur)="loginEmailTouched = true"
+              [class.input-error]="loginEmailTouched && !loginEmailValida"
+              [class.input-success]="loginEmailTouched && loginEmailValida">
+            @if (loginEmailTouched && loginEmailValida) {
+              <span class="check-icon">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 13l4 4L19 7"/>
+                </svg>
+              </span>
+            }
+          </div>
+          @if (loginEmailTouched && !loginEmailValida) {
+            <span class="error-msg">Inserisci un indirizzo email valido</span>
+          }
+        </div>
+
+        <div class="form-group" [class.has-error]="loginPasswordTouched && !loginPasswordValida" [class.has-success]="loginPasswordTouched && loginPasswordValida">
+          <label class="form-label">Password</label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="11" width="14" height="9" rx="2"/>
+                <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+              </svg>
+            </span>
+            <input type="password" [(ngModel)]="loginPassword" name="loginPassword"
+              placeholder="La tua password"
+              (blur)="loginPasswordTouched = true"
+              [class.input-error]="loginPasswordTouched && !loginPasswordValida"
+              [class.input-success]="loginPasswordTouched && loginPasswordValida">
+            @if (loginPasswordTouched && loginPasswordValida) {
+              <span class="check-icon">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 13l4 4L19 7"/>
+                </svg>
+              </span>
+            }
+          </div>
+          @if (loginPasswordTouched && !loginPasswordValida) {
+            <span class="error-msg">Minimo 6 caratteri</span>
+          }
+          <a class="forgot-link" href="#">{{ traduzioni.passimenticata }}</a>
+        </div>
+
+        <button class="submit-btn" (click)="onLoginSubmit()">
+          {{ traduzioni.loginBtn }}
+        </button>
+
+        <p class="switch-text">
+          {{ traduzioni.nonHaiAccount }}
+          <span class="switch-link" (click)="cambiaVista('register')">{{ traduzioni.tabReg }}</span>
+        </p>
+      </div>
+    }
+
+    @if (vista === 'register') {
+      <div class="form-wrapper">
+        <h2 class="form-title">{{ traduzioni.regTitolo }}</h2>
+        <p class="form-subtitle">{{ traduzioni.regSub }}</p>
+
+        @if (regSuccess) {
+          <div class="alert alert-success">{{ traduzioni.regSuccesso }}</div>
+        }
+        @if (regError) {
+          <div class="alert alert-error">{{ regError }}</div>
+        }
+
+        <div class="form-row">
+          <div class="form-group" [class.has-error]="regNomeTouched && !regNomeValido" [class.has-success]="regNomeTouched && regNomeValido">
+            <label class="form-label">Nome</label>
+            <div class="input-wrapper">
+              <span class="input-icon">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="8" r="4"/>
+                  <path d="M4 20c0-4 4-6 8-6s8 2 8 6"/>
+                </svg>
+              </span>
+              <input type="text" [(ngModel)]="regNome" name="regNome" placeholder="Mario"
+                (blur)="regNomeTouched = true"
+                [class.input-error]="regNomeTouched && !regNomeValido"
+                [class.input-success]="regNomeTouched && regNomeValido">
+              @if (regNomeTouched && regNomeValido) {
+                <span class="check-icon">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 13l4 4L19 7"/>
+                  </svg>
+                </span>
+              }
+            </div>
+            @if (regNomeTouched && !regNomeValido) { <span class="error-msg">Minimo 2 caratteri</span> }
+          </div>
+
+          <div class="form-group" [class.has-error]="regCognomeTouched && !regCognomeValido" [class.has-success]="regCognomeTouched && regCognomeValido">
+            <label class="form-label">Cognome</label>
+            <div class="input-wrapper">
+              <span class="input-icon">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="8" r="4"/>
+                  <path d="M4 20c0-4 4-6 8-6s8 2 8 6"/>
+                </svg>
+              </span>
+              <input type="text" [(ngModel)]="regCognome" name="regCognome" placeholder="Rossi"
+                (blur)="regCognomeTouched = true"
+                [class.input-error]="regCognomeTouched && !regCognomeValido"
+                [class.input-success]="regCognomeTouched && regCognomeValido">
+              @if (regCognomeTouched && regCognomeValido) {
+                <span class="check-icon">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 13l4 4L19 7"/>
+                  </svg>
+                </span>
+              }
+            </div>
+            @if (regCognomeTouched && !regCognomeValido) { <span class="error-msg">Minimo 2 caratteri</span> }
+          </div>
+        </div>
+
+        <div class="form-group" [class.has-error]="regEmailTouched && !regEmailValida" [class.has-success]="regEmailTouched && regEmailValida">
+          <label class="form-label">Email</label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="5" width="18" height="14" rx="2"/>
+                <path d="M3 7l9 6 9-6"/>
+              </svg>
+            </span>
+            <input type="email" [(ngModel)]="regEmail" name="regEmail" placeholder="nome@esempio.com"
+              (blur)="regEmailTouched = true"
+              [class.input-error]="regEmailTouched && !regEmailValida"
+              [class.input-success]="regEmailTouched && regEmailValida">
+            @if (regEmailTouched && regEmailValida) {
+              <span class="check-icon">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 13l4 4L19 7"/>
+                </svg>
+              </span>
+            }
+          </div>
+          @if (regEmailTouched && !regEmailValida) { <span class="error-msg">Email non valida</span> }
+        </div>
+
+        <div class="form-group" [class.has-error]="regPasswordTouched && !regPasswordValida">
+          <label class="form-label">Password</label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="11" width="14" height="9" rx="2"/>
+                <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+              </svg>
+            </span>
+            <input type="password" [(ngModel)]="regPassword" name="regPassword" placeholder="Minimo 6 caratteri"
+              (blur)="regPasswordTouched = true"
+              [class.input-error]="regPasswordTouched && !regPasswordValida"
+              [class.input-success]="regPasswordTouched && regPasswordValida && regPasswordHaMaiuscola && regPasswordHaNumero">
+          </div>
+          @if (regPassword.length > 0) {
+            <div class="password-requirements">
+              <span [class.req-ok]="regPassword.length >= 6" [class.req-no]="regPassword.length < 6">
+                6+ caratteri
+              </span>
+              <span [class.req-ok]="regPasswordHaMaiuscola" [class.req-no]="!regPasswordHaMaiuscola">
+                Maiuscola
+              </span>
+              <span [class.req-ok]="regPasswordHaNumero" [class.req-no]="!regPasswordHaNumero">
+                Numero
+              </span>
+            </div>
+          }
+        </div>
+
+        <div class="form-group" [class.has-error]="regConfermaPasswordTouched && !regConfermaValida" [class.has-success]="regConfermaPasswordTouched && regConfermaValida">
+          <label class="form-label">Conferma Password</label>
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="11" width="14" height="9" rx="2"/>
+                <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+              </svg>
+            </span>
+            <input type="password" [(ngModel)]="regConfermaPassword" name="regConfermaPassword"
+              placeholder="Ripeti la password"
+              (blur)="regConfermaPasswordTouched = true"
+              [class.input-error]="regConfermaPasswordTouched && !regConfermaValida"
+              [class.input-success]="regConfermaPasswordTouched && regConfermaValida">
+            @if (regConfermaPasswordTouched && regConfermaValida) {
+              <span class="check-icon">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 13l4 4L19 7"/>
+                </svg>
+              </span>
+            }
+          </div>
+          @if (regConfermaPasswordTouched && !regConfermaValida) {
+            <span class="error-msg">Le password non coincidono</span>
+          }
+        </div>
+
+        <button class="submit-btn" (click)="onRegisterSubmit()">
+          {{ traduzioni.regBtn }}
+        </button>
+
+        <p class="switch-text">
+          {{ traduzioni.haiAccount }}
+          <span class="switch-link" (click)="cambiaVista('login')">{{ traduzioni.tabLogin }}</span>
+        </p>
+      </div>
+    }
+
+  </div>
+</div>

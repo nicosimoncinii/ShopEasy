@@ -11,7 +11,8 @@ export class LanguageService {
     this.lingua.next(lingua);
   }
 
-  traduci(chiave: string): string {
-    return translations[this.lingua.getValue()][chiave] || chiave;
+  traduci(chiave: string, lingua?: string): string {
+    const lang = lingua ?? this.lingua.getValue();
+    return translations[lang]?.[chiave] || chiave;
   }
 }

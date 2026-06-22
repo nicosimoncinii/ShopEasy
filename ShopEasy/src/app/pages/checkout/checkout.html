@@ -1,0 +1,46 @@
+<div class="checkout-page">
+  @if (ordineConfermato) {
+    <div class="checkout-success">
+      <div class="success-circle">
+        <svg viewBox="0 0 24 24" width="28" height="28">
+          <path d="M5 13l4 4L19 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h2>{{ traduzioni.ordineConfermatoMsg }}</h2>
+      <a routerLink="/prodotti" class="continua-btn">{{ traduzioni.continuaShopping }}</a>
+    </div>
+  } @else if (items.length === 0) {
+    <div class="checkout-empty">
+      <p>{{ traduzioni.carrelloVuoto }}</p>
+      <a routerLink="/prodotti" class="continua-btn">{{ traduzioni.continuaShopping }}</a>
+    </div>
+  } @else {
+    <h2>{{ traduzioni.checkoutTitolo }}</h2>
+    <p class="checkout-sub">{{ traduzioni.checkoutSub }}</p>
+
+    <div class="checkout-content">
+      <div class="checkout-items">
+        @for (item of items; track item.id) {
+          <div class="checkout-row">
+            <div class="item-info">
+              <span class="item-name">{{ item.nome }}</span>
+              <span class="item-unit-price">{{ item.prezzo }}€ x {{ item.quantita }}</span>
+            </div>
+            <div class="item-subtotal">{{ item.prezzo * item.quantita }}€</div>
+          </div>
+        }
+      </div>
+
+      <div class="checkout-summary">
+        <div class="summary-row totale-row">
+          <span>{{ traduzioni.totale }}</span>
+          <span class="totale-prezzo">{{ totale }}€</span>
+        </div>
+        <button class="conferma-btn" (click)="confermaOrdine()">
+          {{ traduzioni.confermaPagamento }}
+        </button>
+        <a routerLink="/prodotti" class="continua-link">{{ traduzioni.continuaShopping }}</a>
+      </div>
+    </div>
+  }
+</div>

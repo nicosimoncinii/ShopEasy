@@ -7,33 +7,32 @@
   font-family: 'Inter', sans-serif;
 }
 
-// VARIABILI IN LIGHT MODE (Default)
 :root {
   --primary-color: #1bcf8c;
   --secondary-color: #f0a500;
-
-  --bg-dark: #dcd9d9;              // Grigio chiaro dello sfondo
-  --bg-navbar: #333333;            // Colore scuro della navbar
-  --bg-card: #ffffff;              // Sfondo bianco per le righe dei prodotti (era #f5f5f5 prima)
-  --text-light: #000000;           // Testo principale nero
-  --block-text-color: #3e3e3e;     // Titoli
+  --bg-dark: #dcd9d9;
+  --bg-navbar: #333333;
+  --bg-navbar-secondary: #464141;
+  --bg-card: #ffffff;
+  --text-light: #000000;
+  --block-text-color: #3e3e3e;
   --text-muted: #a0a0b0;
 }
 
-// VARIABILI IN DARK MODE (Si attivano quando <html> o <body> hanno la classe .dark-mode)
 .dark-mode {
-  --bg-dark: #121212;              // Sfondo scuro della pagina
-  --bg-navbar: #1a1a1a;            // Navbar ancora più scura
-  --bg-card: #1e1e1e;              // Righe dei prodotti grigio scuro
-  --text-light: #ffffff;           // Testo principale diventa bianco
-  --block-text-color: #1bcf8c;     // I titoli principali diventano verdi o chiari
+  --bg-dark: #121212;
+  --bg-navbar: #1a1a1a;
+  --bg-navbar-secondary: #2a2a2a;
+  --bg-card: #1e1e1e;
+  --text-light: #ffffff;
+  --block-text-color: #1bcf8c;
   --text-muted: #888899;
 }
 
 body {
   background-color: var(--bg-dark);
   color: var(--text-light);
-  transition: background-color 0.3s ease, color 0.3s ease; /* Transizione fluida quando si cambia tema */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1 {

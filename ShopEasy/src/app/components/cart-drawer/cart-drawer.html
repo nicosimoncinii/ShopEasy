@@ -1,0 +1,43 @@
+@if (aperto) {
+    <div class="drawer-overlay" (click)="chiudi()"></div>
+    <aside class="cart-drawer">
+      <div class="drawer-header">
+        <h3>{{ traduzioni.carrelloTitolo }}</h3>
+        <button class="close-btn" (click)="chiudi()">&times;</button>
+      </div>
+  
+      @if (items.length === 0) {
+        <div class="drawer-empty">
+          <p>{{ traduzioni.carrelloVuoto }}</p>
+          <button class="continua-btn" (click)="vaiAiProdotti()">{{ traduzioni.continuaShopping }}</button>
+        </div>
+      } @else {
+        <div class="drawer-items">
+          @for (item of items; track item.id) {
+            <div class="drawer-row">
+              <div class="item-info">
+                <span class="item-name">{{ item.nome }}</span>
+                <span class="item-unit-price">{{ item.prezzo }}€ / pz</span>
+              </div>
+              <div class="item-subtotal">{{ item.prezzo * item.quantita }}€</div>
+              <div class="item-controls">
+                <button class="qty-btn" (click)="cartService.diminuisci(item.id)">&minus;</button>
+                <span class="qty-value">{{ item.quantita }}</span>
+                <button class="qty-btn" (click)="cartService.aumenta(item.id)">+</button>
+              </div>
+              <button class="remove-btn" (click)="cartService.rimuovi(item.id)">&times;</button>
+            </div>
+          }
+        </div>
+  
+        <div class="drawer-footer">
+          <div class="totale-row">
+            <span>{{ traduzioni.totale }}</span>
+            <span class="totale-prezzo">{{ totale }}€</span>
+          </div>
+          <button class="procedi-btn" (click)="vaiAlCheckout()">{{ traduzioni.procedi }} &rarr;</button>
+          <button class="continua-link" (click)="vaiAiProdotti()">{{ traduzioni.continuaShopping }}</button>
+        </div>
+      }
+    </aside>
+  }

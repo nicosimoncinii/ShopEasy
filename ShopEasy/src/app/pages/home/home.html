@@ -1,1 +1,196 @@
-<h1>{{ titolo }}</h1>
+<div class="home-page">
+
+    <!-- CAROUSEL -->
+    <div class="carousel-3d">
+  
+      <div class="scene">
+  
+        @for (banner of banners; track banner.src; let i = $index) {
+  
+          <div
+            class="card"
+            [class]="getPosition(i)"
+            (click)="getPosition(i) === 'left' ? prev() : getPosition(i) === 'right' ? next() : null">
+  
+            <img
+              [src]="banner.src"
+              [alt]="banner.alt"
+              draggable="false">
+  
+            <div class="card-shine"></div>
+  
+          </div>
+  
+        }
+  
+      </div>
+  
+      <div class="controls">
+  
+        <button class="ctrl-btn"
+                (click)="prev()">
+  
+          ←
+  
+        </button>
+  
+        <div class="dots">
+  
+          @for (banner of banners; track banner.src; let i = $index) {
+  
+            <span class="dot"
+                  [class.active]="i === currentIndex"
+                  (click)="goTo(i)">
+            </span>
+  
+          }
+  
+        </div>
+  
+        <button class="ctrl-btn"
+                (click)="next()">
+  
+          →
+  
+        </button>
+  
+      </div>
+  
+    </div>
+  
+    <!-- PRODOTTI EVIDENZA -->
+  
+    <section class="section">
+  
+      <div class="section-header">
+  
+        <h2 class="section-title">
+  
+          {{ traduzioni.prodottiEvidenza }}
+  
+        </h2>
+  
+        <a routerLink="/prodotti"
+           class="section-link">
+  
+          {{ traduzioni.vediTutti }}
+  
+        </a>
+  
+      </div>
+  
+      <div class="featured-scene">
+  
+        @for (p of prodottiEvidenza; track p.id; let i = $index) {
+  
+          <div class="featured-card"
+               [class]="getFeaturedPosition(i)">
+  
+            @if (p.badge) {
+  
+              <span class="badge">
+  
+                {{ p.badge }}
+  
+              </span>
+  
+            }
+  
+            <div class="card-img-placeholder">
+  
+              📦
+  
+            </div>
+  
+            <div class="card-body">
+  
+              <h3 class="card-nome">
+  
+                {{ p.nome }}
+  
+              </h3>
+  
+              <p class="card-prezzo">
+  
+                {{ p.prezzo }}€
+  
+              </p>
+  
+              <a routerLink="/prodotti"
+                 class="card-btn">
+  
+                {{ traduzioni.scopri }}
+  
+              </a>
+  
+            </div>
+  
+          </div>
+  
+        }
+  
+      </div>
+  
+      <div class="featured-controls">
+  
+        <button class="ctrl-btn"
+                (click)="prevFeatured()">
+  
+          ←
+  
+        </button>
+  
+        <div class="dots">
+  
+          @for (p of prodottiEvidenza; track p.id; let i = $index) {
+  
+            <span class="dot"
+                  [class.active]="i === featuredIndex"
+                  (click)="goToFeatured(i)">
+            </span>
+  
+          }
+  
+        </div>
+  
+        <button class="ctrl-btn"
+                (click)="nextFeatured()">
+  
+          →
+  
+        </button>
+  
+      </div>
+  
+    </section>
+  
+    <!-- OFFERTE -->
+  
+    <section class="section offerte-section">
+  
+      <div class="section-header">
+  
+        <h2 class="section-title">
+  
+          {{ traduzioni.offerteAttive }}
+  
+        </h2>
+  
+        <a routerLink="/prodotti"
+           class="section-link">
+  
+          {{ traduzioni.vediTutte }}
+  
+        </a>
+  
+      </div>
+  
+      <p class="section-sub">
+  
+        {{ traduzioni.prezziRidotti }}
+  
+      </p>
+  
+    </section>
+  
+  </div>

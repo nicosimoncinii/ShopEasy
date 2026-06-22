@@ -2,21 +2,34 @@
   <div class="top-bar">
     <div class="left">
       <img src="/Logo.png" alt="Logo">
-
       <div class="search-and-lang">
-        <div class="search-bar">
-          <input type="text" [placeholder]="langService.traduci('cerca')" (input)="onSearch($event)">
+        <div class="search-bar" [class.focused]="searchFocused">
+          <input
+            type="text"
+            [placeholder]="traduzioni.cerca"
+            [value]="searchQuery"
+            (input)="onSearch($event)"
+            (focus)="onFocus()"
+            (blur)="onBlur()"
+          >
           <button class="search-btn">
             <img src="/Lente.png" alt="Cerca">
           </button>
+          @if (suggerimenti.length > 0) {
+            <div class="autocomplete">
+              @for (s of suggerimenti; track s.id) {
+                <div class="autocomplete-item" (mousedown)="selezionaSuggerimento(s)">
+                  {{ s.nome }}
+                </div>
+              }
+            </div>
+          }
         </div>
-
         <div class="language-selector">
           <div class="selected" (click)="toggleDropdown()">
             <img [src]="linguaAttuale === 'it' ? '/it.png' : '/en.png'" alt="lingua">
             <span class="lang-text">{{ linguaAttuale | uppercase }}</span>
           </div>
-
           <div class="dropdown" [class.open]="dropdownAperto">
             <div (click)="cambiaLingua('it')">
               <img src="/it.png" alt="Italiano"> IT
@@ -26,20 +39,34 @@
             </div>
           </div>
         </div>
-
         <button class="theme-toggle-btn" (click)="cambiaTema()">
-          {{ themeService.getIsDarkMode() ? '☀️' : '🌙' }}
+          {{ themeService.getIsDarkMode() ? 'Light' : 'Dark' }}
         </button>
       </div>
-
+    </div>
+    <!-- Destra: carrello + login -->
+    <div class="right-actions">
+      <button class="cart-btn" (click)="cartService.toggleDrawer()">
+        <img src="/Cart.png" alt="Carrello">
+        @if (cartQuantita > 0) {
+          <span class="cart-badge">{{ cartQuantita }}</span>
+        }
+      </button>
+      <button class="login-btn" routerLink="/login">Login</button>
     </div>
   </div>
-
   <nav>
     <ul>
-      <li><a routerLink="/">{{ langService.traduci('home') }}</a></li>
-      <li><a routerLink="/prodotti">{{ langService.traduci('prodotti') }}</a></li>
-      <li><a routerLink="/carrello">{{ langService.traduci('carrello') }}</a></li>
+      <li>
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          {{ traduzioni.home }}
+        </a>
+      </li>
+      <li>
+        <a routerLink="/prodotti" routerLinkActive="active">
+          {{ traduzioni.prodotti }}
+        </a>
+      </li>
     </ul>
   </nav>
 </header>

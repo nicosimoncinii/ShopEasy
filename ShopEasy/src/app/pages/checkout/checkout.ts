@@ -6,18 +6,19 @@ import { LanguageService } from '../../services/language.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-cart',
+  selector: 'app-checkout',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './cart.html',
-  styleUrl: './cart.scss'
+  templateUrl: './checkout.html',
+  styleUrl: './checkout.scss'
 })
-export class Cart implements OnInit, OnDestroy {
+export class Checkout implements OnInit, OnDestroy {
   private cartSub!: Subscription;
   private langSub!: Subscription;
 
   items: CartItem[] = [];
   traduzioni: any = {};
+  ordineConfermato = false;
 
   constructor(
     public cartService: CartService,
@@ -38,16 +39,24 @@ export class Cart implements OnInit, OnDestroy {
 
   aggiornaTraduzione(lingua: string) {
     this.traduzioni = {
-      carrelloTitolo: this.langService.traduci('carrelloTitolo', lingua),
-      carrelloVuoto:  this.langService.traduci('carrelloVuoto', lingua),
-      totale:         this.langService.traduci('totale', lingua),
-      procedi:        this.langService.traduci('procedi', lingua),
+      checkoutTitolo: this.langService.traduci('checkoutTitolo', lingua),
+      checkoutSub: this.langService.traduci('checkoutSub', lingua),
+      totale: this.langService.traduci('totale', lingua),
+      confermaPagamento: this.langService.traduci('confermaPagamento', lingua),
+      ordineConfermatoMsg: this.langService.traduci('ordineConfermato', lingua),
       continuaShopping: this.langService.traduci('continuaShopping', lingua),
+      carrelloVuoto: this.langService.traduci('carrelloVuoto', lingua),
     };
   }
 
   get totale(): number {
     return this.cartService.totalePrezzo;
+  }
+
+  confermaOrdine() {
+    // TODO: collegare a POST /orders quando integri il backend
+    this.ordineConfermato = true;
+    this.cartService.svuota();
   }
 
   ngOnDestroy() {

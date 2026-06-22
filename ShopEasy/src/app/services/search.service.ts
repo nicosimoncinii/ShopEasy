@@ -9,4 +9,8 @@ export class SearchService {
   cerca(testo: string) {
     this.searchText.next(testo);
   }
+
+  reset() {
+    this.searchText.next('');
+  }
 }

@@ -1,17 +1,20 @@
 <div class="products-page">
-  <h2>{{ langService.traduci('prodottiTitolo') }}</h2>
-
+  <h2>{{ traduzioni.prodottiTitolo }}</h2>
   <div class="products-list">
-    <div *ngFor="let prodotto of prodottiVisualizzati" class="product-row">
-      <div class="product-info">
-        <span class="product-name">
-          <strong>{{ prodotto.nome }}</strong>
-          <span class="product-price">{{ prodotto.prezzo }}</span>
-        </span>
-      </div>
-      <button class="add-to-cart-btn">
-        {{ langService.traduci('aggiungi') }}
-      </button>
-    </div>
+    @if (prodottiVisualizzati.length > 0) {
+      @for (prodotto of prodottiVisualizzati; track prodotto.id) {
+        <div class="product-row">
+          <div class="product-info">
+            <strong>{{ prodotto.nome }}</strong>
+            <span class="product-price">{{ prodotto.prezzo }}€</span>
+          </div>
+          <button class="add-to-cart-btn" (click)="aggiungiAlCarrello(prodotto)">
+            {{ traduzioni.aggiungi }}
+          </button>
+        </div>
+      }
+    } @else {
+      <p class="no-results">{{ traduzioni.nessunProdotto }}</p>
+    }
   </div>
 </div>

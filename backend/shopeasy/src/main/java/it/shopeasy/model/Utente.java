@@ -24,19 +24,23 @@ public class Utente {
 
     private String telefono;
 
+
     private String indirizzo;
 
-    @Column(name = "language_preference")
+    @Column(name = "language_preference", nullable = false)
     private String languagePreference;
 
-    @Column(name = "theme_preference")
+
+    @Column(name = "theme_preference",nullable = false)
     private String themePreference;
 
     @ManyToOne
+    @Enumerated(EnumType.STRING)
     @JoinColumn(name = "ruolo_id", nullable = false)
     private Ruolo ruolo;
 
     @ManyToOne
+    @Enumerated(EnumType.STRING)
     @JoinColumn(name = "stato_id")
     private String stato;
 
@@ -133,11 +137,11 @@ public class Utente {
         this.ruolo = ruolo;
     }
 
-    public StatoOrdine getStato() {
+    public String getStato() {
         return stato;
     }
 
-    public void setStato(StatoOrdine stato) {
+    public void setStato(String stato) {
         this.stato = stato;
     }
 }

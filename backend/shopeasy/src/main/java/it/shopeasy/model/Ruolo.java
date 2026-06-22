@@ -1,6 +1,7 @@
 package it.shopeasy.model;
 
 import jakarta.persistence.*;
+import it.shopeasy.enums.RuoloUtente;
 
 @Entity
 @Table(name = "ruoli")
@@ -12,12 +13,12 @@ public class Ruolo {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, unique = true)
-    private String nome;
+    private RuoloUtente nome;
 
     public Ruolo() {
     }
 
-    public Ruolo(String nome) {
+    public Ruolo(RuoloUtente nome) {
         this.nome = nome;
     }
 
@@ -29,11 +30,11 @@ public class Ruolo {
         this.id = id;
     }
 
-    public String getNome() {
+    public RuoloUtente getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNome(RuoloUtente nome) {
         this.nome = nome;
     }
 }

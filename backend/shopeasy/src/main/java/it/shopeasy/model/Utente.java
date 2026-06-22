@@ -1,5 +1,7 @@
 package it.shopeasy.model;
 
+import it.shopeasy.enums.StatoOrdine;
+import it.shopeasy.enums.StatoUtente;
 import jakarta.persistence.*;
 
 @Entity
@@ -34,21 +36,21 @@ public class Utente {
     @Column(name = "theme_preference",nullable = false)
     private String themePreference;
 
-    @ManyToOne
-    @Enumerated(EnumType.STRING)
-    @JoinColumn(name = "ruolo_id", nullable = false)
-    private Ruolo ruolo;
 
     @ManyToOne
+    @JoinColumn(name = "ruolo")
+    private Ruolo ruolo;
+
+
     @Enumerated(EnumType.STRING)
-    @JoinColumn(name = "stato_id")
-    private String stato;
+    @Column(name = "stato")
+    private StatoUtente stato;
 
     public Utente() {
     }
 
     public Utente(String nome, String cognome, String email, String password, String telefono, 
-                  String indirizzo, String languagePreference, String themePreference, Ruolo ruolo, String stato) {
+                  String indirizzo, String languagePreference, String themePreference, Ruolo ruolo, StatoUtente stato) {
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
@@ -137,11 +139,11 @@ public class Utente {
         this.ruolo = ruolo;
     }
 
-    public String getStato() {
+    public StatoUtente getStato() {
         return stato;
     }
 
-    public void setStato(String stato) {
+    public void setStato(StatoUtente stato) {
         this.stato = stato;
     }
 }

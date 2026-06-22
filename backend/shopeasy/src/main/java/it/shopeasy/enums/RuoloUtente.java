@@ -1,6 +1,6 @@
 package it.shopeasy.enums;
 
-public enum Ruolo {
+public enum RuoloUtente {
     UTENTE,
     ADMIN
 

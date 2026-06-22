@@ -15,6 +15,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import it.shopeasy.enums.StatoUtente;
 
 @Service
 public class AuthService {
@@ -51,7 +52,7 @@ public class AuthService {
         utente.setEmail(request.getEmail());
         utente.setPassword(passwordEncoder.encode(request.getPassword()));
         utente.setRuolo(ruolo);
-        utente.setStato("ATTIVO");
+        utente.setStato(StatoUtente.ATTIVO);
         utente.setLanguagePreference("it");
         utente.setThemePreference("light");
 

@@ -3,7 +3,7 @@ package it.shopeasy.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "categorie")
+@Table(name = "categoria")
 public class Categoria {
 
     @Id

@@ -2,11 +2,12 @@ package it.shopeasy.model;
 
 
 import jakarta.persistence.*;
-
+import java.util.List;
+import java.util.ArrayList;
 
 
 @Entity
-@Table(name = "prodotti")
+@Table(name = "prodotto")
 public class Prodotto {
 
     @Id
@@ -31,6 +32,8 @@ public class Prodotto {
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
+    @ManyToMany(mappedBy = "prodotti")
+    private List<Wishlist> wishlist = new ArrayList<>();
 
     public Prodotto() {
     }
@@ -91,5 +94,13 @@ public class Prodotto {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public List<Wishlist> getWishlist() {
+        return wishlist;
+    }
+    
+    public void setWishlist(List<Wishlist> wishlist) {
+        this.wishlist = wishlist;
     }
 }

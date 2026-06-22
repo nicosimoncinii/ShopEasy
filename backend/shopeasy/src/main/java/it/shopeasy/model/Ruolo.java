@@ -4,12 +4,12 @@ import jakarta.persistence.*;
 import it.shopeasy.enums.RuoloUtente;
 
 @Entity
-@Table(name = "ruoli")
+@Table(name = "ruolo")
 public class Ruolo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long  id;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, unique = true)

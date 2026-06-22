@@ -10,10 +10,13 @@ import java.util.Date;
 
 @Service
 public class JwtService {
+    
+    // SOSTITUITA con una stringa di 32 caratteri esatti (256 bit)
     private final SecretKey secretKey = Keys.hmacShaKeyFor(
-        "chiave-32".getBytes()
+        "QuestaEUnaChiaveSegretaMoltoLunga".getBytes()
     );
-    private final long durata = 3000 * 60 * 60;
+    
+    private final long durata = 3000 * 60 * 60; // 3000 ore
 
     private Claims estraiClaims(String token) {
         return Jwts.parser()
@@ -46,4 +49,3 @@ public class JwtService {
     }
 
 }
-

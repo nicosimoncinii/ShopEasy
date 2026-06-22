@@ -1,11 +1,10 @@
 package it.shopeasy.model;
 
-import it.shopeasy.enums.StatoOrdine;
 import it.shopeasy.enums.StatoUtente;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "utenti")
+@Table(name = "utente")
 public class Utente {
 
     @Id
@@ -26,31 +25,33 @@ public class Utente {
 
     private String telefono;
 
-
     private String indirizzo;
 
     @Column(name = "language_preference", nullable = false)
     private String languagePreference;
 
-
-    @Column(name = "theme_preference",nullable = false)
+    @Column(name = "theme_preference", nullable = false)
     private String themePreference;
-
 
     @ManyToOne
     @JoinColumn(name = "ruolo")
     private Ruolo ruolo;
 
-
     @Enumerated(EnumType.STRING)
     @Column(name = "stato")
     private StatoUtente stato;
 
+    @OneToOne(mappedBy = "utente", cascade = CascadeType.ALL)
+    private Wishlist wishlist;
+
     public Utente() {
     }
 
-    public Utente(String nome, String cognome, String email, String password, String telefono, 
-                  String indirizzo, String languagePreference, String themePreference, Ruolo ruolo, StatoUtente stato) {
+    public Utente(String nome, String cognome, String email, String password,
+                  String telefono, String indirizzo,
+                  String languagePreference, String themePreference,
+                  Ruolo ruolo, StatoUtente stato) {
+
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
@@ -145,5 +146,13 @@ public class Utente {
 
     public void setStato(StatoUtente stato) {
         this.stato = stato;
+    }
+
+    public Wishlist getWishlist() {
+        return wishlist;
+    }
+
+    public void setWishlist(Wishlist wishlist) {
+        this.wishlist = wishlist;
     }
 }

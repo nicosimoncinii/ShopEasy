@@ -34,10 +34,11 @@ public class Prodotto {
     @JsonIgnore
     private List<Wishlist> wishlist = new ArrayList<>();
 
-    public Prodotto() {}
+    public Prodotto() {
+    }
 
     public Prodotto(String nome, String descrizione, Double prezzo,
-                    Integer quantita, String immagine, Categoria categoria) {
+            Integer quantita, String immagine, Categoria categoria) {
         this.nome = nome;
         this.descrizione = descrizione;
         this.prezzo = prezzo;
@@ -46,19 +47,63 @@ public class Prodotto {
         this.categoria = categoria;
     }
 
-    public Long getId() { return id; }
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
-    public String getDescrizione() { return descrizione; }
-    public void setDescrizione(String descrizione) { this.descrizione = descrizione; }
-    public Double getPrezzo() { return prezzo; }
-    public void setPrezzo(Double prezzo) { this.prezzo = prezzo; }
-    public Integer getQuantita() { return quantita; }
-    public void setQuantita(Integer quantita) { this.quantita = quantita; }
-    public String getImmagine() { return immagine; }
-    public void setImmagine(String immagine) { this.immagine = immagine; }
-    public Categoria getCategoria() { return categoria; }
-    public void setCategoria(Categoria categoria) { this.categoria = categoria; }
-    public List<Wishlist> getWishlist() { return wishlist; }
-    public void setWishlist(List<Wishlist> wishlist) { this.wishlist = wishlist; }
+    public Long getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getDescrizione() {
+        return descrizione;
+    }
+
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
+
+    public Double getPrezzo() {
+        return prezzo;
+    }
+
+    public void setPrezzo(Double prezzo) {
+        this.prezzo = prezzo;
+    }
+
+    public Integer getQuantita() {
+        return quantita;
+    }
+
+    public void setQuantita(Integer quantita) {
+        this.quantita = quantita;
+    }
+
+    public String getImmagine() {
+        return immagine;
+    }
+
+    public void setImmagine(String immagine) {
+        this.immagine = immagine;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public List<Wishlist> getWishlist() {
+        return wishlist;
+    }
+
+    public void setWishlist(List<Wishlist> wishlist) {
+        this.wishlist = wishlist;
+    }
 }

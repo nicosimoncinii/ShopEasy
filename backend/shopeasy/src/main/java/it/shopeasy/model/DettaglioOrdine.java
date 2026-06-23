@@ -2,6 +2,7 @@ package it.shopeasy.model;
 
 import jakarta.persistence.*;
 
+
 @Entity
 @Table(name = "dettaglio_ordine")
 public class DettaglioOrdine {
@@ -23,6 +24,8 @@ public class DettaglioOrdine {
 
     @Column(nullable = false)
     private Double prezzoUnitario;
+
+    public DettaglioOrdine() {} 
 
     public DettaglioOrdine(Ordine ordine, Prodotto prodotto, Integer quantita, Double prezzoUnitario) {
         this.ordine = ordine;

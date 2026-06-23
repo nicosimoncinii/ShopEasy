@@ -3,9 +3,11 @@ package it.shopeasy.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -16,6 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Autowired
@@ -49,25 +52,22 @@ public class SecurityConfig {
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
-                    // Auth endpoints
                     "/api/auth/**",
-                    
-                    // Products endpoints (pubblici in lettura)
-                    "/api/products",
-                    "/api/products/**",
-                    
-                    // SWAGGER UI - TUTTE le risorse
-                    "/swagger-ui/**",        // <-- IMPORTANTE: questo copre tutto
+                    "/swagger-ui/**",
                     "/swagger-ui.html",
                     "/swagger-initializer.js",
-                    
-                    // OpenAPI docs
                     "/v3/api-docs/**",
                     "/api-docs/**",
-                    
-                    // WebJars (dipendenze JS/CSS di Swagger)
                     "/webjars/**"
                 ).permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/products", "/api/products/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/products/**").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/products/**").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/products/**").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/api/users", "/api/users/**").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/users").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/users/**").hasAuthority("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
             )
             .authenticationProvider(authenticationProvider())

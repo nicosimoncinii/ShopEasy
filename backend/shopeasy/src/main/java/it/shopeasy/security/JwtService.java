@@ -11,12 +11,11 @@ import java.util.Date;
 @Service
 public class JwtService {
     
-    // SOSTITUITA con una stringa di 32 caratteri esatti (256 bit)
     private final SecretKey secretKey = Keys.hmacShaKeyFor(
         "QuestaEUnaChiaveSegretaMoltoLunga".getBytes()
     );
     
-    private final long durata = 3000 * 60 * 60; // 3000 ore
+    private final long durata = 3000 * 60 * 60;
 
     private Claims estraiClaims(String token) {
         return Jwts.parser()
@@ -29,7 +28,7 @@ public class JwtService {
     public String generaToken(Utente utente) {
         return Jwts.builder()
                 .subject(utente.getEmail())
-                .claim("ruolo", utente.getRuolo().getNome())
+                .claim("ruolo", utente.getRuolo().getNome().name())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + durata))
                 .signWith(secretKey)
@@ -38,6 +37,10 @@ public class JwtService {
 
     public String estraiEmail(String token) {
         return estraiClaims(token).getSubject();
+    }
+
+    public String estraiRuolo(String token) {
+        return estraiClaims(token).get("ruolo", String.class);
     }
 
     private boolean isTokenScaduto(String token) {

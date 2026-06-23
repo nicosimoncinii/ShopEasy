@@ -1,25 +1,31 @@
 package it.shopeasy.dto;
 
 public class UtenteUpdateRequestDTO {
-
     private String nome;
     private String cognome;
     private String email;
+    private String password;
     private String telefono;
     private String indirizzo;
-    private String password;
+    private String languagePreference;
+    private String themePreference;
+    private String ruolo;
+    private String stato;
 
     public UtenteUpdateRequestDTO() {
     }
 
-    public UtenteUpdateRequestDTO(String nome, String cognome, String email,
-            String telefono, String indirizzo, String password) {
+    public UtenteUpdateRequestDTO(String nome, String cognome, String email, String password, String telefono, String indirizzo, String languagePreference, String themePreference, String ruolo, String stato) {
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
+        this.password = password;
         this.telefono = telefono;
         this.indirizzo = indirizzo;
-        this.password = password;
+        this.languagePreference = languagePreference;
+        this.themePreference = themePreference;
+        this.ruolo = ruolo;
+        this.stato = stato;
     }
 
     public String getNome() {
@@ -46,6 +52,14 @@ public class UtenteUpdateRequestDTO {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getTelefono() {
         return telefono;
     }
@@ -62,11 +76,35 @@ public class UtenteUpdateRequestDTO {
         this.indirizzo = indirizzo;
     }
 
-    public String getPassword() {
-        return password;
+    public String getLanguagePreference() {
+        return languagePreference;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setLanguagePreference(String languagePreference) {
+        this.languagePreference = languagePreference;
+    }
+
+    public String getThemePreference() {
+        return themePreference;
+    }
+
+    public void setThemePreference(String themePreference) {
+        this.themePreference = themePreference;
+    }
+
+    public String getRuolo() {
+        return ruolo;
+    }
+
+    public void setRuolo(String ruolo) {
+        this.ruolo = ruolo;
+    }
+
+    public String getStato() {
+        return stato;
+    }
+
+    public void setStato(String stato) {
+        this.stato = stato;
     }
 }

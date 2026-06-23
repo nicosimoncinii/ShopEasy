@@ -1,9 +1,9 @@
 package it.shopeasy.controller;
 
-
 import it.shopeasy.service.ProdottoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import it.shopeasy.model.Prodotto;
 
@@ -14,7 +14,6 @@ import java.util.List;
 public class ProdottoController {
 
     private final ProdottoService prodottoService;
-
 
     public ProdottoController(ProdottoService prodottoService){
         this.prodottoService = prodottoService;
@@ -31,23 +30,23 @@ public class ProdottoController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Prodotto> creaProdotto(@RequestBody Prodotto prodotto) {
         Prodotto creato = prodottoService.salvaProdotto(prodotto);
         return ResponseEntity.status(HttpStatus.CREATED).body(creato);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Prodotto> aggiornaProdotto(@RequestBody Prodotto prodotto, @PathVariable Long id) {
-        Prodotto aggiornato = prodottoService.aggiornaProdotto(id,prodotto);
+        Prodotto aggiornato = prodottoService.aggiornaProdotto(id, prodotto);
         return ResponseEntity.ok(aggiornato);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Void> cancellaProdotto(@PathVariable Long id){
         prodottoService.cancellaProdotto(id);
         return ResponseEntity.noContent().build();
     }
-
-
-
 }

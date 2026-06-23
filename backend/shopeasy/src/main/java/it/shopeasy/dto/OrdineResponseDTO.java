@@ -1,5 +1,7 @@
 package it.shopeasy.dto;
 
+import it.shopeasy.model.DettaglioOrdine;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -11,20 +13,20 @@ public class OrdineResponseDTO {
     private Double totale;
     private Long utenteId;
     private String utenteNome;
-    private List<ProdottoOrdineResponseDTO> prodotti;
+   private List<DettaglioOrdine> dettagli;
 
     public OrdineResponseDTO() {}
 
     public OrdineResponseDTO(Long id, LocalDateTime data, String stato, Double totale,
                              Long utenteId, String utenteNome,
-                             List<ProdottoOrdineResponseDTO> prodotti) {
+                             List<DettaglioOrdine> dettagli) {
         this.id = id;
         this.data = data;
         this.stato = stato;
         this.totale = totale;
         this.utenteId = utenteId;
         this.utenteNome = utenteNome;
-        this.prodotti = prodotti;
+        this.dettagli = dettagli;
     }
 
     public Long getId() {
@@ -51,8 +53,8 @@ public class OrdineResponseDTO {
         return utenteNome;
     }
 
-    public List<ProdottoOrdineResponseDTO> getProdotti() {
-        return prodotti;
+    public List<DettaglioOrdine> getProdotti() {
+        return dettagli;
     }
 
     public void setId(Long id) {
@@ -79,7 +81,7 @@ public class OrdineResponseDTO {
         this.utenteNome = utenteNome;
     }
 
-    public void setProdotti(List<ProdottoOrdineResponseDTO> prodotti) {
-        this.prodotti = prodotti;
+    public void setProdotti(List<DettaglioOrdine> dettagli) {
+        this.dettagli = dettagli;
     }
 }

@@ -1,11 +1,13 @@
 package it.shopeasy.model;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "dettaglio_ordine")
 public class DettaglioOrdine {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,12 +27,11 @@ public class DettaglioOrdine {
     @Column(nullable = false)
     private Double prezzoUnitario;
 
-    public DettaglioOrdine() {
-    }
+    public DettaglioOrdine() {}
 
     public DettaglioOrdine(Ordine ordine, Prodotto prodotto, Integer quantita, Double prezzoUnitario) {
         this.ordine = ordine;
-        this.prodotto = prodotto;
+        this.prodotto = prodotto; // ✅ corretto
         this.quantita = quantita;
         this.prezzoUnitario = prezzoUnitario;
     }
@@ -39,20 +40,16 @@ public class DettaglioOrdine {
         return id;
     }
 
-    public Ordine getOrdine() {
-        return ordine;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setOrdine(Ordine ordine) {
-        this.ordine = ordine;
+    public Double getPrezzoUnitario() {
+        return prezzoUnitario;
     }
 
-    public Prodotto getProdotto() {
-        return prodotto;
-    }
-
-    public void setProdotto(Prodotto prodotto) {
-        this.prodotto = prodotto;
+    public void setPrezzoUnitario(Double prezzoUnitario) {
+        this.prezzoUnitario = prezzoUnitario;
     }
 
     public Integer getQuantita() {
@@ -63,11 +60,19 @@ public class DettaglioOrdine {
         this.quantita = quantita;
     }
 
-    public Double getPrezzoUnitario() {
-        return prezzoUnitario;
+    public Prodotto getProdotto() {
+        return prodotto;
     }
 
-    public void setPrezzoUnitario(Double prezzoUnitario) {
-        this.prezzoUnitario = prezzoUnitario;
+    public void setProdotto(Prodotto prodotto) {
+        this.prodotto = prodotto;
+    }
+
+    public Ordine getOrdine() {
+        return ordine;
+    }
+
+    public void setOrdine(Ordine ordine) {
+        this.ordine = ordine;
     }
 }

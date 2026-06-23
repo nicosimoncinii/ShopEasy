@@ -1,8 +1,8 @@
 package it.shopeasy.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.shopeasy.enums.StatoOrdine;
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,6 @@ import java.util.List;
 @Entity
 @Table(name = "ordine")
 public class Ordine {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,6 +17,7 @@ public class Ordine {
     private LocalDateTime data;
 
     @OneToMany(mappedBy = "ordine", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<DettaglioOrdine> dettagli = new ArrayList<>();
 
     @Column(nullable = false)
@@ -29,23 +29,18 @@ public class Ordine {
 
     @ManyToOne
     @JoinColumn(name = "utente_id")
+    @JsonIgnore
     private Utente utente;
-
 
     public Ordine() {
     }
 
-    public Ordine(LocalDateTime data,
-                  Double totale,
-                  StatoOrdine stato,
-                  Utente utente) {
-
+    public Ordine(LocalDateTime data, Double totale, StatoOrdine stato, Utente utente) {
         this.data = data;
         this.totale = totale;
         this.stato = stato;
         this.utente = utente;
     }
-
 
     public Long getId() {
         return id;
@@ -86,7 +81,7 @@ public class Ordine {
     public List<DettaglioOrdine> getDettagli() {
         return dettagli;
     }
-    
+
     public void setDettagli(List<DettaglioOrdine> dettagli) {
         this.dettagli = dettagli;
     }

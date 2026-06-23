@@ -1,10 +1,9 @@
-package it.shopeasy.dto;
+package it.shopeasy.dto.ordine;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import it.shopeasy.dto.ProdottoOrdineResponseDTO;
-
+import it.shopeasy.dto.prodotto.ProdottoOrdineResponseDTO;
 public class OrdineResponseDTO {
 
     private Long id;

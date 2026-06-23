@@ -2,6 +2,7 @@ package it.shopeasy.model;
 
 import it.shopeasy.enums.StatoUtente;
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "utente")
@@ -20,6 +21,7 @@ public class Utente {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 
@@ -42,6 +44,7 @@ public class Utente {
     private StatoUtente stato;
 
     @OneToOne(mappedBy = "utente", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Wishlist wishlist;
 
     public Utente() {

@@ -1,17 +1,18 @@
 package it.shopeasy.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "dettaglio_ordine")
 public class DettaglioOrdine {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "ordine_id", nullable = false)
+    @JsonIgnore
     private Ordine ordine;
 
     @ManyToOne
@@ -23,6 +24,9 @@ public class DettaglioOrdine {
 
     @Column(nullable = false)
     private Double prezzoUnitario;
+
+    public DettaglioOrdine() {
+    }
 
     public DettaglioOrdine(Ordine ordine, Prodotto prodotto, Integer quantita, Double prezzoUnitario) {
         this.ordine = ordine;

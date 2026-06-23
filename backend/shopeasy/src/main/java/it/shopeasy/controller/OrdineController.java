@@ -1,5 +1,6 @@
 package it.shopeasy.controller;
 
+import it.shopeasy.dto.OrdineResponseDTO;
 import it.shopeasy.model.Ordine;
 import it.shopeasy.service.OrdineService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class OrdineController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Ordine>> prendiTuttiOrdini() {
+    public ResponseEntity<List<OrdineResponseDTO>> prendiTuttiOrdini() {
         return ResponseEntity.ok(service.prendiTuttiOrdini());
     }
 

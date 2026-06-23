@@ -1,8 +1,6 @@
-package it.shopeasy.dto.ordine;
+package it.shopeasy.dto;
 
 import java.util.List;
-
-import it.shopeasy.dto.prodotto.ProdottoOrdineRequestDTO;
 
 public class OrdineRequestDTO {
 

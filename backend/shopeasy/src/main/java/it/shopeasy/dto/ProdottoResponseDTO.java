@@ -1,4 +1,4 @@
-package it.shopeasy.dto.prodotto;
+package it.shopeasy.dto;
 
 public class ProdottoResponseDTO {
     

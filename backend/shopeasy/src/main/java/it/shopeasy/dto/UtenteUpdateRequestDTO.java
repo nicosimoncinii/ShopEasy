@@ -1,4 +1,4 @@
-package it.shopeasy.dto.utente;
+package it.shopeasy.dto;
 
 public class UtenteUpdateRequestDTO {
     

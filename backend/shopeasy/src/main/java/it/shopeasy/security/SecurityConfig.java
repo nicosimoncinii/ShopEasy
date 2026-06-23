@@ -29,11 +29,10 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @SuppressWarnings("deprecation")
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(passwordEncoder());
-        provider.setUserDetailsService(customUserDetailsService);
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(customUserDetailsService);
+        provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
 
@@ -50,12 +49,25 @@ public class SecurityConfig {
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
-    "/api/**",    
-                "/swagger-ui/**",
-                "/swagger-ui.html",
-                "/api-docs/**",
-                "/v3/api-docs/**").permitAll()
-
+                    // Auth endpoints
+                    "/api/auth/**",
+                    
+                    // Products endpoints (pubblici in lettura)
+                    "/api/products",
+                    "/api/products/**",
+                    
+                    // SWAGGER UI - TUTTE le risorse
+                    "/swagger-ui/**",        // <-- IMPORTANTE: questo copre tutto
+                    "/swagger-ui.html",
+                    "/swagger-initializer.js",
+                    
+                    // OpenAPI docs
+                    "/v3/api-docs/**",
+                    "/api-docs/**",
+                    
+                    // WebJars (dipendenze JS/CSS di Swagger)
+                    "/webjars/**"
+                ).permitAll()
                 .anyRequest().authenticated()
             )
             .authenticationProvider(authenticationProvider())

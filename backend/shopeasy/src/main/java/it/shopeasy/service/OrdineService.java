@@ -2,12 +2,15 @@ package it.shopeasy.service;
 
 import it.shopeasy.model.Ordine;
 
-
+import it.shopeasy.dto.OrdineResponseDTO;
 import it.shopeasy.repository.OrdineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Nodes.collect;
 
 @Service
 public class OrdineService {
@@ -16,10 +19,15 @@ public class OrdineService {
     private OrdineRepository ordineRepository;
 
 
+    public List<OrdineResponseDTO> prendiTuttiOrdini() {
+        return ordineRepository.findAll()
+                .stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
+    }
 
-
-    public List<Ordine> prendiTuttiOrdini() {
-        return ordineRepository.findAll();
+    public OrdineResponseDTO prendiOrdineResponsePerId(Long id) {
+        return toRespone()
     }
 
     public Ordine prendiOrdinePerId(Long id) {
@@ -36,7 +44,7 @@ public class OrdineService {
         return ordineRepository.save(ordine);
     }
 
-    public List<Ordine> prendiOrdiniPerUtente(Long utente_id){
+    public List<Ordine> prendiOrdiniPerUtente(Long utente_id) {
         return ordineRepository.findByUtenteId(utente_id);
     }
 
@@ -51,5 +59,17 @@ public class OrdineService {
 
         return salvaOrdine(ordine);
     }
-    
+
+    private OrdineResponseDTO toResponse(Ordine ordine) {
+        return new OrdineResponseDTO(
+            ordine.getId();
+            ordine.getData();
+            ordine.getStato();
+            ordine.getTotale();
+            ordine.getUtente().getId();
+            ordine.getUtente().getNome() ;
+            ordine.getDettagli();
+        );
+    }
+
 }

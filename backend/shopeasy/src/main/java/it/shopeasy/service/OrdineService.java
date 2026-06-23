@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Nodes.collect;
+
 
 @Service
 public class OrdineService {
@@ -27,7 +27,7 @@ public class OrdineService {
     }
 
     public OrdineResponseDTO prendiOrdineResponsePerId(Long id) {
-        return toRespone()
+        return toResponse(prendiOrdinePerId(id));
     }
 
     public Ordine prendiOrdinePerId(Long id) {
@@ -62,13 +62,13 @@ public class OrdineService {
 
     private OrdineResponseDTO toResponse(Ordine ordine) {
         return new OrdineResponseDTO(
-            ordine.getId();
-            ordine.getData();
-            ordine.getStato();
-            ordine.getTotale();
-            ordine.getUtente().getId();
-            ordine.getUtente().getNome() ;
-            ordine.getDettagli();
+            ordine.getId(),
+            ordine.getData(),
+            ordine.getStato(),
+            ordine.getTotale(),
+            ordine.getUtente().getId(),
+            ordine.getUtente().getNome(),
+            ordine.getDettagli()
         );
     }
 

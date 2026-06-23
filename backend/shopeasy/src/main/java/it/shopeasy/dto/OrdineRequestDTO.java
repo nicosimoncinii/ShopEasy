@@ -1,17 +1,19 @@
 package it.shopeasy.dto;
 
+import it.shopeasy.model.DettaglioOrdine;
+
 import java.util.List;
 
 public class OrdineRequestDTO {
 
     private Long utenteId;
-    private List<ProdottoOrdineRequestDTO> prodotti;
+    private List<DettaglioOrdine> dettagli;
 
     public OrdineRequestDTO() {}
 
-    public OrdineRequestDTO(Long utenteId, List<ProdottoOrdineRequestDTO> prodotti) {
+    public OrdineRequestDTO(Long utenteId, List<DettaglioOrdine> dettagli) {
         this.utenteId = utenteId;
-        this.prodotti = prodotti;
+        this.dettagli = dettagli;
     }
 
     public Long getUtenteId() {
@@ -22,11 +24,11 @@ public class OrdineRequestDTO {
         this.utenteId = utenteId;
     }
 
-    public List<ProdottoOrdineRequestDTO> getProdotti() {
-        return prodotti;
+    public List<DettaglioOrdine> getProdotti() {
+        return dettagli;
     }
 
-    public void setProdotti(List<ProdottoOrdineRequestDTO> prodotti) {
-        this.prodotti = prodotti;
+    public void setProdotti(List<DettaglioOrdine> dettagli) {
+        this.dettagli = dettagli;
     }
 }

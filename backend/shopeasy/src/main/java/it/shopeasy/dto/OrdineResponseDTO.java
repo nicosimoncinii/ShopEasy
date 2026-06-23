@@ -1,5 +1,6 @@
 package it.shopeasy.dto;
 
+import it.shopeasy.enums.StatoOrdine;
 import it.shopeasy.model.DettaglioOrdine;
 
 import java.time.LocalDateTime;
@@ -9,7 +10,7 @@ public class OrdineResponseDTO {
 
     private Long id;
     private LocalDateTime data;
-    private String stato;
+    private StatoOrdine stato;
     private Double totale;
     private Long utenteId;
     private String utenteNome;
@@ -17,7 +18,7 @@ public class OrdineResponseDTO {
 
     public OrdineResponseDTO() {}
 
-    public OrdineResponseDTO(Long id, LocalDateTime data, String stato, Double totale,
+    public OrdineResponseDTO(Long id, LocalDateTime data, StatoOrdine stato, Double totale,
                              Long utenteId, String utenteNome,
                              List<DettaglioOrdine> dettagli) {
         this.id = id;

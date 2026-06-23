@@ -1,7 +1,6 @@
 package it.shopeasy.dto;
 
 import it.shopeasy.model.DettaglioOrdine;
-
 import java.util.List;
 
 public class OrdineRequestDTO {
@@ -24,11 +23,11 @@ public class OrdineRequestDTO {
         this.utenteId = utenteId;
     }
 
-    public List<DettaglioOrdine> getProdotti() {
+    public List<DettaglioOrdine> getDettagli() {
         return dettagli;
     }
 
-    public void setProdotti(List<DettaglioOrdine> dettagli) {
+    public void setDettagli(List<DettaglioOrdine> dettagli) {
         this.dettagli = dettagli;
     }
 }

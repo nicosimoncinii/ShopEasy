@@ -1,8 +1,6 @@
 package it.shopeasy.dto;
 
 import it.shopeasy.enums.StatoOrdine;
-import it.shopeasy.model.DettaglioOrdine;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,13 +12,20 @@ public class OrdineResponseDTO {
     private Double totale;
     private Long utenteId;
     private String utenteNome;
-   private List<DettaglioOrdine> dettagli;
+    private List<?> dettagli;
 
     public OrdineResponseDTO() {}
 
-    public OrdineResponseDTO(Long id, LocalDateTime data, StatoOrdine stato, Double totale,
-                             Long utenteId, String utenteNome,
-                             List<DettaglioOrdine> dettagli) {
+    public OrdineResponseDTO(Long id, LocalDateTime data, StatoOrdine stato, Double totale, Long utenteId, String utenteNome) {
+        this.id = id;
+        this.data = data;
+        this.stato = stato;
+        this.totale = totale;
+        this.utenteId = utenteId;
+        this.utenteNome = utenteNome;
+    }
+
+    public OrdineResponseDTO(Long id, LocalDateTime data, StatoOrdine stato, Double totale, Long utenteId, String utenteNome, List<?> dettagli) {
         this.id = id;
         this.data = data;
         this.stato = stato;
@@ -34,55 +39,55 @@ public class OrdineResponseDTO {
         return id;
     }
 
-    public LocalDateTime getData() {
-        return data;
-    }
-
-    public String getStato() {
-        return stato;
-    }
-
-    public Double getTotale() {
-        return totale;
-    }
-
-    public Long getUtenteId() {
-        return utenteId;
-    }
-
-    public String getUtenteNome() {
-        return utenteNome;
-    }
-
-    public List<DettaglioOrdine> getProdotti() {
-        return dettagli;
-    }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public LocalDateTime getData() {
+        return data;
     }
 
     public void setData(LocalDateTime data) {
         this.data = data;
     }
 
-    public void setStato(String stato) {
+    public StatoOrdine getStato() {
+        return stato;
+    }
+
+    public void setStato(StatoOrdine stato) {
         this.stato = stato;
+    }
+
+    public Double getTotale() {
+        return totale;
     }
 
     public void setTotale(Double totale) {
         this.totale = totale;
     }
 
+    public Long getUtenteId() {
+        return utenteId;
+    }
+
     public void setUtenteId(Long utenteId) {
         this.utenteId = utenteId;
+    }
+
+    public String getUtenteNome() {
+        return utenteNome;
     }
 
     public void setUtenteNome(String utenteNome) {
         this.utenteNome = utenteNome;
     }
 
-    public void setProdotti(List<DettaglioOrdine> dettagli) {
+    public List<?> getDettagli() {
+        return dettagli;
+    }
+
+    public void setDettagli(List<?> dettagli) {
         this.dettagli = dettagli;
     }
 }

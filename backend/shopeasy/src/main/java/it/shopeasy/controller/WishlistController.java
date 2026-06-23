@@ -6,7 +6,6 @@ import it.shopeasy.model.Wishlist;
 import it.shopeasy.repository.ProdottoRepository;
 import it.shopeasy.repository.UtenteRepository;
 import it.shopeasy.repository.WishlistRepository;
-import it.shopeasy.service.WishlistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +19,6 @@ import java.util.List;
 @RequestMapping("/api/wishlist")
 public class WishlistController {
 
-    private final WishlistService wishlistService;
-
     @Autowired
     private UtenteRepository utenteRepository;
 
@@ -30,38 +27,6 @@ public class WishlistController {
 
     @Autowired
     private WishlistRepository wishlistRepository;
-
-    public WishlistController(WishlistService wishlistService) {
-        this.wishlistService = wishlistService;
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Wishlist>> prendiTuttiWishlist() {
-        return ResponseEntity.ok(wishlistService.prendiTuttiWishlist());
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Wishlist> prendiWishlistPerId(@PathVariable Long id) {
-        return ResponseEntity.ok(wishlistService.prendiWishlistPerId(id));
-    }
-
-    @PostMapping
-    public ResponseEntity<Wishlist> salvaWishlist(@RequestBody Wishlist wishlist) {
-        Wishlist creato = wishlistService.salvaWishlist(wishlist);
-        return ResponseEntity.status(HttpStatus.CREATED).body(creato);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Wishlist> aggiornaWishlist(@RequestBody Wishlist wishlist, @PathVariable Long id) {
-        Wishlist aggiornato = wishlistService.aggiornaWishlist(id, wishlist);
-        return ResponseEntity.ok(aggiornato);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> cancellaWishlist(@PathVariable Long id) {
-        wishlistService.cancellaWishlist(id);
-        return ResponseEntity.noContent().build();
-    }
 
     @GetMapping("/me")
     public ResponseEntity<List<Prodotto>> getMyWishlist() {
@@ -103,7 +68,7 @@ public class WishlistController {
             return ResponseEntity.badRequest().body("Prodotto già presente nella wishlist");
         }
 
-        wishlist.aggiungiProdotto(prodotto);
+        wishlist.getProdotti().add(prodotto);
         wishlistRepository.save(wishlist);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Prodotto aggiunto alla wishlist");
@@ -127,7 +92,7 @@ public class WishlistController {
             return ResponseEntity.badRequest().body("Prodotto non presente nella wishlist");
         }
 
-        wishlist.rimuoviProdotto(prodotto);
+        wishlist.getProdotti().remove(prodotto);
         wishlistRepository.save(wishlist);
 
         return ResponseEntity.ok("Prodotto rimosso dalla wishlist");

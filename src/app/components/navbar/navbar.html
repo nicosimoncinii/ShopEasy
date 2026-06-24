@@ -1,0 +1,55 @@
+<header>
+    <div class="top-bar">
+        <div class="left">
+            <img src="/Logo.png" alt="Logo">
+
+            <div class="search-and-lang">
+                <div class="search-bar">
+                    <input type="text" [placeholder]="langService.traduci('CERCA')" (input)="onSearch($event)">
+                    <button class="search-btn">
+                        <img src="/Lente.png" alt="CERCA">
+                    </button>
+                </div>
+
+                <div class="language-selector">
+                    <div class="selected" (click)="toggleDropdown()">
+                        <span class="lang-text">{{ langService.getLingua() | uppercase }}</span>
+                        <img [src]="langService.getLingua() === 'it' ? '/it.png' : '/en.png'">
+                    </div>
+                    <div class="dropdown" [class.open]="dropdownAperto">
+                        <div (click)="cambiaLingua('it')">
+                            <img src="/it.png" alt="Italiano"> IT
+                        </div>
+                        <div (click)="cambiaLingua('en')">
+                            <img src="/en.png" alt="English"> EN
+                        </div>
+                    </div>
+                </div>
+
+                <button class="theme-toggle-btn" (click)="cambiaTema()">
+                    {{ themeService.getIsDarkMode() ? '☀️' : '🌙' }}
+                </button>
+            </div>
+        </div>
+
+        <!-- NUOVO div a destra -->
+        <div class="right">
+            <button class="cart-btn" routerLink="/cart">
+                <img src="Cart.png" alt="Carrello">
+            </button>
+            <button class="login-btn" routerLink="/login">
+                {{ langService.traduci('ACCEDI') }}
+            </button>
+            <button class="register-btn" routerLink="/register">
+                {{ langService.traduci('REGISTER') }}
+            </button>
+        </div>
+    </div>
+
+    <nav>
+        <ul>
+            <li><a routerLink="/">{{ langService.traduci('HOME') }}</a></li>
+            <li><a routerLink="/prodotti">{{ langService.traduci('PRODOTTI') }}</a></li>
+        </ul>
+    </nav>
+</header>

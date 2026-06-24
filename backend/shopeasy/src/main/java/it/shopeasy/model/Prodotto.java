@@ -26,13 +26,15 @@ public class Prodotto {
 
     private String immagine;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+
+
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
-    @ManyToMany(mappedBy = "prodotti")
-    @JsonIgnore
-    private List<Wishlist> wishlist = new ArrayList<>();
+
 
     public Prodotto() {
     }

@@ -29,7 +29,7 @@ public class DettaglioOrdine {
 
     public DettaglioOrdine(Ordine ordine, Prodotto prodotto, Integer quantita, Double prezzoUnitario) {
         this.ordine = ordine;
-        this.prodotto = prodotto; // ✅ corretto
+        this.prodotto = prodotto;
         this.quantita = quantita;
         this.prezzoUnitario = prezzoUnitario;
     }

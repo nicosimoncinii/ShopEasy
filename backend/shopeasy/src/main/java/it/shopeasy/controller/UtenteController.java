@@ -66,8 +66,8 @@ public class UtenteController {
                     .orElseThrow(() -> new RuntimeException("Ruolo ADMIN non trovato"));
             utente.setRuolo(ruolo);
         } else {
-            Ruolo ruolo = ruoloRepository.findByNome(RuoloUtente.UTENTE)
-                    .orElseThrow(() -> new RuntimeException("Ruolo UTENTE non trovato"));
+            Ruolo ruolo = ruoloRepository.findByNome(RuoloUtente.CLIENTE)
+                    .orElseThrow(() -> new RuntimeException("Ruolo CLIENTE non trovato"));
             utente.setRuolo(ruolo);
         }
 
@@ -116,7 +116,7 @@ public class UtenteController {
                         .orElseThrow(() -> new RuntimeException("Ruolo ADMIN non trovato"));
                 utente.setRuolo(ruolo);
             } else {
-                Ruolo ruolo = ruoloRepository.findByNome(RuoloUtente.UTENTE)
+                Ruolo ruolo = ruoloRepository.findByNome(RuoloUtente.CLIENTE)
                         .orElseThrow(() -> new RuntimeException("Ruolo UTENTE non trovato"));
                 utente.setRuolo(ruolo);
             }

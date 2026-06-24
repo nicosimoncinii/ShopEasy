@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/wishlist")
@@ -29,7 +30,7 @@ public class WishlistController {
     private WishlistRepository wishlistRepository;
 
     @GetMapping("/me")
-    public ResponseEntity<List<Prodotto>> getMyWishlist() {
+    public ResponseEntity<Set<Prodotto>> getMyWishlist() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String email = auth.getName();
 

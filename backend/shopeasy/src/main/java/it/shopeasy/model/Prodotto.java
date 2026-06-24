@@ -1,9 +1,7 @@
 package it.shopeasy.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "prodotto")
@@ -101,11 +99,4 @@ public class Prodotto {
         this.categoria = categoria;
     }
 
-    public List<Wishlist> getWishlist() {
-        return wishlist;
-    }
-
-    public void setWishlist(List<Wishlist> wishlist) {
-        this.wishlist = wishlist;
-    }
 }

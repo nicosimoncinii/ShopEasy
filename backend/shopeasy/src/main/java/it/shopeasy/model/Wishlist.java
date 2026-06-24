@@ -2,7 +2,10 @@ package it.shopeasy.model;
 
 import jakarta.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "wishlist")
@@ -23,7 +26,7 @@ public class Wishlist {
             joinColumns = @JoinColumn(name = "wishlist_id"),
             inverseJoinColumns = @JoinColumn(name = "prodotto_id")
     )
-    private List<Prodotto> prodotti = new ArrayList<>();
+    private Set<Prodotto> prodotti = new HashSet<Prodotto>();
 
     public Wishlist() {
     }
@@ -44,11 +47,11 @@ public class Wishlist {
         this.utente = utente;
     }
 
-    public List<Prodotto> getProdotti() {
+    public Set<Prodotto> getProdotti() {
         return prodotti;
     }
 
-    public void setProdotti(List<Prodotto> prodotti) {
+    public void setProdotti(Set<Prodotto> prodotti) {
         this.prodotti = prodotti;
     }
 

@@ -1,16 +1,22 @@
 package it.shopeasy.dto;
 
 import it.shopeasy.model.DettaglioOrdine;
-import java.util.List;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
+import java.util.Set;
 
 public class OrdineRequestDTO {
 
+    @NotNull
     private Long utenteId;
-    private List<DettaglioOrdine> dettagli;
+    @NotNull
+    @NotEmpty
+    private Set<DettaglioOrdineRequestDTO> dettagli;
 
     public OrdineRequestDTO() {}
 
-    public OrdineRequestDTO(Long utenteId, List<DettaglioOrdine> dettagli) {
+    public OrdineRequestDTO(Long utenteId, Set<DettaglioOrdineRequestDTO> dettagli) {
         this.utenteId = utenteId;
         this.dettagli = dettagli;
     }
@@ -23,11 +29,11 @@ public class OrdineRequestDTO {
         this.utenteId = utenteId;
     }
 
-    public List<DettaglioOrdine> getDettagli() {
+    public Set<DettaglioOrdineRequestDTO> getDettagli() {
         return dettagli;
     }
 
-    public void setDettagli(List<DettaglioOrdine> dettagli) {
+    public void setDettagli(Set<DettaglioOrdineRequestDTO> dettagli) {
         this.dettagli = dettagli;
     }
 }

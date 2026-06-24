@@ -1,0 +1,35 @@
+<div class="cart-page">
+
+    <div *ngIf="cartService.getProdotti().length === 0">
+        <h1>{{ langService.traduci('CARRELLOVUOTO') }}</h1>
+    </div>
+
+    <div *ngIf="cartService.getProdotti().length > 0">
+
+        <p>{{ cartService.getProdotti().length }} {{ langService.traduci('ARTICOLI') }}</p>
+
+        <div *ngFor="let prodotto of cartService.getProdotti()" class="product-row">
+            <span class="product-name">{{ nomeProdotto(prodotto) }}</span>
+            <span class="product-price">{{ prodotto.prezzo }}€</span>
+
+            <div class="quantity-controls">
+                <button (click)="modificaQuantita(prodotto.id, prodotto.quantita - 1)">-</button>
+                <span>{{ prodotto.quantita }}</span>
+                <button (click)="modificaQuantita(prodotto.id, prodotto.quantita + 1)">+</button>
+            </div>
+
+            <button class="elimina-btn" (click)="eliminaProdotto(prodotto.id)">
+                {{ langService.traduci('elimina') }}
+            </button>
+            <hr>
+        </div>
+
+        <div class="cart-footer">
+            <strong>{{ langService.traduci('totale') }}: {{ cartService.getTotale() }}€</strong>
+            <button class="torna-btn" (click)="tornaAlloShopping()">
+                {{ langService.traduci('torna') }}
+            </button>
+        </div>
+    </div>
+
+</div>

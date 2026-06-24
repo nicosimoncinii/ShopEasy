@@ -1,21 +1,30 @@
 package it.shopeasy.service;
 
+import it.shopeasy.dto.auth.ForgotPasswordRequest;
 import it.shopeasy.dto.auth.LoginRequest;
 import it.shopeasy.dto.auth.LoginResponse;
 import it.shopeasy.dto.auth.RegisterRequest;
 import it.shopeasy.dto.auth.RegisterResponse;
+import it.shopeasy.dto.auth.ResetPasswordRequest;
+import it.shopeasy.model.PasswordResetToken;
 import it.shopeasy.model.Ruolo;
 import it.shopeasy.model.Utente;
+import it.shopeasy.repository.PasswordResetTokenRepository;
 import it.shopeasy.repository.RuoloRepository;
 import it.shopeasy.repository.UtenteRepository;
 import it.shopeasy.security.JwtService;
 import it.shopeasy.enums.RuoloUtente;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import it.shopeasy.enums.StatoUtente;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 public class AuthService {
@@ -34,9 +43,18 @@ public class AuthService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private PasswordResetTokenRepository tokenRepository;
+
+    @Autowired
+    private EmailService emailService;
+
+    @Value("${app.reset-token-expiration:30}")
+    private int tokenExpirationMinutes;
+
     public RegisterResponse registra(RegisterRequest request) {
         if (utenteRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email già registrata");
+            throw new RuntimeException("Email gia registrata");
         }
 
         if (!request.getPassword().equals(request.getConfermaPassword())) {
@@ -57,6 +75,8 @@ public class AuthService {
         utente.setThemePreference("light");
 
         utenteRepository.save(utente);
+
+        emailService.sendWelcomeEmail(utente);
 
         return new RegisterResponse(
             "Registrazione completata con successo",
@@ -85,5 +105,47 @@ public class AuthService {
         );
     }
 
-}
+    @Transactional
+    public void forgotPassword(ForgotPasswordRequest request) {
+        Utente utente = utenteRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("Email non trovata"));
 
+        tokenRepository.deleteByUtente(utente);
+
+        String tokenValue = UUID.randomUUID().toString();
+        PasswordResetToken resetToken = new PasswordResetToken(
+                tokenValue,
+                utente,
+                LocalDateTime.now().plusMinutes(tokenExpirationMinutes)
+        );
+        tokenRepository.save(resetToken);
+
+        emailService.sendPasswordResetEmail(utente, tokenValue);
+        System.out.println("Token reset: " + tokenValue);
+    }
+
+    @Transactional
+    public void resetPassword(ResetPasswordRequest request) {
+        PasswordResetToken resetToken = tokenRepository.findByToken(request.getToken())
+                .orElseThrow(() -> new RuntimeException("Token non valido"));
+
+        if (resetToken.isUsed()) {
+            throw new RuntimeException("Token gia utilizzato");
+        }
+
+        if (resetToken.getExpiryDate().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("Token scaduto");
+        }
+
+        if (!request.getNuovaPassword().equals(request.getConfermaPassword())) {
+            throw new RuntimeException("Le password non coincidono");
+        }
+
+        Utente utente = resetToken.getUtente();
+        utente.setPassword(passwordEncoder.encode(request.getNuovaPassword()));
+        utenteRepository.save(utente);
+
+        resetToken.setUsed(true);
+        tokenRepository.save(resetToken);
+    }
+}

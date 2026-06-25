@@ -1,24 +1,31 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CartService } from '../../services/cart.services';
+import { LangService } from '../../services/lang.service';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-products',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './products.html',
-  styleUrl: './products.scss',
+  styleUrl: './products.scss'
 })
 export class Products {
-  prodotti = [
-    { nome: 'Rolex', prezzo: 50 },
-    { nome: 'Patek Philippe', prezzo: 80 },
-    { nome: 'Hamilton', prezzo: 30 },
-  ];
 
-  constructor(private cartService: CartService) {}
+  get prodottiTutti() {
+    return this.cartService.prodottiTutti;
+  }
 
-  aggiungiAlCarrello(prodotto: any) {
-    this.cartService.aggiungi(prodotto);
-    console.log('Carrello:', this.cartService.scelti);
+  constructor(
+      public langService: LangService,
+      public cartService: CartService
+  ) {}
+
+  nomeProdotto(prodotto: any): string {
+    return this.langService.getLingua() === 'it' ? prodotto.nomeIt : prodotto.nomeEn;
+  }
+
+  onAggiungiAlCarrello(prodotto: any) {
+    this.cartService.aggiungiProdotto(prodotto);
   }
 }

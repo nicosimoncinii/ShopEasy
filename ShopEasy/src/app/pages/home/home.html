@@ -1,1 +1,56 @@
-<h1>{{ titolo }}</h1>
+<div class="home-page">
+
+    <section class="benvenuto">
+        <h1>{{ langService.traduci('BENVENUTI') }}</h1>
+
+        <button (click)="vaiAiProdotti()">
+            {{ langService.traduci('VAIPRODOTTI') }}
+        </button>
+    </section>
+
+    <section class="offerte">
+        <h2>{{ langService.traduci('OFFERTE') }}</h2>
+
+        <div class="products-grid">
+
+            <div
+                    class="product-card"
+                    *ngFor="let prodotto of prodottiInEvidenza">
+
+                <h3>{{ nomeProdotto(prodotto) }}</h3>
+
+                <p>{{ prodotto.prezzo }} €</p>
+
+                <button (click)="aggiungiAlCarrello(prodotto)">
+                    {{ langService.traduci('AGGIUNGI') }}
+                </button>
+
+            </div>
+
+        </div>
+    </section>
+    <section class="popolari">
+
+        <h2>Prodotti in evidenza</h2>
+
+        <div class="products-grid">
+
+            <div
+                    class="product-card"
+                    *ngFor="let prodotto of prodottiPopolari">
+
+                <h3>{{ nomeProdotto(prodotto) }}</h3>
+
+                <p>{{ prodotto.prezzo }} €</p>
+
+                <button (click)="aggiungiAlCarrello(prodotto)">
+                    {{ langService.traduci('AGGIUNGI') }}
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>

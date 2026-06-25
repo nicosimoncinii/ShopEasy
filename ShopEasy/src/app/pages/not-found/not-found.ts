@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { LangService } from '../../services/lang.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,5 +12,12 @@ import { CommonModule } from '@angular/common';
 })
 export class NotFoundComponent {
 
-  goHome(){ this.router.navigate['/home']}
+  constructor(
+      public langService: LangService,
+      private router: Router
+  ) {}
+
+  goHome() {
+    this.router.navigate(['/']);
+  }
 }

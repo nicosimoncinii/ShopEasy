@@ -2,7 +2,7 @@
     <h2>{{ langService.traduci('PRODOTTITITOLO') }}</h2>
 
     <div class="products-list">
-        <div *ngFor="let prodotto di prodottiTutti" class="product-row">
+        <div *ngFor="let prodotto of prodottiTutti" class="product-row">
 
             <img [src]="prodotto.img" [alt]="nomeProdotto(prodotto)" class="product-img">
 

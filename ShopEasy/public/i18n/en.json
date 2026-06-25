@@ -25,5 +25,14 @@
   "ARTICOLI": "Items in cart",
   "OFFERTE": "Our offers",
   "BENVENUTI": "Welcome to ShopEasy",
-  "VAIPRODOTTI": "Discover products"
+  "VAIPRODOTTI": "Discover products",
+  "AZIENDA": "Company Information",
+  "PARTITAIVA": "VAT Number",
+  "SEDE": "Address",
+  "CONTATTI": "Contact Us",
+  "SEGUICI": "Follow Us",
+  "DIRITTI": "All rights reserved",
+  "WISHLIST": "My wishlist",
+  "WISHLISTVUOTA": "Your wishlist is empty",
+  "WISHLISTARTICOLI": "saved items"
 }

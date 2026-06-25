@@ -27,16 +27,27 @@
                 </div>
 
                 <button class="theme-toggle-btn" (click)="cambiaTema()">
-                    {{ themeService.getIsDarkMode() ? '☀️' : '🌙' }}
+                    @if (themeService.getIsDarkMode()) {
+                        <i class="pi pi-sun"></i>
+                    } @else {
+                        <i class="pi pi-moon"></i>
+                    }
                 </button>
             </div>
         </div>
 
-        <!-- NUOVO div a destra -->
         <div class="right">
+            <button class="wishlist-nav-btn" routerLink="/wishlist">
+                <ng-icon name="heroHeart" size="28"></ng-icon>
+            </button>
             <button class="cart-btn" routerLink="/cart">
                 <img src="Cart.png" alt="Carrello">
+
+                <span class="cart-count" *ngIf="numeroProdottiCarrello > 0">
+                    {{ numeroProdottiCarrello }}
+                </span>
             </button>
+
             <button class="login-btn" routerLink="/login">
                 {{ langService.traduci('ACCEDI') }}
             </button>

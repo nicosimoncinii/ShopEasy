@@ -1,1 +1,55 @@
-<p>footer works!</p>
+<footer class="footer">
+    <div class="footer-content">
+
+        <div class="footer-section">
+            <h3>
+                <ng-icon name="heroBuildingOffice2" size="18"></ng-icon>
+                {{ langService.traduci('AZIENDA') }}
+            </h3>
+            <p>TechWorld S.r.l</p>
+            <p>{{ langService.traduci('PARTITAIVA') }}: IT12345678901</p>
+            <p>{{ langService.traduci('SEDE') }}: Via Roma 1, Milano</p>
+        </div>
+
+        <div class="footer-section">
+            <h3>
+                <ng-icon name="heroEnvelope" size="18"></ng-icon>
+                {{ langService.traduci('CONTATTI') }}
+            </h3>
+            <p>
+                <ng-icon name="heroEnvelope" size="14"></ng-icon>
+                shopeasy749&#64;gmail.com
+            </p>
+            <p>
+                <ng-icon name="heroPhone" size="14"></ng-icon>
+                +39 02 1234567
+            </p>
+            <p>
+                <ng-icon name="heroClock" size="14"></ng-icon>
+                Lun-Ven 9:00 - 18:00
+            </p>
+        </div>
+
+        <div class="footer-section">
+            <h3>
+                <ng-icon name="heroGlobeAlt" size="18"></ng-icon>
+                {{ langService.traduci('SEGUICI') }}
+            </h3>
+            <div class="social-links">
+                <a href="https://instagram.com" target="_blank">
+                    <ng-icon name="simpleInstagram" size="22"></ng-icon>
+                    @shopeasy_official
+                </a>
+                <a href="https://facebook.com" target="_blank">
+                    <ng-icon name="simpleFacebook" size="22"></ng-icon>
+                    ShopEasy Italia
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <p>© {{ anno }} TechWorld S.r.l — {{ langService.traduci('DIRITTI') }}</p>
+    </div>
+</footer>

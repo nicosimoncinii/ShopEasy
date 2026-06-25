@@ -1,0 +1,43 @@
+<div class="wishlist-page">
+
+    <div *ngIf="wishlistService.getProdotti().length === 0">
+        <h1>{{ langService.traduci('WISHLISTVUOTA') }}</h1>
+        <button class="torna-btn" (click)="tornaAiProdotti()">
+            {{ langService.traduci('TORNA') }}
+        </button>
+    </div>
+
+    <div *ngIf="wishlistService.getProdotti().length > 0">
+
+        <h2>{{ langService.traduci('WISHLIST') }}</h2>
+        <p>{{ wishlistService.getProdotti().length }} {{ langService.traduci('WISHLISTARTICOLI') }}</p>
+
+        <div *ngFor="let prodotto of wishlistService.getProdotti()" class="wishlist-row">
+
+            <img [src]="prodotto.img" [alt]="nomeProdotto(prodotto)" class="product-img">
+
+            <div class="product-info">
+                <strong>{{ nomeProdotto(prodotto) }}</strong>
+                <span class="product-price">{{ prodotto.prezzo }}€</span>
+            </div>
+
+            <div class="actions">
+                <button class="cart-btn" (click)="aggiungiAlCarrello(prodotto)">
+                    {{ langService.traduci('AGGIUNGI') }}
+                </button>
+                <button class="remove-btn" (click)="rimuoviDaWishlist(prodotto.id)">
+                    {{ langService.traduci('ELIMINA') }}
+                </button>
+            </div>
+
+        </div>
+
+        <div class="wishlist-footer">
+            <button class="torna-btn" (click)="tornaAiProdotti()">
+                {{ langService.traduci('TORNA') }}
+            </button>
+        </div>
+
+    </div>
+
+</div>

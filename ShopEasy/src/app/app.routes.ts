@@ -5,6 +5,7 @@ import { Products } from './pages/products/products';
 import { Login } from './pages/login/login';
 import { Register } from './pages/register/register';
 import { Cart } from './pages/cart/cart';
+import { Wishlist } from './pages/wishlist/wishlist';
 import { NotFoundComponent } from './pages/not-found/not-found';
 
 export const routes: Routes = [
@@ -13,7 +14,6 @@ export const routes: Routes = [
     { path: 'login', component: Login },
     { path: 'register', component: Register },
     { path: 'cart', component: Cart },
-
-
-    { path: '**', component: NotFoundComponent }  //chiave
+    { path: 'wishlist', component: Wishlist },
+    { path: '**', component: NotFoundComponent }
 ];

@@ -1,30 +1,35 @@
 <div class="login-page">
     <div class="login-card">
-
-        <h2>{{ langService.traduci('LOGINTITOLO') }}</h2>
-
-        <div class="form-group">
-            <label>{{ langService.traduci('EMAIL') }}</label>
-            <input type="email" [placeholder]="langService.traduci('EMAIL')" />
-        </div>
-
-        <div class="form-group">
-            <label>{{ langService.traduci('PASSWORD') }}</label>
-            <input type="password" [placeholder]="langService.traduci('PASSWORD')" />
-        </div>
-
-        <div class="form-group">
-            <label>{{ langService.traduci('CONFERMAPASSWORD') }}</label>
-            <input type="password" [placeholder]="langService.traduci('CONFERMAPASSWORD')" />
-        </div>
-
-        <button class="login-btn" (click)="goToRegister()">
-            {{ langService.traduci('NONHAIACCOUNT') }}
-        </button>
-
-        <button class="back-btn" (click)="goBack()">
-            {{ langService.traduci('TORNA') }}
-        </button>
-
+      <h2>{{ langService.traduci('LOGINTITOLO') }}</h2>
+  
+      @if (errore()) {
+        <div class="errore">{{ errore() }}</div>
+      }
+  
+      <div class="form-group">
+        <label>{{ langService.traduci('EMAIL') }}</label>
+        <input type="email" [(ngModel)]="email" [placeholder]="langService.traduci('EMAIL')" />
+      </div>
+  
+      <div class="form-group">
+        <label>{{ langService.traduci('PASSWORD') }}</label>
+        <input type="password" [(ngModel)]="password" [placeholder]="langService.traduci('PASSWORD')" />
+      </div>
+  
+      <button class="login-btn" (click)="onLogin()" [disabled]="caricamento()">
+        @if (caricamento()) {
+          Caricamento...
+        } @else {
+          {{ langService.traduci('ACCEDI') }}
+        }
+      </button>
+  
+      <button class="login-link" (click)="goToRegister()">
+        {{ langService.traduci('NONHAIACCOUNT') }}
+      </button>
+  
+      <button class="back-btn" (click)="goBack()">
+        {{ langService.traduci('TORNA') }}
+      </button>
     </div>
-</div>
+  </div>

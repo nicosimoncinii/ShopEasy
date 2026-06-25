@@ -1,11 +1,11 @@
 package it.shopeasy.model;
 
-
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "prodotto")
 public class Prodotto {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
@@ -24,21 +24,15 @@ public class Prodotto {
 
     private String immagine;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-
-
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
-
-
 
     public Prodotto() {
     }
 
     public Prodotto(String nome, String descrizione, Double prezzo,
-            Integer quantita, String immagine, Categoria categoria) {
+                    Integer quantita, String immagine, Categoria categoria) {
         this.nome = nome;
         this.descrizione = descrizione;
         this.prezzo = prezzo;
@@ -98,5 +92,4 @@ public class Prodotto {
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
-
 }

@@ -92,8 +92,5 @@ public class Prodotto {
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> 56e408e41c3b24a37ee93165c8b205884ae606c0

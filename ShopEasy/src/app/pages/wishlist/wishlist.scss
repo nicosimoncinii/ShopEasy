@@ -1,0 +1,123 @@
+.wishlist-page {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+
+  h1 {
+    text-align: center;
+    color: #888;
+    font-size: 1.4rem;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 1.5rem;
+  }
+
+  .wishlist-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+
+    .product-img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .product-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+
+      strong {
+        font-size: 1rem;
+        color: var(--text-color);
+      }
+
+      .product-price {
+        font-weight: 600;
+        color: #1bcf8c;
+        font-size: 0.95rem;
+      }
+    }
+
+    .actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .cart-btn {
+      background-color: #1bcf8c;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s;
+
+      &:hover { background-color: #15a36f; }
+    }
+
+    .remove-btn {
+      background: transparent;
+      border: 1.5px solid #e74c3c;
+      color: #e74c3c;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover { background: #e74c3c; color: white; }
+    }
+  }
+
+  .wishlist-footer {
+    margin-top: 2rem;
+  }
+
+  .torna-btn {
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    color: #888;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover { border-color: #aaa; color: #555; }
+  }
+
+  @media (max-width: 480px) {
+    .wishlist-row {
+      flex-wrap: wrap;
+
+      .actions {
+        width: 100%;
+        justify-content: flex-end;
+      }
+
+      .cart-btn, .remove-btn {
+        flex: 1;
+        text-align: center;
+      }
+    }
+  }
+}

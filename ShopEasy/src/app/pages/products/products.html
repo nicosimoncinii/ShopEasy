@@ -13,6 +13,13 @@
                 </span>
             </div>
 
+            <button class="wishlist-btn" (click)="toggleWishlist(prodotto)">
+                <ng-icon
+                        [name]="wishlistService.isInWishlist(prodotto.id) ? 'heroHeartSolid' : 'heroHeart'"
+                        size="22">
+                </ng-icon>
+            </button>
+
             <button class="add-to-cart-btn" (click)="onAggiungiAlCarrello(prodotto)">
                 {{ langService.traduci('AGGIUNGI') }}
             </button>

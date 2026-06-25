@@ -39,6 +39,9 @@ export class CartService {
   svuota() {
     this.elementiCarrello = [];
   }
+  getNumeroProdotti(): number {
+    return this.elementiCarrello.reduce((tot, item) => tot + item.quantita, 0);
+  }
 
   modificaQuantita(id: number, quantita: number) {
     const prodotto = this.elementiCarrello.find(item => item.id === id);

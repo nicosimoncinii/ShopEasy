@@ -1,29 +1,26 @@
 <div class="products-page">
-    <h2>{{ langService.traduci('PRODOTTITITOLO') }}</h2>
-
-    <div class="products-list">
-        <div *ngFor="let prodotto of prodottiTutti" class="product-row">
-
-            <img [src]="prodotto.img" [alt]="nomeProdotto(prodotto)" class="product-img">
-
+    <h2>{{ langService.traduci('prodottiTitolo') }}</h2>
+  
+    @if (caricamento) {
+      <div class="loading">Caricamento prodotti...</div>
+    } @else if (errore) {
+      <div class="errore">{{ errore }}</div>
+    } @else if (prodottiVisualizzati.length > 0) {
+      <div class="products-list">
+        @for (prodotto of prodottiVisualizzati; track prodotto.id) {
+          <div class="product-row">
+            <img [src]="prodotto.img || prodotto.immagine" [alt]="prodotto.nome" class="product-img">
             <div class="product-info">
-                <span class="product-name">
-                    <strong>{{ nomeProdotto(prodotto) }}</strong>
-                    <span class="product-price">{{ prodotto.prezzo }}€</span>
-                </span>
+              <strong>{{ prodotto.nome }}</strong>
+              <span class="product-price">{{ prodotto.prezzo }}€</span>
             </div>
-
-            <button class="wishlist-btn" (click)="toggleWishlist(prodotto)">
-                <ng-icon
-                        [name]="wishlistService.isInWishlist(prodotto.id) ? 'heroHeartSolid' : 'heroHeart'"
-                        size="24">
-                </ng-icon>
-            </button>
-
             <button class="add-to-cart-btn" (click)="onAggiungiAlCarrello(prodotto)">
-                {{ langService.traduci('AGGIUNGI') }}
+              {{ langService.traduci('aggiungi') }}
             </button>
-
-        </div>
-    </div>
-</div>
+          </div>
+        }
+      </div>
+    } @else {
+      <p class="no-results">{{ langService.traduci('nessunProdotto') }}</p>
+    }
+  </div>

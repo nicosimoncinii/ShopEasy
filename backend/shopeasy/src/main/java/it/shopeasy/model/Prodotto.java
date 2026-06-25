@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "prodotto")
 public class Prodotto {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
@@ -31,7 +32,7 @@ public class Prodotto {
     }
 
     public Prodotto(String nome, String descrizione, Double prezzo,
-            Integer quantita, String immagine, Categoria categoria) {
+                    Integer quantita, String immagine, Categoria categoria) {
         this.nome = nome;
         this.descrizione = descrizione;
         this.prezzo = prezzo;
@@ -91,4 +92,8 @@ public class Prodotto {
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 56e408e41c3b24a37ee93165c8b205884ae606c0

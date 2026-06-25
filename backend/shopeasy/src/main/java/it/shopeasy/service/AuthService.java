@@ -61,8 +61,12 @@ public class AuthService {
             throw new RuntimeException("Le password non coincidono");
         }
 
-        Ruolo ruolo = ruoloRepository.findByNome(RuoloUtente.CLIENTE)
-        .orElseThrow(() -> new RuntimeException("Ruolo UTENTE non trovato nel database"));
+        Ruolo ruolo = ruoloRepository.findByNome(RuoloUtente.CLIENTE).orElse(null);
+        if (ruolo == null) {
+            ruolo = new Ruolo();
+            ruolo.setId(1L);
+        }
+
 
         Utente utente = new Utente();
         utente.setNome(request.getNome());

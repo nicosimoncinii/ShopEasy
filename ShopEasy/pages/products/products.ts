@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LangService } from '../../services/lang.service';
-import { CartService } from '../../services/cart.service';
+import { LangService } from '../../src/app/services/lang.service';
+import { CartService } from '../../src/app/services/cart.service';
+import { SearchService } from '../../src/app/services/search.service';
+import { ProductService } from '../../src/app/services/product.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-products',
@@ -10,29 +13,63 @@ import { CartService } from '../../services/cart.service';
   templateUrl: './products.html',
   styleUrl: './products.scss'
 })
-prodottiTutti = [
-  { id: 1, nomeIt: 'iPhone 17 Pro',       nomeEn: 'iPhone 17 Pro',       prezzo: 1299, img: '/iphone17pro.png' },
-  { id: 2, nomeIt: 'Samsung Galaxy S25',   nomeEn: 'Samsung Galaxy S25',  prezzo: 1099, img: '/SamsungGalaxyS25.png' },
-  { id: 3, nomeIt: 'MacBook Air M4',       nomeEn: 'MacBook Air M4',      prezzo: 1499, img: '/MacBookAirM4.png' },
-  { id: 4, nomeIt: 'iPad Pro 13"',         nomeEn: 'iPad Pro 13"',        prezzo: 1199, img: '/iPadPro13.png' },
-  { id: 5, nomeIt: 'AirPods Pro 3',        nomeEn: 'AirPods Pro 3',       prezzo: 299,  img: '/AirPodsPro3.png' },
-  { id: 6, nomeIt: 'Samsung 4K OLED 55"',  nomeEn: 'Samsung 4K OLED 55"', prezzo: 899,  img: '/Samsung4KOLED55.webp' },
-  { id: 7, nomeIt: 'PlayStation 5 Slim',   nomeEn: 'PlayStation 5 Slim',  prezzo: 449,  img: '/PlayStation5Slim.png' }
-];
+export class Products implements OnInit, OnDestroy {
+  private searchSub!: Subscription;
+
+  searchQuery = '';
+  prodottiTutti: any[] = [];
+  prodottiVisualizzati: any[] = [];
+  caricamento = true;
+  errore = '';
 
   constructor(
-      public langService: LangService,
-      private cartService: CartService
+    public langService: LangService,
+    private cartService: CartService,
+    private searchService: SearchService,
+    private productService: ProductService,
+    private cdr: ChangeDetectorRef
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    // Carica prodotti dal backend
+    this.productService.getProdotti().subscribe({
+      next: (dati) => {
+        this.prodottiTutti = dati;
+        this.aggiornaProdotti();
+        this.caricamento = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Errore caricamento prodotti:', err);
+        this.errore = 'Errore nel caricamento dei prodotti';
+        this.caricamento = false;
+        this.cdr.detectChanges();
+      }
+    });
 
-  // usa direttamente la lingua dal servizio
-  nomeProdotto(prodotto: any): string {
-    return this.langService.getLingua() === 'it' ? prodotto.nomeIt : prodotto.nomeEn;
+    this.searchSub = this.searchService.searchText$.subscribe(testo => {
+      this.searchQuery = testo;
+      this.aggiornaProdotti();
+      this.cdr.detectChanges();
+    });
+  }
+
+  aggiornaProdotti() {
+    const query = this.searchQuery.toLowerCase().trim();
+    const lingua = this.langService.getLingua();
+    this.prodottiVisualizzati = this.prodottiTutti
+      .map(p => ({
+        ...p,
+        nome: lingua === 'it' ? (p.nomeIt || p.nome) : (p.nomeEn || p.nome)
+      }))
+      .filter(p => !query || p.nome.toLowerCase().includes(query));
   }
 
   onAggiungiAlCarrello(prodotto: any) {
     this.cartService.aggiungiProdotto(prodotto);
+  }
+
+  ngOnDestroy() {
+    if (this.searchSub) this.searchSub.unsubscribe();
   }
 }

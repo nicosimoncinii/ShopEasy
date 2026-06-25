@@ -1,6 +1,5 @@
 package it.shopeasy.model;
 
-
 import jakarta.persistence.*;
 
 @Entity
@@ -24,15 +23,9 @@ public class Prodotto {
 
     private String immagine;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-
-
     @ManyToOne
-    @JoinColumn(name = "categoria_id")
+    @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
-
-
 
     public Prodotto() {
     }
@@ -98,5 +91,4 @@ public class Prodotto {
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
-
 }

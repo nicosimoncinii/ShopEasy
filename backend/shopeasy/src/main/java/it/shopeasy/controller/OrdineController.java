@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import it.shopeasy.model.Utente;
+import it.shopeasy.service.UtenteService;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -15,10 +18,12 @@ import java.util.List;
 public class OrdineController {
 
     private final OrdineService service;
+    private final UtenteService utenteService;
 
     @Autowired
-    public OrdineController(OrdineService ordineService) {
+    public OrdineController(OrdineService ordineService, UtenteService utenteService) {
         this.service = ordineService;
+        this.utenteService = utenteService;
     }
 
     @GetMapping
@@ -29,6 +34,12 @@ public class OrdineController {
     @GetMapping("/my-orders/{utente_id}")
     public ResponseEntity<List<Ordine>> prendiOrdiniPerUtente(@PathVariable Long utente_id) {
         return ResponseEntity.ok(service.prendiOrdiniPerUtente(utente_id));
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<List<Ordine>> prendiOrdiniUtenteCorrente(Principal principal) {
+        Utente utente = utenteService.prendiUtentePerEmail(principal.getName());
+        return ResponseEntity.ok(service.prendiOrdiniPerUtente(utente.getId()));
     }
 
     @PostMapping

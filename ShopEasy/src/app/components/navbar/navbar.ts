@@ -6,6 +6,7 @@ import { SearchService } from '../../services/search.service';
 import { LangService } from '../../services/lang.service';
 import { ThemeService } from '../../services/theme.service';
 import { CartService } from '../../services/cart.service';
+import { AuthService } from '../../services/auth.service';
 
 
 @Component({
@@ -23,7 +24,8 @@ export class Navbar {
       private searchService: SearchService,
       public langService: LangService,
       public themeService: ThemeService,
-      public cartService: CartService
+      public cartService: CartService,
+      public authService: AuthService
   ) {}
 
   get numeroProdottiCarrello() {

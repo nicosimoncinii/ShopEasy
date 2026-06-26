@@ -48,12 +48,20 @@
                 </span>
             </button>
 
-            <button class="login-btn" routerLink="/login">
-                {{ langService.traduci('ACCEDI') }}
-            </button>
-            <button class="register-btn" routerLink="/register">
-                {{ langService.traduci('REGISTER') }}
-            </button>
+            <ng-container *ngIf="!authService.isLoggato()">
+                <button class="login-btn" routerLink="/login">
+                    {{ langService.traduci('ACCEDI') }}
+                </button>
+                <button class="register-btn" routerLink="/register">
+                    {{ langService.traduci('REGISTER') }}
+                </button>
+            </ng-container>
+
+            <ng-container *ngIf="authService.isLoggato()">
+                <button class="account-btn" routerLink="/account">
+                    <ng-icon name="heroUser" size="24"></ng-icon> Account
+                </button>
+            </ng-container>
         </div>
     </div>
 

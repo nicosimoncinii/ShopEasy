@@ -7,6 +7,8 @@ import { RegisterComponent } from './pages/register/register'; // Corretto il no
 import { Cart } from './pages/cart/cart';
 import { Wishlist } from './pages/wishlist/wishlist';
 import { NotFoundComponent } from './pages/not-found/not-found';
+import { AccountComponent } from './pages/account/account';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     { path: '', component: Home },
@@ -15,5 +17,6 @@ export const routes: Routes = [
     { path: 'register', component: RegisterComponent }, // Corretto il nome del componente
     { path: 'cart', component: Cart },
     { path: 'wishlist', component: Wishlist },
+    { path: 'account', component: AccountComponent, canActivate: [authGuard] },
     { path: '**', component: NotFoundComponent }
 ];

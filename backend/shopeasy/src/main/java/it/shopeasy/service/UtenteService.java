@@ -26,6 +26,11 @@ public class UtenteService {
                 .orElseThrow(() -> new RuntimeException("Utente non trovato con id: " + id));
     }
 
+    public Utente prendiUtentePerEmail(String email) {
+        return utenteRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Utente non trovato con email: " + email));
+    }
+
     public void cancellaUtente(Long id) {
         if (!utenteRepository.existsById(id)) {
             throw new RuntimeException("Utente non trovato con id: " + id);

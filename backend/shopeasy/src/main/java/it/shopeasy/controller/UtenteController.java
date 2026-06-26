@@ -14,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -42,6 +43,42 @@ public class UtenteController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Utente> prendiUtentePerId(@PathVariable Long id) {
         return ResponseEntity.ok(utenteService.prendiUtentePerId(id));
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<Utente> prendiUtenteCorrente(Principal principal) {
+        Utente utente = utenteService.prendiUtentePerEmail(principal.getName());
+        return ResponseEntity.ok(utente);
+    }
+
+    @PutMapping("/me")
+    public ResponseEntity<Utente> aggiornaUtenteCorrente(@RequestBody UtenteUpdateRequestDTO request, Principal principal) {
+        Utente utente = utenteService.prendiUtentePerEmail(principal.getName());
+        
+        if (request.getNome() != null) utente.setNome(request.getNome());
+        if (request.getCognome() != null) utente.setCognome(request.getCognome());
+        if (request.getTelefono() != null) utente.setTelefono(request.getTelefono());
+        if (request.getIndirizzo() != null) utente.setIndirizzo(request.getIndirizzo());
+        
+        Utente aggiornato = utenteService.aggiornaUtente(utente.getId(), utente);
+        return ResponseEntity.ok(aggiornato);
+    }
+
+    @PutMapping("/me/password")
+    public ResponseEntity<Void> cambiaPasswordCorrente(@RequestBody UtenteUpdateRequestDTO request, Principal principal) {
+        Utente utente = utenteService.prendiUtentePerEmail(principal.getName());
+        if (request.getPassword() != null && !request.getPassword().isEmpty()) {
+            utente.setPassword(passwordEncoder.encode(request.getPassword()));
+            utenteService.aggiornaUtente(utente.getId(), utente);
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/me")
+    public ResponseEntity<Void> cancellaUtenteCorrente(Principal principal) {
+        Utente utente = utenteService.prendiUtentePerEmail(principal.getName());
+        utenteService.cancellaUtente(utente.getId());
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping

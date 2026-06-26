@@ -1,57 +1,104 @@
 package it.shopeasy.service;
 
+import it.shopeasy.dto.ProdottoResponseDTO;
 import it.shopeasy.dto.WishlistRequestDTO;
 import it.shopeasy.dto.WishlistResponseDTO;
+import it.shopeasy.model.Prodotto;
+import it.shopeasy.model.Utente;
 import it.shopeasy.model.Wishlist;
+import it.shopeasy.repository.ProdottoRepository;
+import it.shopeasy.repository.UtenteRepository;
 import it.shopeasy.repository.WishlistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class WishlistService {
-
     @Autowired
     private WishlistRepository wishlistRepository;
+    @Autowired
+    private UtenteRepository utenteRepository;
+    @Autowired
+    private ProdottoRepository prodottoRepository;
 
-    public List<WishlistResponseDTO> prendiTuttiWishlist(){
+    public List<WishlistResponseDTO> prendiTutteLeWishlist() {
         return wishlistRepository.findAll()
                 .stream()
                 .map(this::toResponse)
                 .toList();
     }
 
-    public WishlistResponseDTO prendiWishlistResponsePerId(Long id) {
-        return toResponse(prendiWishlistPerId(id));
+    public WishlistResponseDTO prendiWishlistPerUtente(String email) {
+        Utente utente = utenteRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Utente non trovato"));
+        Wishlist wishlist = wishlistRepository.findByUtente(utente)
+                .orElseThrow(() -> new RuntimeException("Wishlist non trovata"));
+        return toResponse(wishlist);
     }
 
-    private Wishlist prendiWishlistPerId(Long id) {
-        return wishlistRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Wishlist non trovata con id: " + id));
+    public WishlistResponseDTO prendiWishlistPerUtenteId(Long utenteId) {
+        Utente utente = utenteRepository.findById(utenteId)
+                .orElseThrow(() -> new RuntimeException("Utente non trovato"));
+        Wishlist wishlist = wishlistRepository.findByUtente(utente)
+                .orElseThrow(() -> new RuntimeException("Wishlist non trovata"));
+        return toResponse(wishlist);
     }
 
-    public void cancellaWishlist(Long id) {
-        wishlistRepository.deleteById(id);
-    }
+    public WishlistResponseDTO aggiungiProdotto(String email, Long prodottoId) {
+        Utente utente = utenteRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Utente non trovato"));
+        Wishlist wishlist = wishlistRepository.findByUtente(utente)
+                .orElseThrow(() -> new RuntimeException("Wishlist non trovata"));
+        Prodotto prodotto = prodottoRepository.findById(prodottoId)
+                .orElseThrow(() -> new RuntimeException("Prodotto non trovato"));
 
-    public WishlistResponseDTO salvaWishlist(WishlistRequestDTO request) {
-        Wishlist wishlist = new Wishlist();
-        // Se la tua entità ha metodi set, inseriscili qui usando l'oggetto 'request'
+        if (wishlist.getProdotti().contains(prodotto)) {
+            throw new RuntimeException("Prodotto già presente nella wishlist");
+        }
+
+        wishlist.aggiungiProdotto(prodotto);
         return toResponse(wishlistRepository.save(wishlist));
     }
 
-    public WishlistResponseDTO aggiornaWishlist(Long id, WishlistRequestDTO nuovaRequest) {
-        Wishlist wishlist = prendiWishlistPerId(id);
-        // Se devi aggiornare i dati, usa l'oggetto 'nuovaRequest' qui
+    public WishlistResponseDTO rimuoviProdotto(String email, Long prodottoId) {
+        Utente utente = utenteRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Utente non trovato"));
+        Wishlist wishlist = wishlistRepository.findByUtente(utente)
+                .orElseThrow(() -> new RuntimeException("Wishlist non trovata"));
+        Prodotto prodotto = prodottoRepository.findById(prodottoId)
+                .orElseThrow(() -> new RuntimeException("Prodotto non trovato"));
+
+        if (!wishlist.getProdotti().contains(prodotto)) {
+            throw new RuntimeException("Prodotto non presente nella wishlist");
+        }
+
+        wishlist.rimuoviProdotto(prodotto);
         return toResponse(wishlistRepository.save(wishlist));
     }
 
     private WishlistResponseDTO toResponse(Wishlist wishlist) {
+        Set<ProdottoResponseDTO> prodottiDTO = wishlist.getProdotti()
+                .stream()
+                .map(prodotto -> new ProdottoResponseDTO(
+                        prodotto.getId(),
+                        prodotto.getNome(),
+                        prodotto.getDescrizione(),
+                        prodotto.getPrezzo(),
+                        prodotto.getQuantita(),
+                        prodotto.getImmagine(),
+                        prodotto.getCategoria().getId(),
+                        prodotto.getCategoria().getNome()
+                ))
+                .collect(Collectors.toSet());
+
         return new WishlistResponseDTO(
                 wishlist.getId(),
-                wishlist.getUtente(),
-                wishlist.getProdotti()
+                wishlist.getUtente().getId(),
+                prodottiDTO
         );
     }
 }

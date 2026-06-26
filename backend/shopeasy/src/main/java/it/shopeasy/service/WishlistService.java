@@ -1,5 +1,7 @@
 package it.shopeasy.service;
 
+import it.shopeasy.dto.WishlistRequestDTO;
+import it.shopeasy.dto.WishlistResponseDTO;
 import it.shopeasy.model.Wishlist;
 import it.shopeasy.repository.WishlistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,31 +15,43 @@ public class WishlistService {
     @Autowired
     private WishlistRepository wishlistRepository;
 
-    public List<Wishlist> prendiTuttiWishlist(){
-        return wishlistRepository.findAll();
+    public List<WishlistResponseDTO> prendiTuttiWishlist(){
+        return wishlistRepository.findAll()
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
-    public Wishlist prendiWishlistPerId(Long id) {
+    public WishlistResponseDTO prendiWishlistResponsePerId(Long id) {
+        return toResponse(prendiWishlistPerId(id));
+    }
+
+    private Wishlist prendiWishlistPerId(Long id) {
         return wishlistRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Wishlist non trovato con id: " + id));
+                .orElseThrow(() -> new RuntimeException("Wishlist non trovata con id: " + id));
     }
 
-    public void cancellaWishlist(Long id)
-    {
+    public void cancellaWishlist(Long id) {
         wishlistRepository.deleteById(id);
     }
 
-    public Wishlist salvaWishlist(Wishlist wishlist) {
-
-        return wishlistRepository.save(wishlist);
+    public WishlistResponseDTO salvaWishlist(WishlistRequestDTO request) {
+        Wishlist wishlist = new Wishlist();
+        // Se la tua entità ha metodi set, inseriscili qui usando l'oggetto 'request'
+        return toResponse(wishlistRepository.save(wishlist));
     }
 
-    public Wishlist aggiornaWishlist(Long id, Wishlist nuovoWishlist) {
+    public WishlistResponseDTO aggiornaWishlist(Long id, WishlistRequestDTO nuovaRequest) {
         Wishlist wishlist = prendiWishlistPerId(id);
+        // Se devi aggiornare i dati, usa l'oggetto 'nuovaRequest' qui
+        return toResponse(wishlistRepository.save(wishlist));
+    }
 
-        wishlist.setUtente(nuovoWishlist.getUtente());
-
-
-        return salvaWishlist(wishlist);
+    private WishlistResponseDTO toResponse(Wishlist wishlist) {
+        return new WishlistResponseDTO(
+                wishlist.getId(),
+                wishlist.getUtente(),
+                wishlist.getProdotti()
+        );
     }
 }

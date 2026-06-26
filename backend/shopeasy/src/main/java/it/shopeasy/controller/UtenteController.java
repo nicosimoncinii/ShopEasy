@@ -65,6 +65,12 @@ public class UtenteController {
         return ResponseEntity.ok(utenteService.aggiornaUtentePerEmail(principal.getName(), request));
     }
 
+
+
+
+
+
+
     @DeleteMapping("/me")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENTE')")
     public ResponseEntity<Void> cancellaProfiloCorrente(Principal principal) {

@@ -1,10 +1,25 @@
 package it.shopeasy.dto;
 
+import jakarta.validation.constraints.*;
+
 public class UtenteUpdateRequestDTO {
+    @NotNull
+    @Size(min = 3, message = "Il nome deve avere almeno 3 caratteri")
     private String nome;
+    @NotNull
+    @Size(min = 3, message = "Il nome deve avere almeno 3 caratteri")
     private String cognome;
+    @NotNull
+    @Email(message = "Email non valida")
     private String email;
+    @NotNull
+    @NotBlank
+    @Pattern(
+            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!]).{6,}$",
+            message = "La password deve contenere almeno 8 caratteri, una maiuscola, una minuscola, un numero e un carattere speciale"
+    )
     private String password;
+
     private String telefono;
     private String indirizzo;
     private String languagePreference;

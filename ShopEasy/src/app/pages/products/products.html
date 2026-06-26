@@ -1,29 +1,4 @@
 <div class="products-page">
     <h2>{{ langService.traduci('PRODOTTITITOLO') }}</h2>
-
-    <div class="products-list">
-        <div *ngFor="let prodotto of prodottiTutti" class="product-row">
-
-            <img [src]="prodotto.img" [alt]="nomeProdotto(prodotto)" class="product-img">
-
-            <div class="product-info">
-                <span class="product-name">
-                    <strong>{{ nomeProdotto(prodotto) }}</strong>
-                    <span class="product-price">{{ prodotto.prezzo }}€</span>
-                </span>
-            </div>
-
-            <button class="wishlist-btn" (click)="toggleWishlist(prodotto)">
-                <ng-icon
-                        [name]="wishlistService.isInWishlist(prodotto.id) ? 'heroHeartSolid' : 'heroHeart'"
-                        size="22">
-                </ng-icon>
-            </button>
-
-            <button class="add-to-cart-btn" (click)="onAggiungiAlCarrello(prodotto)">
-                {{ langService.traduci('AGGIUNGI') }}
-            </button>
-
-        </div>
-    </div>
+    <app-product-list></app-product-list>
 </div>

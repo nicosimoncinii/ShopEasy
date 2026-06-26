@@ -1,8 +1,11 @@
 package it.shopeasy.dto;
 
 import it.shopeasy.enums.StatoOrdine;
+import it.shopeasy.model.DettaglioOrdine;
+
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 public class OrdineResponseDTO {
 
@@ -12,7 +15,7 @@ public class OrdineResponseDTO {
     private Double totale;
     private Long utenteId;
     private String utenteNome;
-    private List<?> dettagli;
+    private Set<DettaglioOrdine> dettagli;
 
     public OrdineResponseDTO() {}
 
@@ -25,7 +28,7 @@ public class OrdineResponseDTO {
         this.utenteNome = utenteNome;
     }
 
-    public OrdineResponseDTO(Long id, LocalDateTime data, StatoOrdine stato, Double totale, Long utenteId, String utenteNome, List<?> dettagli) {
+    public OrdineResponseDTO(Long id, LocalDateTime data, StatoOrdine stato, Double totale, Long utenteId, String utenteNome, Set<DettaglioOrdine> dettagli) {
         this.id = id;
         this.data = data;
         this.stato = stato;
@@ -83,11 +86,11 @@ public class OrdineResponseDTO {
         this.utenteNome = utenteNome;
     }
 
-    public List<?> getDettagli() {
+    public Set<DettaglioOrdine> getDettagli() {
         return dettagli;
     }
 
-    public void setDettagli(List<?> dettagli) {
+    public void setDettagli(Set<DettaglioOrdine> dettagli) {
         this.dettagli = dettagli;
     }
 }

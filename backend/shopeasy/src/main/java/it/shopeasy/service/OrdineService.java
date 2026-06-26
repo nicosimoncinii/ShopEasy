@@ -1,5 +1,7 @@
 package it.shopeasy.service;
 
+import it.shopeasy.dto.OrdineRequestDTO;
+import it.shopeasy.enums.StatoOrdine;
 import it.shopeasy.model.Ordine;
 
 import it.shopeasy.dto.OrdineResponseDTO;
@@ -7,8 +9,9 @@ import it.shopeasy.repository.OrdineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 
 
@@ -17,13 +20,14 @@ public class OrdineService {
 
     @Autowired
     private OrdineRepository ordineRepository;
-
+    @Autowired
+    private UtenteService utenteService;
 
     public List<OrdineResponseDTO> prendiTuttiOrdini() {
         return ordineRepository.findAll()
                 .stream()
                 .map(this::toResponse)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public OrdineResponseDTO prendiOrdineResponsePerId(Long id) {
@@ -39,27 +43,31 @@ public class OrdineService {
         ordineRepository.deleteById(id);
     }
 
-    public Ordine salvaOrdine(Ordine ordine) {
+    public OrdineResponseDTO salvaOrdine(OrdineRequestDTO ordineR) {
+        Ordine ordine = new Ordine();
 
-        return ordineRepository.save(ordine);
+        ordine.setData(LocalDateTime.now());
+        ordine.setDettagli(ordineR.getDettagli());
+        ordine.setStato(StatoOrdine.ORDINATO);
+        ordine.setTotale(0.0);
+        ordine.setUtente(utenteService.prendiUtentePerId(ordineR.getUtenteId()));
+
+        return toResponse(ordineRepository.save(ordine));
     }
 
-    public List<Ordine> prendiOrdiniPerUtente(Long utente_id) {
-        return ordineRepository.findByUtenteId(utente_id);
+    public List<OrdineResponseDTO> prendiOrdiniPerUtente(Long utenteId) {
+        return ordineRepository.findByUtenteId(utenteId)
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
-    public Ordine aggiornaOrdine(Long id, Ordine nuovoOrdine) {
+    public OrdineResponseDTO aggiornaOrdine(Long id, OrdineRequestDTO nuovoOrdine) {
         Ordine ordine = prendiOrdinePerId(id);
 
-        ordine.setUtente(nuovoOrdine.getUtente());
-        ordine.setData(nuovoOrdine.getData());
-        ordine.setStato(nuovoOrdine.getStato());
-        ordine.setTotale(ordine.getTotale());
+        ordine.setDettagli(nuovoOrdine.getDettagli());
 
-
-        ordine.setTotale(nuovoOrdine.getTotale());
-
-        return ordineRepository.save(ordine);
+        return toResponse(ordineRepository.save(ordine));
     }
 
     private OrdineResponseDTO toResponse(Ordine ordine) {

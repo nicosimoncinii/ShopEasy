@@ -1,6 +1,8 @@
 package it.shopeasy.model;
 
+import it.shopeasy.enums.LanguagePreferences;
 import it.shopeasy.enums.StatoUtente;
+import it.shopeasy.enums.ThemePreferences;
 import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -29,11 +31,13 @@ public class Utente {
 
     private String indirizzo;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "language_preference", nullable = false)
-    private String languagePreference;
+    private LanguagePreferences languagePreference;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "theme_preference", nullable = false)
-    private String themePreference;
+    private ThemePreferences themePreference;
 
     @ManyToOne
     @JoinColumn(name = "ruolo")
@@ -52,7 +56,7 @@ public class Utente {
 
     public Utente(String nome, String cognome, String email, String password,
                   String telefono, String indirizzo,
-                  String languagePreference, String themePreference,
+                  LanguagePreferences languagePreference, ThemePreferences themePreference,
                   Ruolo ruolo, StatoUtente stato) {
 
         this.nome = nome;
@@ -119,19 +123,19 @@ public class Utente {
         this.indirizzo = indirizzo;
     }
 
-    public String getLanguagePreference() {
+    public LanguagePreferences getLanguagePreference() {
         return languagePreference;
     }
 
-    public void setLanguagePreference(String languagePreference) {
+    public void setLanguagePreference(LanguagePreferences languagePreference) {
         this.languagePreference = languagePreference;
     }
 
-    public String getThemePreference() {
+    public ThemePreferences getThemePreference() {
         return themePreference;
     }
 
-    public void setThemePreference(String themePreference) {
+    public void setThemePreference(ThemePreferences themePreference) {
         this.themePreference = themePreference;
     }
 

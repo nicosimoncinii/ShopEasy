@@ -5,7 +5,9 @@ import it.shopeasy.enums.StatoOrdine;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "ordine")
@@ -18,7 +20,7 @@ public class Ordine {
 
     @OneToMany(mappedBy = "ordine", cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<DettaglioOrdine> dettagli = new ArrayList<>();
+    private Set<DettaglioOrdine> dettagli = new HashSet<>();
 
     @Column(nullable = false)
     private Double totale;
@@ -35,11 +37,12 @@ public class Ordine {
     public Ordine() {
     }
 
-    public Ordine(LocalDateTime data, Double totale, StatoOrdine stato, Utente utente) {
+    public Ordine(LocalDateTime data, Double totale, StatoOrdine stato, Utente utente, Set<DettaglioOrdine> dettagli) {
         this.data = data;
         this.totale = totale;
         this.stato = stato;
         this.utente = utente;
+        this.dettagli = dettagli;
     }
 
     public Long getId() {
@@ -78,11 +81,11 @@ public class Ordine {
         this.utente = utente;
     }
 
-    public List<DettaglioOrdine> getDettagli() {
+    public Set<DettaglioOrdine> getDettagli() {
         return dettagli;
     }
 
-    public void setDettagli(List<DettaglioOrdine> dettagli) {
+    public void setDettagli(Set<DettaglioOrdine> dettagli) {
         this.dettagli = dettagli;
     }
 }

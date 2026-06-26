@@ -1,5 +1,10 @@
 package it.shopeasy.dto;
 
+import it.shopeasy.enums.LanguagePreferences;
+import it.shopeasy.enums.RuoloUtente;
+import it.shopeasy.enums.StatoUtente;
+import it.shopeasy.enums.ThemePreferences;
+import it.shopeasy.model.Ruolo;
 import jakarta.validation.constraints.*;
 
 public class UtenteUpdateRequestDTO {
@@ -20,22 +25,28 @@ public class UtenteUpdateRequestDTO {
     )
     private String password;
 
+    /*@Size(min = 11, max = 11, message = "Inserisci un numero di telefono valdio")
     private String telefono;
+    */
+
+    @NotNull(message = "L'indirizzo è necessario")
+    @NotBlank(message = "L'indirizzo non può essere vuoto")
     private String indirizzo;
-    private String languagePreference;
-    private String themePreference;
-    private String ruolo;
-    private String stato;
+    private LanguagePreferences languagePreference;
+    private ThemePreferences themePreference;
+
+    private RuoloUtente ruolo;
+    private StatoUtente stato;
 
     public UtenteUpdateRequestDTO() {
     }
 
-    public UtenteUpdateRequestDTO(String nome, String cognome, String email, String password, String telefono, String indirizzo, String languagePreference, String themePreference, String ruolo, String stato) {
+    public UtenteUpdateRequestDTO(String nome, String cognome, String email, String password, /*String telefono,*/ String indirizzo, LanguagePreferences languagePreference, ThemePreferences themePreference, RuoloUtente ruolo, StatoUtente stato) {
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
         this.password = password;
-        this.telefono = telefono;
+       // this.telefono = telefono;
         this.indirizzo = indirizzo;
         this.languagePreference = languagePreference;
         this.themePreference = themePreference;
@@ -75,13 +86,15 @@ public class UtenteUpdateRequestDTO {
         this.password = password;
     }
 
-    public String getTelefono() {
+   /* public String getTelefono() {
         return telefono;
     }
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+    */
+
 
     public String getIndirizzo() {
         return indirizzo;
@@ -91,35 +104,35 @@ public class UtenteUpdateRequestDTO {
         this.indirizzo = indirizzo;
     }
 
-    public String getLanguagePreference() {
+    public LanguagePreferences getLanguagePreference() {
         return languagePreference;
     }
 
-    public void setLanguagePreference(String languagePreference) {
+    public void setLanguagePreference(LanguagePreferences languagePreference) {
         this.languagePreference = languagePreference;
     }
 
-    public String getThemePreference() {
+    public ThemePreferences getThemePreference() {
         return themePreference;
     }
 
-    public void setThemePreference(String themePreference) {
+    public void setThemePreference(ThemePreferences themePreference) {
         this.themePreference = themePreference;
     }
 
-    public String getRuolo() {
+    public RuoloUtente getRuolo() {
         return ruolo;
     }
 
-    public void setRuolo(String ruolo) {
+    public void setRuolo(RuoloUtente ruolo) {
         this.ruolo = ruolo;
     }
 
-    public String getStato() {
+    public StatoUtente getStato() {
         return stato;
     }
 
-    public void setStato(String stato) {
+    public void setStato(StatoUtente stato) {
         this.stato = stato;
     }
 }

@@ -1,8 +1,10 @@
 package it.shopeasy.controller;
 
 import it.shopeasy.dto.UtenteUpdateRequestDTO;
+import it.shopeasy.enums.LanguagePreferences;
 import it.shopeasy.enums.RuoloUtente;
 import it.shopeasy.enums.StatoUtente;
+import it.shopeasy.enums.ThemePreferences;
 import it.shopeasy.model.Ruolo;
 import it.shopeasy.model.Utente;
 import it.shopeasy.repository.RuoloRepository;
@@ -56,12 +58,12 @@ public class UtenteController {
         utente.setCognome(request.getCognome());
         utente.setEmail(request.getEmail());
         utente.setPassword(passwordEncoder.encode(request.getPassword()));
-        utente.setTelefono(request.getTelefono());
+        //utente.setTelefono(request.getTelefono());
         utente.setIndirizzo(request.getIndirizzo());
-        utente.setLanguagePreference(request.getLanguagePreference() != null ? request.getLanguagePreference() : "it");
-        utente.setThemePreference(request.getThemePreference() != null ? request.getThemePreference() : "light");
+        utente.setLanguagePreference(request.getLanguagePreference() != null ? request.getLanguagePreference() : LanguagePreferences.IT);
+        utente.setThemePreference(request.getThemePreference() != null ? request.getThemePreference() : ThemePreferences.LIGHT);
 
-        if (request.getRuolo() != null && request.getRuolo().equalsIgnoreCase("ADMIN")) {
+        if (request.getRuolo() != null && request.getRuolo() == RuoloUtente.ADMIN) {
             Ruolo ruolo = ruoloRepository.findByNome(RuoloUtente.ADMIN)
                     .orElseThrow(() -> new RuntimeException("Ruolo ADMIN non trovato"));
             utente.setRuolo(ruolo);
@@ -72,7 +74,7 @@ public class UtenteController {
         }
 
         if (request.getStato() != null) {
-            utente.setStato(StatoUtente.valueOf(request.getStato()));
+            utente.setStato(request.getStato());
         } else {
             utente.setStato(StatoUtente.ATTIVO);
         }
@@ -98,9 +100,11 @@ public class UtenteController {
         if (request.getPassword() != null && !request.getPassword().isEmpty()) {
             utente.setPassword(passwordEncoder.encode(request.getPassword()));
         }
-        if (request.getTelefono() != null) {
+        /*if (request.getTelefono() != null) {
             utente.setTelefono(request.getTelefono());
         }
+
+         */
         if (request.getIndirizzo() != null) {
             utente.setIndirizzo(request.getIndirizzo());
         }
@@ -111,7 +115,7 @@ public class UtenteController {
             utente.setThemePreference(request.getThemePreference());
         }
         if (request.getRuolo() != null) {
-            if (request.getRuolo().equalsIgnoreCase("ADMIN")) {
+            if (request.getRuolo() == RuoloUtente.ADMIN) {
                 Ruolo ruolo = ruoloRepository.findByNome(RuoloUtente.ADMIN)
                         .orElseThrow(() -> new RuntimeException("Ruolo ADMIN non trovato"));
                 utente.setRuolo(ruolo);
@@ -122,7 +126,7 @@ public class UtenteController {
             }
         }
         if (request.getStato() != null) {
-            utente.setStato(StatoUtente.valueOf(request.getStato()));
+            utente.setStato(request.getStato());
         }
 
         Utente aggiornato = utenteService.aggiornaUtente(id, utente);

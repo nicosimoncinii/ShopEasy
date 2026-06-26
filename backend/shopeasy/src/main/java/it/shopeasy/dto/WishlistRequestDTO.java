@@ -1,8 +1,14 @@
 package it.shopeasy.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class WishlistRequestDTO {
 
+
+    @NotNull(message = "L'id dell'utente è necessario")
     private Long utenteId;
+    @NotNull(message = "L'id del prodotto è necessario")
     private Long prodottoId;
 
     public WishlistRequestDTO() {

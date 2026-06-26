@@ -6,6 +6,8 @@ import it.shopeasy.dto.auth.LoginResponse;
 import it.shopeasy.dto.auth.RegisterRequest;
 import it.shopeasy.dto.auth.RegisterResponse;
 import it.shopeasy.dto.auth.ResetPasswordRequest;
+import it.shopeasy.enums.LanguagePreferences;
+import it.shopeasy.enums.ThemePreferences;
 import it.shopeasy.model.PasswordResetToken;
 import it.shopeasy.model.Ruolo;
 import it.shopeasy.model.Utente;
@@ -75,8 +77,8 @@ public class AuthService {
         utente.setPassword(passwordEncoder.encode(request.getPassword()));
         utente.setRuolo(ruolo);
         utente.setStato(StatoUtente.ATTIVO);
-        utente.setLanguagePreference("it");
-        utente.setThemePreference("light");
+        utente.setLanguagePreference(LanguagePreferences.IT);
+        utente.setThemePreference(ThemePreferences.LIGHT);
 
         utenteRepository.save(utente);
 

@@ -17,11 +17,13 @@
       </div>
   
       <button class="login-btn" (click)="onLogin()" [disabled]="caricamento()">
-        @if (caricamento()) {
-          Caricamento...
-        } @else {
-          {{ langService.traduci('ACCEDI') }}
-        }
+          @if (caricamento()) {
+              Caricamento...
+          } @else {
+              {{ langService.traduci('ACCEDI') }}
+          }
+
+
       </button>
   
       <button class="login-link" (click)="goToRegister()">

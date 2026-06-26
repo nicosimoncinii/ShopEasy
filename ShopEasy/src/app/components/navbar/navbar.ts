@@ -11,7 +11,7 @@ import { CartService } from '../../services/cart.service';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterModule, RouterLink, NgIconComponent],
+  imports: [CommonModule, RouterModule, RouterLink],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })
@@ -27,7 +27,7 @@ export class Navbar {
   ) {}
 
   get numeroProdottiCarrello() {
-    return this.cartService.getNumeroProdotti();
+    return this.cartService.numeroProdotti();
   }
 
 

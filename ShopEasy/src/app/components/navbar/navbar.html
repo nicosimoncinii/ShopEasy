@@ -38,12 +38,12 @@
 
         <div class="right">
             <button class="wishlist-nav-btn" routerLink="/wishlist">
-                <ng-icon name="heroHeart" size="28"></ng-icon>
+                <i class="pi pi-heart" size="28"></i>
             </button>
             <button class="cart-btn" routerLink="/cart">
                 <img src="Cart.png" alt="Carrello">
 
-                <span class="cart-count" *ngIf="numeroProdottiCarrello > 0">
+                <span class="cart-count" [@if]="numeroProdottiCarrello > 0">
                     {{ numeroProdottiCarrello }}
                 </span>
             </button>

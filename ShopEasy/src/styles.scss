@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+/* FONT & PRIME ICONS */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
 @import "primeicons/primeicons.css";
 
@@ -9,54 +9,53 @@
   font-family: 'Inter', sans-serif;
 }
 
-// VARIABILI IN LIGHT MODE (Default)
+/* 🌞 LIGHT MODE — Pastello chiaro (NO BIANCO) */
 :root {
-  --primary-color: #1bcf8c;
-  --secondary-color: #f0a500;
+  --primary-color: #C8F3DF;      /* Verde menta chiaro */
+  --secondary-color: #FFE7B3;    /* Giallo crema */
+  --accent-color: #FFD6D1;       /* Rosa pesca */
 
-  --bg-dark: #dcd9d9;              // Grigio chiaro dello sfondo
-  --bg-navbar: #3e3e3e;            // Colore scuro della navbar
-  --bg-card: #ffffff;              // Sfondo bianco per le righe dei prodotti (era #f5f5f5 prima)
-  --text-light: #000000;           // Testo principale nero
-  --block-text-color: #3e3e3e;     // Titoli
-  --text-muted: #a0a0b0;
+  --bg-dark: #F0F0F0;            /* Sfondo generale chiaro NON bianco */
+  --bg-navbar: #E3F2FF;          /* Azzurro ghiaccio */
+  --bg-footer: #E3F2FF;          /* Footer uguale alla navbar */
+  --bg-card: #F7F7F7;            /* Grigio perla molto chiaro */
+
+  --text-light: #3A3A3A;         /* Testo grigio scuro soft */
+  --block-text-color: #4A4A4A;   /* Titoli */
+  --text-muted: #8A8A8A;         /* Testo secondario */
 }
 
-// VARIABILI IN DARK MODE (Si attivano quando <html> o <body> hanno la classe .dark-mode)
+/* 🌙 DARK MODE — Pastello scuro elegante */
 .dark-mode {
-  --bg-dark: #121212;              // Sfondo scuro della pagina
-  --bg-navbar: #1a1a1a;            // Navbar ancora più scura
-  --bg-card: #1e1e1e;              // Righe dei prodotti grigio scuro
-  --text-light: #ffffff;           // Testo principale diventa bianco
-  --block-text-color: #1bcf8c;     // I titoli principali diventano verdi o chiari
-  --text-muted: #888899;
+  --primary-color: #9EDFC8;
+  --secondary-color: #E8D3A0;
+  --accent-color: #E8B5B0;
+
+  --bg-dark: #121212;
+  --bg-navbar: #1A1A1A;
+  --bg-footer: #1A1A1A;
+  --bg-card: #1E1E1E;
+
+  --text-light: #FFFFFF;
+  --block-text-color: #C8F3DF;
+  --text-muted: #AAAAAA;
 }
 
+/* 🌐 GLOBAL */
 body {
   background-color: var(--bg-dark);
   color: var(--text-light);
-  transition: background-color 0.3s ease, color 0.3s ease; /* Transizione fluida quando si cambia tema */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-h1 {
-  margin-left: 20px;
-  font-size: 2rem;
-  font-weight: 700;
+h1, h2 {
   color: var(--block-text-color);
-  letter-spacing: 1px;
-  transition: color 0.3s ease;
-}
-
-h2 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--text-light);
   transition: color 0.3s ease;
 }
 
 button {
   background-color: var(--primary-color);
-  color: #fff;
+  color: #2E2E2E;
   border: none;
   padding: 10px 20px;
   border-radius: 8px;
@@ -66,7 +65,7 @@ button {
   transition: opacity 0.2s, background-color 0.3s;
 
   &:hover {
-    opacity: 0.8;
+    opacity: 0.85;
   }
 }
 
@@ -76,6 +75,6 @@ a {
   transition: color 0.3s ease;
 
   &:hover {
-    color: var(--primary-color);
+    color: var(--accent-color);
   }
 }

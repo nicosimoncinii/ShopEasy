@@ -1,5 +1,6 @@
 package it.shopeasy.service;
 
+import it.shopeasy.dto.UtenteResponseDTO;
 import it.shopeasy.model.Utente;
 import it.shopeasy.repository.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,18 @@ public class UtenteService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public List<Utente> prendiTuttiUtenti() {
-        return utenteRepository.findAll();
+    public List<UtenteResponseDTO> prendiTuttiUtenti() {
+        return utenteRepository.findAll()
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
-    public Utente prendiUtentePerId(Long id) {
+    public UtenteResponseDTO prendiUtenteResponsePerId(Long id){
+        return toResponse(prendiUtentePerId(id));
+    }
+
+    private Utente prendiUtentePerId(Long id) {
         return utenteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Utente non trovato con id: " + id));
     }
@@ -33,17 +41,17 @@ public class UtenteService {
         utenteRepository.deleteById(id);
     }
 
-    public Utente salvaUtente(Utente utente) {
+    public UtenteResponseDTO salvaUtente(Utente utente) {
         if (utenteRepository.existsByEmail(utente.getEmail())) {
             throw new RuntimeException("Email già registrata: " + utente.getEmail());
         }
         if (utente.getPassword() != null && !utente.getPassword().isEmpty()) {
             utente.setPassword(passwordEncoder.encode(utente.getPassword()));
         }
-        return utenteRepository.save(utente);
+        return toResponse(utenteRepository.save(utente));
     }
 
-    public Utente aggiornaUtente(Long id, Utente nuovoUtente) {
+    public UtenteResponseDTO aggiornaUtente(Long id, Utente nuovoUtente) {
         Utente utente = prendiUtentePerId(id);
 
         if (nuovoUtente.getNome() != null) {
@@ -62,9 +70,13 @@ public class UtenteService {
         if (nuovoUtente.getPassword() != null && !nuovoUtente.getPassword().isEmpty()) {
             utente.setPassword(passwordEncoder.encode(nuovoUtente.getPassword()));
         }
+        /*
         if (nuovoUtente.getTelefono() != null) {
+
             utente.setTelefono(nuovoUtente.getTelefono());
         }
+
+         */
         if (nuovoUtente.getIndirizzo() != null) {
             utente.setIndirizzo(nuovoUtente.getIndirizzo());
         }
@@ -81,6 +93,22 @@ public class UtenteService {
             utente.setStato(nuovoUtente.getStato());
         }
 
-        return utenteRepository.save(utente);
+        return toResponse(utenteRepository.save(utente));
     }
+
+
+    private UtenteResponseDTO toResponse(Utente utente){
+        return new UtenteResponseDTO(
+                utente.getId(),
+                utente.getNome(),
+                utente.getCognome(),
+                utente.getEmail(),
+                utente.getIndirizzo(),
+                utente.getLanguagePreference(),
+                utente.getThemePreference(),
+                utente.getRuolo().getNome(),
+                utente.getStato()
+        );
+    }
+
 }

@@ -1,6 +1,10 @@
 package it.shopeasy.service;
 
+import it.shopeasy.dto.ProdottoRequestDTO;
+import it.shopeasy.dto.ProdottoResponseDTO;
+import it.shopeasy.model.Categoria;
 import it.shopeasy.model.Prodotto;
+import it.shopeasy.repository.CategoriaRepository;
 import it.shopeasy.repository.ProdottoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,12 +16,21 @@ public class ProdottoService {
     
     @Autowired
     private ProdottoRepository prodottoRepository;
-    
-    public List<Prodotto> prendiTuttiProdotti() {
-        return prodottoRepository.findAll();
+
+    @Autowired
+    private CategoriaRepository categoriaRepository;
+
+    public List<ProdottoResponseDTO> prendiTuttiProdotti() {
+        return prodottoRepository.findAll()
+                .stream()
+                .map(this::toResponse)
+                .toList();
+    }
+    public ProdottoResponseDTO prendiProdottoResponsePerId(Long id){
+        return toResponse(prendiProdottoPerId(id));
     }
 
-    public Prodotto prendiProdottoPerId(Long id) {
+    private Prodotto prendiProdottoPerId(Long id) {
         return prodottoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Prodotto non trovato con id: " + id));
     }
@@ -28,24 +41,53 @@ public class ProdottoService {
     }
 
 
-    public Prodotto salvaProdotto(Prodotto prodotto) {
+    public ProdottoResponseDTO salvaProdotto(ProdottoRequestDTO request) {
 
-        return prodottoRepository.save(prodotto);
+        Prodotto prodotto = new Prodotto();
+
+        prodotto.setNome(request.getNome());
+        prodotto.setDescrizione(request.getDescrizione());
+        prodotto.setPrezzo(request.getPrezzo());
+        prodotto.setImmagine(request.getImmagine());
+        prodotto.setCategoria(prendiCategoriaPerId(request.getCategoriaId()));
+        prodotto.setQuantita(request.getQuantita());
+
+        return toResponse(prodottoRepository.save(prodotto));
     }
 
-    public Prodotto aggiornaProdotto(Long id, Prodotto nuovoProdotto) {
+    private Categoria prendiCategoriaPerId(Long id){
+        return categoriaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Categoria non trovata con id " + id));
+    }
+
+    public ProdottoResponseDTO aggiornaProdotto(Long id, ProdottoRequestDTO nuovoProdotto) {
+
         Prodotto prodotto = prendiProdottoPerId(id);
 
-
         prodotto.setNome(nuovoProdotto.getNome());
-        prodotto.setPrezzo(nuovoProdotto.getPrezzo());
         prodotto.setDescrizione(nuovoProdotto.getDescrizione());
-        prodotto.setCategoria(nuovoProdotto.getCategoria());
+        prodotto.setPrezzo(nuovoProdotto.getPrezzo());
         prodotto.setImmagine(nuovoProdotto.getImmagine());
+        prodotto.setCategoria(prendiCategoriaPerId(nuovoProdotto.getCategoriaId()));
+        prodotto.setQuantita(nuovoProdotto.getQuantita());
 
-        return salvaProdotto(prodotto);
+        return toResponse(prodottoRepository.save(prodotto));
     }
 
+
+    private ProdottoResponseDTO toResponse(Prodotto prodotto)
+    {
+        return new ProdottoResponseDTO(
+                prodotto.getId(),
+                prodotto.getNome(),
+                prodotto.getDescrizione(),
+                prodotto.getPrezzo(),
+                prodotto.getQuantita(),
+                prodotto.getImmagine(),
+                prodotto.getCategoria().getId(),
+                prodotto.getCategoria().getNome()
+        );
+    }
 
 
 }

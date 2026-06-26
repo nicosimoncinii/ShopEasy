@@ -1,142 +1,74 @@
 package it.shopeasy.controller;
 
+import it.shopeasy.dto.UtenteResponseDTO;
 import it.shopeasy.dto.UtenteUpdateRequestDTO;
-import it.shopeasy.enums.LanguagePreferences;
-import it.shopeasy.enums.RuoloUtente;
-import it.shopeasy.enums.StatoUtente;
-import it.shopeasy.enums.ThemePreferences;
-import it.shopeasy.model.Ruolo;
-import it.shopeasy.model.Utente;
-import it.shopeasy.repository.RuoloRepository;
+
 import it.shopeasy.service.UtenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
 public class UtenteController {
 
-    private final UtenteService utenteService;
-
     @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private RuoloRepository ruoloRepository;
-
-    public UtenteController(UtenteService utenteService) {
-        this.utenteService = utenteService;
-    }
+    private UtenteService utenteService;
 
     @GetMapping
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<List<Utente>> prendiTuttiUtente() {
+    public ResponseEntity<List<UtenteResponseDTO>> prendiTuttiUtente() {
         return ResponseEntity.ok(utenteService.prendiTuttiUtenti());
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Utente> prendiUtentePerId(@PathVariable Long id) {
-        return ResponseEntity.ok(utenteService.prendiUtentePerId(id));
+    public ResponseEntity<UtenteResponseDTO> prendiUtentePerId(@PathVariable Long id) {
+        return ResponseEntity.ok(utenteService.prendiUtenteResponsePerId(id));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Utente> salvaUtente(@RequestBody UtenteUpdateRequestDTO request) {
-        if (request.getPassword() == null || request.getPassword().isEmpty()) {
-            throw new RuntimeException("La password è obbligatoria");
-        }
-
-        Utente utente = new Utente();
-        utente.setNome(request.getNome());
-        utente.setCognome(request.getCognome());
-        utente.setEmail(request.getEmail());
-        utente.setPassword(passwordEncoder.encode(request.getPassword()));
-        //utente.setTelefono(request.getTelefono());
-        utente.setIndirizzo(request.getIndirizzo());
-        utente.setLanguagePreference(request.getLanguagePreference() != null ? request.getLanguagePreference() : LanguagePreferences.IT);
-        utente.setThemePreference(request.getThemePreference() != null ? request.getThemePreference() : ThemePreferences.LIGHT);
-
-        if (request.getRuolo() != null && request.getRuolo() == RuoloUtente.ADMIN) {
-            Ruolo ruolo = ruoloRepository.findByNome(RuoloUtente.ADMIN)
-                    .orElseThrow(() -> new RuntimeException("Ruolo ADMIN non trovato"));
-            utente.setRuolo(ruolo);
-        } else {
-            Ruolo ruolo = ruoloRepository.findByNome(RuoloUtente.CLIENTE)
-                    .orElseThrow(() -> new RuntimeException("Ruolo CLIENTE non trovato"));
-            utente.setRuolo(ruolo);
-        }
-
-        if (request.getStato() != null) {
-            utente.setStato(request.getStato());
-        } else {
-            utente.setStato(StatoUtente.ATTIVO);
-        }
-
-        Utente creato = utenteService.salvaUtente(utente);
-        return ResponseEntity.status(HttpStatus.CREATED).body(creato);
+    public ResponseEntity<UtenteResponseDTO> salvaUtente(@RequestBody UtenteUpdateRequestDTO request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(utenteService.salvaUtente(request));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Utente> aggiornaUtente(@RequestBody UtenteUpdateRequestDTO request, @PathVariable Long id) {
-        Utente utente = utenteService.prendiUtentePerId(id);
-
-        if (request.getNome() != null) {
-            utente.setNome(request.getNome());
-        }
-        if (request.getCognome() != null) {
-            utente.setCognome(request.getCognome());
-        }
-        if (request.getEmail() != null) {
-            utente.setEmail(request.getEmail());
-        }
-        if (request.getPassword() != null && !request.getPassword().isEmpty()) {
-            utente.setPassword(passwordEncoder.encode(request.getPassword()));
-        }
-        /*if (request.getTelefono() != null) {
-            utente.setTelefono(request.getTelefono());
-        }
-
-         */
-        if (request.getIndirizzo() != null) {
-            utente.setIndirizzo(request.getIndirizzo());
-        }
-        if (request.getLanguagePreference() != null) {
-            utente.setLanguagePreference(request.getLanguagePreference());
-        }
-        if (request.getThemePreference() != null) {
-            utente.setThemePreference(request.getThemePreference());
-        }
-        if (request.getRuolo() != null) {
-            if (request.getRuolo() == RuoloUtente.ADMIN) {
-                Ruolo ruolo = ruoloRepository.findByNome(RuoloUtente.ADMIN)
-                        .orElseThrow(() -> new RuntimeException("Ruolo ADMIN non trovato"));
-                utente.setRuolo(ruolo);
-            } else {
-                Ruolo ruolo = ruoloRepository.findByNome(RuoloUtente.CLIENTE)
-                        .orElseThrow(() -> new RuntimeException("Ruolo UTENTE non trovato"));
-                utente.setRuolo(ruolo);
-            }
-        }
-        if (request.getStato() != null) {
-            utente.setStato(request.getStato());
-        }
-
-        Utente aggiornato = utenteService.aggiornaUtente(id, utente);
-        return ResponseEntity.ok(aggiornato);
+    public ResponseEntity<UtenteResponseDTO> aggiornaUtente(@PathVariable Long id,
+                                                            @RequestBody UtenteUpdateRequestDTO request) {
+        return ResponseEntity.ok(utenteService.aggiornaUtente(id, request));
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Void> cancellaUtente(@PathVariable Long id) {
         utenteService.cancellaUtente(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/me")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENTE')")
+    public ResponseEntity<UtenteResponseDTO> prendiProfiloCorrente(Principal principal) {
+        return ResponseEntity.ok(utenteService.prendiUtenteResponsePerEmail(principal.getName()));
+    }
+
+    @PutMapping("/me")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENTE')")
+    public ResponseEntity<UtenteResponseDTO> aggiornaProfiloCorrente(@RequestBody UtenteUpdateRequestDTO request,
+                                                                     Principal principal) {
+        return ResponseEntity.ok(utenteService.aggiornaUtentePerEmail(principal.getName(), request));
+    }
+
+    @DeleteMapping("/me")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENTE')")
+    public ResponseEntity<Void> cancellaProfiloCorrente(Principal principal) {
+        utenteService.cancellaUtentePerEmail(principal.getName());
         return ResponseEntity.noContent().build();
     }
 }

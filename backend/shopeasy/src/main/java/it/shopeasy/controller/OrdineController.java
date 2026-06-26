@@ -1,5 +1,6 @@
 package it.shopeasy.controller;
 
+import it.shopeasy.dto.OrdineRequestDTO;
 import it.shopeasy.dto.OrdineResponseDTO;
 import it.shopeasy.model.Ordine;
 import it.shopeasy.service.OrdineService;
@@ -27,19 +28,19 @@ public class OrdineController {
     }
 
     @GetMapping("/my-orders/{utente_id}")
-    public ResponseEntity<List<Ordine>> prendiOrdiniPerUtente(@PathVariable Long utente_id) {
+    public ResponseEntity<List<OrdineResponseDTO>> prendiOrdiniPerUtente(@PathVariable Long utente_id) {
         return ResponseEntity.ok(service.prendiOrdiniPerUtente(utente_id));
     }
 
     @PostMapping
-    public ResponseEntity<Ordine> salvaOrdine(@RequestBody Ordine ordine) {
-        Ordine creato = service.salvaOrdine(ordine);
+    public ResponseEntity<OrdineResponseDTO> salvaOrdine(@RequestBody OrdineRequestDTO ordine) {
+        OrdineResponseDTO creato = service.salvaOrdine(ordine);
         return ResponseEntity.status(HttpStatus.CREATED).body(creato);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Ordine> aggiornaOrdine(@RequestBody Ordine ordine, @PathVariable Long id) {
-        Ordine aggiornato = service.aggiornaOrdine(id, ordine);
+    public ResponseEntity<OrdineResponseDTO> aggiornaOrdine(@RequestBody OrdineRequestDTO ordine, @PathVariable Long id) {
+        OrdineResponseDTO aggiornato = service.aggiornaOrdine(id, ordine);
         return ResponseEntity.ok(aggiornato);
     }
 }

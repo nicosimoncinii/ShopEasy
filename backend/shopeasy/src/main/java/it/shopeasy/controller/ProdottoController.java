@@ -1,5 +1,7 @@
 package it.shopeasy.controller;
 
+import it.shopeasy.dto.ProdottoRequestDTO;
+import it.shopeasy.dto.ProdottoResponseDTO;
 import it.shopeasy.service.ProdottoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,26 +22,26 @@ public class ProdottoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Prodotto>> prendiTuttiProdotti() {
+    public ResponseEntity<List<ProdottoResponseDTO>> prendiTuttiProdotti() {
         return ResponseEntity.ok(prodottoService.prendiTuttiProdotti());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Prodotto> prendiProdottoPerId(@PathVariable Long id){
-        return ResponseEntity.ok(prodottoService.prendiProdottoPerId(id));
+    public ResponseEntity<ProdottoResponseDTO> prendiProdottoPerId(@PathVariable Long id){
+        return ResponseEntity.ok(prodottoService.prendiProdottoResponsePerId(id));
     }
 
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Prodotto> creaProdotto(@RequestBody Prodotto prodotto) {
-        Prodotto creato = prodottoService.salvaProdotto(prodotto);
+    public ResponseEntity<ProdottoResponseDTO> creaProdotto(@RequestBody ProdottoRequestDTO prodotto) {
+        ProdottoResponseDTO creato = prodottoService.salvaProdotto(prodotto);
         return ResponseEntity.status(HttpStatus.CREATED).body(creato);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Prodotto> aggiornaProdotto(@RequestBody Prodotto prodotto, @PathVariable Long id) {
-        Prodotto aggiornato = prodottoService.aggiornaProdotto(id, prodotto);
+    public ResponseEntity<ProdottoResponseDTO> aggiornaProdotto(@RequestBody ProdottoRequestDTO prodotto, @PathVariable Long id) {
+        ProdottoResponseDTO aggiornato = prodottoService.aggiornaProdotto(id, prodotto);
         return ResponseEntity.ok(aggiornato);
     }
 

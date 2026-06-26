@@ -1,7 +1,14 @@
 package it.shopeasy.service;
 
 import it.shopeasy.dto.UtenteResponseDTO;
+import it.shopeasy.dto.UtenteUpdateRequestDTO;
+import it.shopeasy.enums.LanguagePreferences;
+import it.shopeasy.enums.RuoloUtente;
+import it.shopeasy.enums.StatoUtente;
+import it.shopeasy.enums.ThemePreferences;
+import it.shopeasy.model.Ruolo;
 import it.shopeasy.model.Utente;
+import it.shopeasy.repository.RuoloRepository;
 import it.shopeasy.repository.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,10 +18,10 @@ import java.util.List;
 
 @Service
 public class UtenteService {
-
     @Autowired
     private UtenteRepository utenteRepository;
-
+    @Autowired
+    private RuoloRepository ruoloRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -25,11 +32,11 @@ public class UtenteService {
                 .toList();
     }
 
-    public UtenteResponseDTO prendiUtenteResponsePerId(Long id){
+    public UtenteResponseDTO prendiUtenteResponsePerId(Long id) {
         return toResponse(prendiUtentePerId(id));
     }
 
-    private Utente prendiUtentePerId(Long id) {
+    public Utente prendiUtentePerId(Long id) {
         return utenteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Utente non trovato con id: " + id));
     }
@@ -41,63 +48,80 @@ public class UtenteService {
         utenteRepository.deleteById(id);
     }
 
-    public UtenteResponseDTO salvaUtente(Utente utente) {
-        if (utenteRepository.existsByEmail(utente.getEmail())) {
-            throw new RuntimeException("Email già registrata: " + utente.getEmail());
+    public UtenteResponseDTO salvaUtente(UtenteUpdateRequestDTO request) {
+        if (utenteRepository.existsByEmail(request.getEmail())) {
+            throw new RuntimeException("Email già registrata: " + request.getEmail());
         }
-        if (utente.getPassword() != null && !utente.getPassword().isEmpty()) {
-            utente.setPassword(passwordEncoder.encode(utente.getPassword()));
+        if (request.getPassword() == null || request.getPassword().isEmpty()) {
+            throw new RuntimeException("La password è obbligatoria");
         }
+
+        Utente utente = new Utente();
+        utente.setNome(request.getNome());
+        utente.setCognome(request.getCognome());
+        utente.setEmail(request.getEmail());
+        utente.setPassword(passwordEncoder.encode(request.getPassword()));
+        utente.setIndirizzo(request.getIndirizzo());
+        utente.setLanguagePreference(request.getLanguagePreference() != null ? request.getLanguagePreference() : LanguagePreferences.IT);
+        utente.setThemePreference(request.getThemePreference() != null ? request.getThemePreference() : ThemePreferences.LIGHT);
+        utente.setStato(request.getStato() != null ? request.getStato() : StatoUtente.ATTIVO);
+
+        RuoloUtente ruoloEnum = request.getRuolo() != null ? request.getRuolo() : RuoloUtente.CLIENTE;
+        Ruolo ruolo = ruoloRepository.findByNome(ruoloEnum)
+                .orElseThrow(() -> new RuntimeException("Ruolo non trovato"));
+        utente.setRuolo(ruolo);
+
         return toResponse(utenteRepository.save(utente));
     }
 
-    public UtenteResponseDTO aggiornaUtente(Long id, Utente nuovoUtente) {
+    public UtenteResponseDTO aggiornaUtente(Long id, UtenteUpdateRequestDTO request) {
         Utente utente = prendiUtentePerId(id);
 
-        if (nuovoUtente.getNome() != null) {
-            utente.setNome(nuovoUtente.getNome());
-        }
-        if (nuovoUtente.getCognome() != null) {
-            utente.setCognome(nuovoUtente.getCognome());
-        }
-        if (nuovoUtente.getEmail() != null) {
-            if (!nuovoUtente.getEmail().equals(utente.getEmail()) && 
-                utenteRepository.existsByEmail(nuovoUtente.getEmail())) {
-                throw new RuntimeException("Email già registrata: " + nuovoUtente.getEmail());
+        if (request.getNome() != null) utente.setNome(request.getNome());
+        if (request.getCognome() != null) utente.setCognome(request.getCognome());
+        if (request.getEmail() != null) {
+            if (!request.getEmail().equals(utente.getEmail()) &&
+                    utenteRepository.existsByEmail(request.getEmail())) {
+                throw new RuntimeException("Email già registrata: " + request.getEmail());
             }
-            utente.setEmail(nuovoUtente.getEmail());
+            utente.setEmail(request.getEmail());
         }
-        if (nuovoUtente.getPassword() != null && !nuovoUtente.getPassword().isEmpty()) {
-            utente.setPassword(passwordEncoder.encode(nuovoUtente.getPassword()));
+        if (request.getPassword() != null && !request.getPassword().isEmpty()) {
+            utente.setPassword(passwordEncoder.encode(request.getPassword()));
         }
-        /*
-        if (nuovoUtente.getTelefono() != null) {
-
-            utente.setTelefono(nuovoUtente.getTelefono());
-        }
-
-         */
-        if (nuovoUtente.getIndirizzo() != null) {
-            utente.setIndirizzo(nuovoUtente.getIndirizzo());
-        }
-        if (nuovoUtente.getLanguagePreference() != null) {
-            utente.setLanguagePreference(nuovoUtente.getLanguagePreference());
-        }
-        if (nuovoUtente.getThemePreference() != null) {
-            utente.setThemePreference(nuovoUtente.getThemePreference());
-        }
-        if (nuovoUtente.getRuolo() != null) {
-            utente.setRuolo(nuovoUtente.getRuolo());
-        }
-        if (nuovoUtente.getStato() != null) {
-            utente.setStato(nuovoUtente.getStato());
+        if (request.getIndirizzo() != null) utente.setIndirizzo(request.getIndirizzo());
+        if (request.getLanguagePreference() != null) utente.setLanguagePreference(request.getLanguagePreference());
+        if (request.getThemePreference() != null) utente.setThemePreference(request.getThemePreference());
+        if (request.getStato() != null) utente.setStato(request.getStato());
+        if (request.getRuolo() != null) {
+            Ruolo ruolo = ruoloRepository.findByNome(request.getRuolo())
+                    .orElseThrow(() -> new RuntimeException("Ruolo non trovato"));
+            utente.setRuolo(ruolo);
         }
 
         return toResponse(utenteRepository.save(utente));
     }
 
+    public UtenteResponseDTO prendiUtenteResponsePerEmail(String email) {
+        return toResponse(utenteRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Utente non trovato")));
+    }
 
-    private UtenteResponseDTO toResponse(Utente utente){
+    public UtenteResponseDTO aggiornaUtentePerEmail(String email, UtenteUpdateRequestDTO request) {
+        Utente utente = utenteRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Utente non trovato"));
+        request.setRuolo(null);
+        request.setStato(null);
+        return aggiornaUtente(utente.getId(), request);
+    }
+
+    public void cancellaUtentePerEmail(String email) {
+        Utente utente = utenteRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Utente non trovato"));
+        cancellaUtente(utente.getId());
+    }
+
+    private UtenteResponseDTO toResponse(Utente utente) {
         return new UtenteResponseDTO(
                 utente.getId(),
                 utente.getNome(),
@@ -110,5 +134,4 @@ public class UtenteService {
                 utente.getStato()
         );
     }
-
 }

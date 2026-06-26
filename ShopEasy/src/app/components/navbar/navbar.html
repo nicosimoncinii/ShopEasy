@@ -38,22 +38,29 @@
 
         <div class="right">
             <button class="wishlist-nav-btn" routerLink="/wishlist">
-                <i class="pi pi-heart" size="28"></i>
+                <ng-icon name="heroHeart" size="28"></ng-icon>
             </button>
             <button class="cart-btn" routerLink="/cart">
                 <img src="Cart.png" alt="Carrello">
-
-                <span class="cart-count" [@if]="numeroProdottiCarrello > 0">
-                    {{ numeroProdottiCarrello }}
-                </span>
             </button>
 
-            <button class="login-btn" routerLink="/login">
-                {{ langService.traduci('ACCEDI') }}
-            </button>
-            <button class="register-btn" routerLink="/register">
-                {{ langService.traduci('REGISTER') }}
-            </button>
+            @if (authService.isLoggato()) {
+                <div class="profilo" (click)="toggleProfilo()">
+                    <span class="profilo-email">{{ authService.getEmail() }}</span>
+                    <div class="profilo-dropdown" [class.open]="profiloAperto">
+                        <div routerLink="/profilo">{{ langService.traduci('PROFILO') }}</div>
+                        <div routerLink="/ordini">{{ langService.traduci('ORDINI') }}</div>
+                        <div (click)="logout()">{{ langService.traduci('LOGOUT') }}</div>
+                    </div>
+                </div>
+            } @else {
+                <button class="login-btn" routerLink="/login">
+                    {{ langService.traduci('ACCEDI') }}
+                </button>
+                <button class="register-btn" routerLink="/register">
+                    {{ langService.traduci('REGISTER') }}
+                </button>
+            }
         </div>
     </div>
 

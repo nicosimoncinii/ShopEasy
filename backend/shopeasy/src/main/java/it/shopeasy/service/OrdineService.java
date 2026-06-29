@@ -45,7 +45,7 @@ public class OrdineService {
                 .orElseThrow(() -> new RuntimeException("Ordine non trovato con id: " + id));
     }
 
-    public void cancellaOrdine(Long id) {
+    public void cancellaOrdine(Long id,String email) {
         ordineRepository.deleteById(id);
     }
 

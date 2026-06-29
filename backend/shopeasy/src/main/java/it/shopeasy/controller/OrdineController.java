@@ -50,8 +50,9 @@ public class OrdineController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENTE')")
-    public ResponseEntity<void> cancellaOrdine(@PathVariable Long id){
-        service.cancellaOrdine();
+    public ResponseEntity<Void> cancellaOrdine(@PathVariable Long id, Principal principal){
+        service.cancellaOrdine(id,principal.getName());
+
         return ResponseEntity.noContent().build();
     }
 

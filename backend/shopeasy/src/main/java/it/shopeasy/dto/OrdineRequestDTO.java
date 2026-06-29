@@ -14,15 +14,14 @@ public class OrdineRequestDTO {
     @NotNull
     @NotEmpty
     private Set<DettaglioOrdineRequestDTO> dettagli;
-    @NotNull(message = "Lo stato dell'ordine è necessario")
-    private StatoOrdine stato;
+
 
     public OrdineRequestDTO() {}
 
-    public OrdineRequestDTO(Long utenteId, Set<DettaglioOrdineRequestDTO> dettagli,StatoOrdine stato) {
+    public OrdineRequestDTO(Long utenteId, Set<DettaglioOrdineRequestDTO> dettagli) {
         this.utenteId = utenteId;
         this.dettagli = dettagli;
-        this.stato = stato;
+
     }
 
     public Long getUtenteId() {
@@ -33,7 +32,7 @@ public class OrdineRequestDTO {
         this.utenteId = utenteId;
     }
 
-    public Set<DettaglioOrdine> getDettagli() {
+    public Set<DettaglioOrdineRequestDTO> getDettagli() {
         return dettagli;
     }
 
@@ -41,10 +40,5 @@ public class OrdineRequestDTO {
         this.dettagli = dettagli;
     }
 
-    public StatoOrdine getStato(){
-        return stato;
-    }
-    public void setStato(StatoOrdine stato){
-        this.stato = stato;
-    }
+
 }

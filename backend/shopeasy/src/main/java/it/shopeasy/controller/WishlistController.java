@@ -50,9 +50,12 @@ public class WishlistController {
         return ResponseEntity.ok(wishlistService.rimuoviProdotto(principal.getName(), prodottoId));
     }
 
+    /*
     @PostMapping("/me/checkout")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENTE')")
     public ResponseEntity<WishlistResponseDTO> checkoutWishlist(Principal principal) {
         return ResponseEntity.ok(wishlistService.checkoutWishlist(principal.getName()));
     }
+
+     */
 }

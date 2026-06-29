@@ -2,7 +2,6 @@ package it.shopeasy.controller;
 
 import it.shopeasy.dto.OrdineRequestDTO;
 import it.shopeasy.dto.OrdineResponseDTO;
-import it.shopeasy.model.Ordine;
 import it.shopeasy.service.OrdineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

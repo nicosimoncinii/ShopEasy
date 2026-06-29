@@ -1,6 +1,7 @@
 package it.shopeasy.service;
 
 import it.shopeasy.dto.OrdineRequestDTO;
+import it.shopeasy.enums.RuoloUtente;
 import it.shopeasy.enums.StatoOrdine;
 import it.shopeasy.model.DettaglioOrdine;
 import it.shopeasy.model.Ordine;
@@ -47,7 +48,7 @@ public class OrdineService {
 
     public void cancellaOrdine(Long id,String email) {
         Ordine ordine = prendiOrdinePerId(id);
-        if (!ordine.getUtente().getEmail().equals(email) && utenteService.prendiUtentePerId(ordine.getUtente().getId()).getRuolo() != RuoloUtente.ADMIN) {
+        if (!ordine.getUtente().getEmail().equals(email) && !(utenteService.prendiUtentePerId(ordine.getUtente().getId()).getRuolo().getNome().equals(RuoloUtente.ADMIN))) {
             throw new RuntimeException("Non sei autorizzato a cancellare questo ordine");
         }
 

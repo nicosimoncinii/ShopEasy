@@ -46,6 +46,11 @@ public class OrdineService {
     }
 
     public void cancellaOrdine(Long id,String email) {
+        Ordine ordine = prendiOrdinePerId(id);
+        if (!ordine.getUtente().getEmail().equals(email) && utenteService.prendiUtentePerId(ordine.getUtente().getId()).getRuolo() != RuoloUtente.ADMIN) {
+            throw new RuntimeException("Non sei autorizzato a cancellare questo ordine");
+        }
+
         ordineRepository.deleteById(id);
     }
 

@@ -46,20 +46,21 @@ export class RegisterComponent {
 
     this.caricamento.set(true);
 
+    // Aggiunto .toLowerCase() a this.email
     this.authService.register(
       this.nome, 
       this.cognome, 
-      this.email, 
+      this.email.toLowerCase(), 
       this.password, 
       this.confermaPassword
     ).subscribe({
       next: (risposta) => {
         this.caricamento.set(false);
-        console.log('Registrazione avvenuta con successo!', risposta);
-        if (risposta && risposta.token) {
-          this.authService.salvaToken(risposta.token);
-        }
-        this.router.navigate(['/home']); 
+        // Puoi usare il messaggio che arriva direttamente dal backend
+        console.log(risposta.messaggio || 'Registrazione avvenuta con successo!'); 
+        
+        // Visto che l'API non fornisce un token, lo mandiamo al login
+        this.router.navigate(['/login']); 
       },
       error: (err) => {
         this.caricamento.set(false);
@@ -76,6 +77,6 @@ export class RegisterComponent {
 
   // Funzione per tornare indietro
   goBack() {
-    this.router.navigate(['/home']); // O ovunque tu preferisca rimandare l'utente
+    this.router.navigate(['/']); // O ovunque tu preferisca rimandare l'utente
   }
 }

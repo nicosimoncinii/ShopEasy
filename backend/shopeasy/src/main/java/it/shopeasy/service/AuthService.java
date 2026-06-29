@@ -75,7 +75,7 @@ public class AuthService {
         Utente utente = new Utente();
         utente.setNome(request.getNome());
         utente.setCognome(request.getCognome());
-        utente.setEmail(request.getEmail());
+        utente.setEmail(request.getEmail().toLowerCase());
         utente.setPassword(passwordEncoder.encode(request.getPassword()));
         utente.setRuolo(ruolo);
         utente.setStato(StatoUtente.ATTIVO);
@@ -100,12 +100,12 @@ public class AuthService {
     public LoginResponse login(LoginRequest request) {
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
-                    request.getEmail(),
+                    request.getEmail().toLowerCase(),
                     request.getPassword()
             )
         );
 
-        Utente utente = utenteRepository.findByEmail(request.getEmail())
+        Utente utente = utenteRepository.findByEmail(request.getEmail().toLowerCase())
         .orElseThrow(() -> new RuntimeException("Utente non trovato"));
 
         String token = jwtService.generaToken(utente);
@@ -119,7 +119,7 @@ public class AuthService {
 
     @Transactional
     public void forgotPassword(ForgotPasswordRequest request) {
-        Utente utente = utenteRepository.findByEmail(request.getEmail())
+        Utente utente = utenteRepository.findByEmail(request.getEmail().toLowerCase())
                 .orElseThrow(() -> new RuntimeException("Email non trovata"));
 
         tokenRepository.deleteByUtente(utente);

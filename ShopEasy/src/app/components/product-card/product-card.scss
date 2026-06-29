@@ -8,13 +8,17 @@
   font-family: 'Inter', 'Roboto', 'Helvetica', sans-serif;
   cursor: pointer;
   height: 100%;
+  border: 1px solid #f0f0f0;
 
   &:hover {
     transform: translateY(-4px);
     box-shadow: 0 12px 24px rgba(0,0,0,0.06);
   }
 }
-
+.condition{
+  color: #cdc9c9;
+  font-size: 8px;
+}
 .product-image {
   width: 100%;
   aspect-ratio: 3/4;
@@ -22,7 +26,7 @@
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
-  
+
   img {
     max-width: 100%;
     max-height: 100%;
@@ -46,7 +50,7 @@
 }
 
 .product-info {
-  padding: 0 0.5rem 1.5rem;
+  padding: 0 1rem 1rem;
   text-align: left;
   display: flex;
   flex-direction: column;
@@ -82,7 +86,8 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  margin-top: auto; /* Push to bottom of card */
+  margin-top: auto;
+  margin-bottom: 1rem;
 }
 
 .current-price-row {
@@ -91,7 +96,7 @@
   gap: 6px;
 
   .price-prefix {
-    font-size: 0.75rem;
+    font-size: 7px;
     color: #666666;
   }
 
@@ -116,5 +121,56 @@
 
   .condition {
     color: #666666;
+  }
+}
+
+.product-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 0.5rem;
+
+
+  .add-to-cart-btn {
+    flex-grow: 1;
+    background-color: #75d5d5;
+    color: black;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    span {
+      font-size: 0.95rem;
+    }
+
+    &:hover {
+      background-color: #333333;
+    }
+  }
+
+  .wishlist-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+    color: #666666;
+
+    &:hover {
+      background-color: #e8e8e8;
+      color: #ff3b30;
+    }
+
+
+    ng-icon[name="heroHeartSolid"] {
+      color: #ff3b30;
+    }
   }
 }

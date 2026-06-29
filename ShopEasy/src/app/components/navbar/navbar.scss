@@ -93,6 +93,7 @@
         align-items: center;
         gap: 8px;
 
+
         img {
           width: 32px;
           height: 22px;
@@ -100,7 +101,7 @@
         }
 
         .lang-text {
-          color: white;
+          color: black;
           font-weight: 600;
           font-size: 0.95rem;
         }
@@ -187,7 +188,7 @@
     cursor: pointer;
     white-space: nowrap;
     background-color: transparent;
-    color: white;
+    color: black;
     border: 2px solid var(--primary-color);
     transition: background-color 0.2s;
 
@@ -202,7 +203,7 @@
     cursor: pointer;
     white-space: nowrap;
     background-color: var(--primary-color);
-    color: white;
+    color: black;
     border: 2px solid var(--primary-color);
     transition: filter 0.2s;
 
@@ -288,6 +289,9 @@ nav {
       &:hover { background-color: #f0f0f0; }
     }
   }
+}
+p{
+ color: black;
 }
 // TABLET
 @media (max-width: 768px) {

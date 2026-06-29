@@ -1,5 +1,5 @@
 {
-  "HOME": "Home",
+  "HOME1": "Home",
   "PRODOTTI": "Products",
   "CARRELLO": "Cart",
   "CERCA": "Search product, category, brand...",
@@ -37,5 +37,21 @@
   "WISHLISTARTICOLI": "saved items",
   "PROFILO": "My profile",
   "ORDINI": "My orders",
-  "LOGOUT": "Logout"
+  "LOGOUT": "Logout",
+  "POPOLARI": "Featured products",
+  "FAQ": "Frequently asked questions",
+  "FAQ1_DOMANDA": "How can I track my order?",
+  "FAQ1_RISPOSTA": "After order confirmation you will receive an email with the tracking code.",
+  "FAQ2_DOMANDA": "What payment methods do you accept?",
+  "FAQ2_RISPOSTA": "We accept credit cards, PayPal and bank transfer.",
+  "FAQ3_DOMANDA": "Can I return a product?",
+  "FAQ3_RISPOSTA": "Yes, you have 30 days from receipt to make a free return.",
+  "FAQ4_DOMANDA": "How long does delivery take?",
+  "FAQ4_RISPOSTA": "Standard delivery takes 2-3 working days.",
+  "HOME": {
+    "BANNER_PATH": "/assets/banner-en.png"
+  },
+  "ADDCARRELLO": "Add to cart",
+  "NUOVO": "New",
+  "PREZZO": "Starting from"
 }

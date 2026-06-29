@@ -32,11 +32,12 @@ export class Login {
     this.caricamento.set(true);
     this.errore.set('');
 
-    this.authService.login(this.email, this.password).subscribe({
+    // Aggiunto .toLowerCase() a this.email
+    this.authService.login(this.email.toLowerCase(), this.password).subscribe({
       next: (res) => {
         this.authService.salvaToken(res.token);
         this.caricamento.set(false);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/']);
       },
       error: (err) => {
         this.errore.set('Email o password errati');

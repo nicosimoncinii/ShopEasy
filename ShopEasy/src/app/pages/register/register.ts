@@ -46,10 +46,11 @@ export class RegisterComponent {
 
     this.caricamento.set(true);
 
-   this.authService.register(
+    // Aggiunto .toLowerCase() a this.email
+    this.authService.register(
       this.nome, 
       this.cognome, 
-      this.email, 
+      this.email.toLowerCase(), 
       this.password, 
       this.confermaPassword
     ).subscribe({
@@ -76,6 +77,6 @@ export class RegisterComponent {
 
   // Funzione per tornare indietro
   goBack() {
-    this.router.navigate(['/home']); // O ovunque tu preferisca rimandare l'utente
+    this.router.navigate(['/']); // O ovunque tu preferisca rimandare l'utente
   }
 }

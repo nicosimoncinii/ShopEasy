@@ -1,5 +1,5 @@
 {
-  "HOME": "Home",
+  "HOME1": "Home",
   "PRODOTTI": "Prodotti",
   "CARRELLO": "Carrello",
   "CERCA": "Cerca prodotto, categoria, marca...",
@@ -37,5 +37,19 @@
   "WISHLISTARTICOLI": "articoli salvati",
   "PROFILO": "Il mio profilo",
   "ORDINI": "I miei ordini",
-  "LOGOUT": "Esci"
+  "LOGOUT": "Esci",
+  "POPOLARI": "Prodotti in evidenza",
+  "FAQ": "Domande frequenti",
+  "FAQ1_DOMANDA": "Come posso tracciare il mio ordine?",
+  "FAQ1_RISPOSTA": "Dopo la conferma dell'ordine riceverai una email con il codice di tracciamento.",
+  "FAQ2_DOMANDA": "Quali metodi di pagamento accettate?",
+  "FAQ2_RISPOSTA": "Accettiamo carte di credito, PayPal e bonifico bancario.",
+  "FAQ3_DOMANDA": "Posso restituire un prodotto?",
+  "FAQ3_RISPOSTA": "Sì, hai 30 giorni di tempo dalla ricezione per effettuare un reso gratuito.",
+  "FAQ4_DOMANDA": "Quanto tempo ci vuole per la consegna?",
+  "FAQ4_RISPOSTA": "La consegna standard richiede 2-3 giorni lavorativi.",
+  "HOME": {
+    "BANNER_PATH": "/assets/banner-it.png"
+  },
+  "CARRELLO": "Aggiungi al carrello"
 }

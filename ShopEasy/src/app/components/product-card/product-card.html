@@ -34,8 +34,7 @@
 
     <div class="product-actions">
         <button class="add-to-cart-btn" (click)="onAggiungiAlCarrello()">
-            Aggiungi al carrello
-        </button>
+            <h2>{{ langService.traduci('CARRELLO') }}</h2>        </button>
         <button class="wishlist-btn" (click)="onToggleWishlist()">
             <ng-icon [name]="isInWishlist ? 'heroHeartSolid' : 'heroHeart'" size="20"></ng-icon>
         </button>

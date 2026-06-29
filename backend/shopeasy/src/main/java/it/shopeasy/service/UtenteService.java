@@ -8,8 +8,10 @@ import it.shopeasy.enums.StatoUtente;
 import it.shopeasy.enums.ThemePreferences;
 import it.shopeasy.model.Ruolo;
 import it.shopeasy.model.Utente;
+import it.shopeasy.model.Wishlist;
 import it.shopeasy.repository.RuoloRepository;
 import it.shopeasy.repository.UtenteRepository;
+import it.shopeasy.repository.WishlistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,8 @@ public class UtenteService {
     private UtenteRepository utenteRepository;
     @Autowired
     private RuoloRepository ruoloRepository;
+    @Autowired
+    private WishlistRepository wishlistRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -70,6 +74,9 @@ public class UtenteService {
         Ruolo ruolo = ruoloRepository.findByNome(ruoloEnum)
                 .orElseThrow(() -> new RuntimeException("Ruolo non trovato"));
         utente.setRuolo(ruolo);
+
+        Wishlist wishlist = new Wishlist(utente);
+        wishlistRepository.save(wishlist);
 
         return toResponse(utenteRepository.save(utente));
     }

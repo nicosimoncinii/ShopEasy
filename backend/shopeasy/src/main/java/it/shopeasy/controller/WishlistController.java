@@ -1,18 +1,22 @@
 package it.shopeasy.controller;
 
+import it.shopeasy.dto.WishlistResponseDTO;
 import it.shopeasy.model.Prodotto;
 import it.shopeasy.model.Utente;
 import it.shopeasy.model.Wishlist;
 import it.shopeasy.repository.ProdottoRepository;
 import it.shopeasy.repository.UtenteRepository;
 import it.shopeasy.repository.WishlistRepository;
+import it.shopeasy.service.WishlistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 
@@ -21,81 +25,37 @@ import java.util.Set;
 public class WishlistController {
 
     @Autowired
-    private UtenteRepository utenteRepository;
+    private WishlistService wishlistService;
 
-    @Autowired
-    private ProdottoRepository prodottoRepository;
+    @GetMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<List<WishlistResponseDTO>> prendiTutteLeWishlist() {
+        return ResponseEntity.ok(wishlistService.prendiTutteLeWishlist());
+    }
 
-    @Autowired
-    private WishlistRepository wishlistRepository;
+    @GetMapping("/{utenteId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<WishlistResponseDTO> prendiWishlistPerUtente(@PathVariable Long utenteId) {
+        return ResponseEntity.ok(wishlistService.prendiWishlistPerUtenteId(utenteId));
+    }
 
     @GetMapping("/me")
-    public ResponseEntity<Set<Prodotto>> getMyWishlist() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String email = auth.getName();
-
-        Utente utente = utenteRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Utente non trovato"));
-
-        Wishlist wishlist = wishlistRepository.findByUtente(utente)
-                .orElseGet(() -> {
-                    Wishlist nuova = new Wishlist();
-                    nuova.setUtente(utente);
-                    return wishlistRepository.save(nuova);
-                });
-
-        return ResponseEntity.ok(wishlist.getProdotti());
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENTE')")
+    public ResponseEntity<WishlistResponseDTO> prendiMiaWishlist(Principal principal) {
+        return ResponseEntity.ok(wishlistService.prendiWishlistPerUtente(principal.getName()));
     }
 
-    @PostMapping("/add/{id}")
-    public ResponseEntity<String> addToWishlist(@PathVariable Long id) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String email = auth.getName();
-
-        Utente utente = utenteRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Utente non trovato"));
-
-        Prodotto prodotto = prodottoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Prodotto non trovato con ID: " + id));
-
-        Wishlist wishlist = wishlistRepository.findByUtente(utente)
-                .orElseGet(() -> {
-                    Wishlist nuova = new Wishlist();
-                    nuova.setUtente(utente);
-                    return wishlistRepository.save(nuova);
-                });
-
-        if (wishlist.getProdotti().contains(prodotto)) {
-            return ResponseEntity.badRequest().body("Prodotto già presente nella wishlist");
-        }
-
-        wishlist.getProdotti().add(prodotto);
-        wishlistRepository.save(wishlist);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body("Prodotto aggiunto alla wishlist");
+    @PostMapping("/me/prodotti/{prodottoId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENTE')")
+    public ResponseEntity<WishlistResponseDTO> aggiungiProdotto(@PathVariable Long prodottoId,
+                                                                Principal principal) {
+        return ResponseEntity.ok(wishlistService.aggiungiProdotto(principal.getName(), prodottoId));
     }
 
-    @DeleteMapping("/remove/{id}")
-    public ResponseEntity<String> removeFromWishlist(@PathVariable Long id) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String email = auth.getName();
-
-        Utente utente = utenteRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Utente non trovato"));
-
-        Prodotto prodotto = prodottoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Prodotto non trovato con ID: " + id));
-
-        Wishlist wishlist = wishlistRepository.findByUtente(utente)
-                .orElseThrow(() -> new RuntimeException("Wishlist non trovata"));
-
-        if (!wishlist.getProdotti().contains(prodotto)) {
-            return ResponseEntity.badRequest().body("Prodotto non presente nella wishlist");
-        }
-
-        wishlist.getProdotti().remove(prodotto);
-        wishlistRepository.save(wishlist);
-
-        return ResponseEntity.ok("Prodotto rimosso dalla wishlist");
+    @DeleteMapping("/me/prodotti/{prodottoId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENTE')")
+    public ResponseEntity<WishlistResponseDTO> rimuoviProdotto(@PathVariable Long prodottoId,
+                                                               Principal principal) {
+        return ResponseEntity.ok(wishlistService.rimuoviProdotto(principal.getName(), prodottoId));
     }
 }

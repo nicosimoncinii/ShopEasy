@@ -102,7 +102,7 @@ public class OrdineService {
     }
 
     public List<OrdineResponseDTO> prendiOrdiniPerUtente(String email) {
-        return ordineRepository.findByEmail(email)
+        return ordineRepository.findByUtenteEmail(email)
                 .stream()
                 .map(this::toResponse)
                 .toList();

@@ -25,7 +25,7 @@ public class OrdineController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENTE')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<List<OrdineResponseDTO>> prendiTuttiOrdini() {
         return ResponseEntity.ok(service.prendiTuttiOrdini());
     }

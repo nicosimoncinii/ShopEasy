@@ -51,5 +51,7 @@
   "HOME": {
     "BANNER_PATH": "/assets/banner-it.png"
   },
-  "CARRELLO": "Aggiungi al carrello"
+  "ADDCARRELLO": "Aggiungi al carrello",
+  "NUOVO": "Nuovo",
+  "PREZZO": "A partire da"
 }

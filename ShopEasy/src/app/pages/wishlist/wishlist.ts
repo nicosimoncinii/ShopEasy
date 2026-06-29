@@ -21,9 +21,7 @@ export class Wishlist {
       private router: Router
   ) {}
 
-  nomeProdotto(prodotto: any): string {
-    return this.langService.getLingua() === 'it' ? prodotto.nomeIt : prodotto.nomeEn;
-  }
+
 
   rimuoviDaWishlist(id: number) {
     this.wishlistService.rimuovi(id);

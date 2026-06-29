@@ -34,5 +34,8 @@
   "DIRITTI": "All rights reserved",
   "WISHLIST": "My wishlist",
   "WISHLISTVUOTA": "Your wishlist is empty",
-  "WISHLISTARTICOLI": "saved items"
+  "WISHLISTARTICOLI": "saved items",
+  "PROFILO": "My profile",
+  "ORDINI": "My orders",
+  "LOGOUT": "Logout"
 }

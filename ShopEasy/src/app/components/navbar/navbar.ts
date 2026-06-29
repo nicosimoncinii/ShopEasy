@@ -1,35 +1,37 @@
 import { Component } from '@angular/core';
 import { RouterModule, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { NgIconComponent } from '@ng-icons/core';
 import { SearchService } from '../../services/search.service';
 import { LangService } from '../../services/lang.service';
 import { ThemeService } from '../../services/theme.service';
 import { CartService } from '../../services/cart.service';
-
+import { AuthService } from '../../services/auth.service';
+import { NgIconComponent } from '@ng-icons/core';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterModule, RouterLink],
+  imports: [CommonModule, RouterModule, RouterLink, NgIconComponent],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
+
 })
 export class Navbar {
 
   dropdownAperto = false;
+  profiloAperto = false;
 
   constructor(
       private searchService: SearchService,
       public langService: LangService,
       public themeService: ThemeService,
-      public cartService: CartService
+      public cartService: CartService,
+      public authService: AuthService
   ) {}
 
   get numeroProdottiCarrello() {
     return this.cartService.numeroProdotti();
   }
-
 
   onSearch(event: any) {
     this.searchService.cerca(event.target.value);
@@ -39,6 +41,10 @@ export class Navbar {
     this.dropdownAperto = !this.dropdownAperto;
   }
 
+  toggleProfilo() {
+    this.profiloAperto = !this.profiloAperto;
+  }
+
   cambiaLingua(lingua: string) {
     this.langService.caricaLingua(lingua);
     this.dropdownAperto = false;
@@ -46,5 +52,10 @@ export class Navbar {
 
   cambiaTema() {
     this.themeService.toggleTema();
+  }
+
+  logout() {
+    this.authService.logout();
+    this.profiloAperto = false;
   }
 }

@@ -14,11 +14,11 @@
 
         <div *ngFor="let prodotto of wishlistService.getProdotti()" class="wishlist-row">
 
-            <img [src]="prodotto.img" [alt]="nomeProdotto(prodotto)" class="product-img">
+            <img [src]="prodotto.imageUrl" [alt]="prodotto.name" class="product-img">
 
             <div class="product-info">
-                <strong>{{ nomeProdotto(prodotto) }}</strong>
-                <span class="product-price">{{ prodotto.prezzo }}€</span>
+                <strong>{{ prodotto.name }}</strong>
+                <span class="product-price">{{ prodotto.price | currency:'EUR':'symbol':'1.2-2':'it-IT' }}</span>
             </div>
 
             <div class="actions">

@@ -18,13 +18,13 @@ export class CartService {
     { id: 7, name: 'PlayStation 5 Slim', imageUrl: '/PlayStation5Slim.png', price: 449, listPrice: 549, rating: 5, reviewsCount: 1200, nomeIt: 'PlayStation 5 Slim', nomeEn: 'PlayStation 5 Slim' }
   ];
 
-  // metodi compatibili con il vecchio codice
+
   getProdotti() {
     return this.elementiCarrello();
   }
 
   getTotale(): number {
-    return this.elementiCarrello().reduce((tot, item) => tot + (item.prezzo * item.quantita), 0);
+    return this.elementiCarrello().reduce((tot, item) => tot + (item.price * item.quantita), 0);
   }
 
   aggiungiProdotto(prodotto: any) {

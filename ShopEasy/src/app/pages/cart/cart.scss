@@ -15,6 +15,12 @@
     color: #888;
     margin-bottom: 1.5rem;
   }
+  .product-img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 8px;
+  }
 
   .product-row {
     display: flex;

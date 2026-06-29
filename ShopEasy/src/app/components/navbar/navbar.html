@@ -42,6 +42,12 @@
             </button>
             <button class="cart-btn" routerLink="/cart">
                 <img src="Cart.png" alt="Carrello">
+
+                @if (numeroProdottiCarrello > 0) {
+                    <span class="cart-badge">
+            {{ numeroProdottiCarrello }}
+        </span>
+                }
             </button>
 
             @if (authService.isLoggato()) {

@@ -5,6 +5,7 @@ import { LangService } from '../../services/lang.service';
 import { CartService } from '../../services/cart.service';
 import { WishlistService } from '../../services/wishlist.service';
 import { ProductCard } from '../../components/product-card/product-card';
+import { ThemeService} from "../../services/theme.service";
 
 
 @Component({
@@ -18,15 +19,23 @@ export class Home {
 
   constructor(
       public langService: LangService,
+      public themeService: ThemeService,
       public cartService: CartService,
       public wishlistService: WishlistService,
       private router: Router
   ) {}
 
   get bannerUrl(): string {
-    return this.langService.getLingua() === 'it'
-        ? '/banner.png'
-        : '/bannerIG.png';
+
+    const lingua = this.langService.getLingua();
+    const isDark = this.themeService.getIsDarkMode();
+
+    if (isDark) {
+
+      return lingua === 'it' ? '/darkbannerIT.png' : '/darkbannerIG.png';
+    } else {
+      return lingua === 'it' ? '/banner.png' : '/bannerIG.png';
+    }
   }
 
   get prodottiInEvidenza() {

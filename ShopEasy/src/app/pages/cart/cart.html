@@ -9,6 +9,7 @@
         <p>{{ cartService.getProdotti().length }} {{ langService.traduci('ARTICOLI') }}</p>
 
         <div *ngFor="let prodotto of cartService.getProdotti()" class="product-row">
+            <img [src]="prodotto.imageUrl" [alt]="prodotto.name" class="product-img">
             <span class="product-name">{{ nomeProdotto(prodotto) }}</span>
             <span class="product-price">{{ prodotto.prezzo }}€</span>
 
@@ -19,13 +20,13 @@
             </div>
 
             <button class="elimina-btn" (click)="eliminaProdotto(prodotto.id)">
-                {{ langService.traduci('elimina') }}
+                {{ langService.traduci('ELIMINA') }}
             </button>
             <hr>
         </div>
 
         <div class="cart-footer">
-            <strong>{{ langService.traduci('totale') }}: {{ cartService.getTotale() }}€</strong>
+            <strong>{{ langService.traduci('TOTALE') }}: {{ cartService.getTotale() }}€</strong>
         </div>
     </div>
 

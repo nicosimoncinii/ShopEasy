@@ -22,7 +22,7 @@
 .offerte h2 {
   margin: 25px 0 15px;
   font-size: 22px;
-  color: #0f172a;
+  color: var(--text-coloree);
 }
 
 .products-grid {
@@ -36,7 +36,7 @@
 
   h2 {
     font-size: 22px;
-    color: #0f172a;
+    color: var(--text-coloree);
     margin-bottom: 1.5rem;
   }
 
@@ -47,7 +47,7 @@
   }
 
   .faq-item {
-    background: white;
+    background: var(--bg-navbar);
     border: 1px solid #e2e8f0;
     border-radius: 12px;
     padding: 1.2rem 1.5rem;
@@ -60,13 +60,13 @@
     h3 {
       font-size: 1rem;
       font-weight: 600;
-      color: #0f172a;
+      color: var(--text-coloree);
       margin: 0 0 0.5rem;
     }
 
     p {
       font-size: 0.9rem;
-      color: #555;
+      color: var(--text-coloree);
       margin: 0;
       line-height: 1.6;
     }

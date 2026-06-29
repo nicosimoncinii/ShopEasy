@@ -13,12 +13,16 @@
 :root {
   --primary-color: #C8F3DF;      /* Verde menta chiaro */
   --secondary-color: #FFE7B3;    /* Giallo crema */
-  --accent-color: #FFD6D1;       /* Rosa pesca */
+  --accent-color: #FFD6D1; /* Rosa pesca */
 
-  --bg-dark: #F0F0F0;            /* Sfondo generale chiaro NON bianco */
-  --bg-navbar: #E3F2FF;          /* Azzurro ghiaccio */
+  --text-coloree: #3A3A3A;
+
+  --bg-dark: #F0F0F0;            /* Sfondo generale chaiaro NON bianco */
+  --bg-navbar: #bed4f3;          /* Azzurro ghiaccio */
   --bg-footer: #E3F2FF;          /* Footer uguale alla navbar */
   --bg-card: #F7F7F7;            /* Grigio perla molto chiaro */
+
+  --btn-heart: #C8F3DF;
 
   --text-light: #3A3A3A;         /* Testo grigio scuro soft */
   --block-text-color: #4A4A4A;   /* Titoli */
@@ -30,6 +34,11 @@
   --primary-color: #9EDFC8;
   --secondary-color: #E8D3A0;
   --accent-color: #E8B5B0;
+
+  --btn-heart: #1A1A1A;
+
+
+  --text-coloree: #FFFFFF;
 
   --bg-dark: #121212;
   --bg-navbar: #1A1A1A;

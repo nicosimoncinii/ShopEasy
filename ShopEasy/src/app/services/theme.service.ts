@@ -40,4 +40,8 @@ export class ThemeService {
   getIsDarkMode(): boolean {
     return this.temaAttuale() === 'dark';
   }
+
+  getTemaSignal() {
+    return this.temaAttuale.asReadonly();
+  }
 }

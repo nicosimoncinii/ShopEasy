@@ -46,7 +46,7 @@ export class RegisterComponent {
 
     this.caricamento.set(true);
 
-    this.authService.register(
+   this.authService.register(
       this.nome, 
       this.cognome, 
       this.email, 
@@ -55,11 +55,11 @@ export class RegisterComponent {
     ).subscribe({
       next: (risposta) => {
         this.caricamento.set(false);
-        console.log('Registrazione avvenuta con successo!', risposta);
-        if (risposta && risposta.token) {
-          this.authService.salvaToken(risposta.token);
-        }
-        this.router.navigate(['/home']); 
+        // Puoi usare il messaggio che arriva direttamente dal backend
+        console.log(risposta.messaggio || 'Registrazione avvenuta con successo!'); 
+        
+        // Visto che l'API non fornisce un token, lo mandiamo al login
+        this.router.navigate(['/login']); 
       },
       error: (err) => {
         this.caricamento.set(false);

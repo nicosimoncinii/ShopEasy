@@ -36,7 +36,7 @@ export class Login {
       next: (res) => {
         this.authService.salvaToken(res.token);
         this.caricamento.set(false);
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
       },
       error: (err) => {
         this.errore.set('Email o password errati');

@@ -1,33 +1,43 @@
 <div class="product-card" *ngIf="product">
-  <div class="product-image">
-    <img [src]="product.imageUrl" [alt]="product.name">
-  </div>
-  
-  <div class="product-colors" *ngIf="product.colors && product.colors.length > 0">
-    <span class="color-circle" *ngFor="let color of product.colors" [style.background-color]="color"></span>
-  </div>
-
-  <div class="product-info">
-    <h3 class="product-title">{{ product.name }}</h3>
-    
-    <div class="product-rating">
-      <div class="stars">
-        <svg *ngFor="let i of [1,2,3,4,5]" width="14" height="14" viewBox="0 0 24 24" [attr.fill]="i <= product.rating ? '#eab308' : '#e5e7eb'">
-          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-        </svg>
-      </div>
-      <span class="reviews-count">({{ product.reviewsCount }})</span>
+    <div class="product-image">
+        <img [src]="product.imageUrl" [alt]="product.name">
     </div>
 
-    <div class="product-price-section">
-      <div class="current-price-row">
-        <span class="price-prefix">A partire da</span>
-        <span class="current-price">{{ product.price | currency:'EUR':'symbol':'1.2-2':'it-IT' }}</span>
-      </div>
-      <div class="list-price-row" *ngIf="product.listPrice">
-        <span class="list-price">{{ product.listPrice | currency:'EUR':'symbol':'1.2-2':'it-IT' }}</span>
-        <span class="condition">Nuovo</span>
-      </div>
+    <div class="product-colors" *ngIf="product.colors && product.colors.length > 0">
+        <span class="color-circle" *ngFor="let color of product.colors" [style.background-color]="color"></span>
     </div>
-  </div>
+
+    <div class="product-info">
+        <h3 class="product-title">{{ product.name }}</h3>
+
+        <div class="product-rating">
+            <div class="stars">
+                <svg *ngFor="let i of [1,2,3,4,5]" width="14" height="14" viewBox="0 0 24 24"
+                     [attr.fill]="i <= product.rating ? '#eab308' : '#e5e7eb'">
+                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                </svg>
+            </div>
+            <span class="reviews-count">({{ product.reviewsCount }})</span>
+        </div>
+
+        <div class="product-price-section">
+            <div class="current-price-row">
+                <span class="price-prefix">A partire da</span>
+                <span class="current-price">{{ product.price | currency:'EUR':'symbol':'1.2-2':'it-IT' }}</span>
+            </div>
+            <div class="list-price-row" *ngIf="product.listPrice">
+                <span class="list-price">{{ product.listPrice | currency:'EUR':'symbol':'1.2-2':'it-IT' }}</span>
+                <span class="condition">Nuovo</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="product-actions">
+        <button class="add-to-cart-btn" (click)="onAggiungiAlCarrello()">
+            Aggiungi al carrello
+        </button>
+        <button class="wishlist-btn" (click)="onToggleWishlist()">
+            <ng-icon [name]="isInWishlist ? 'heroHeartSolid' : 'heroHeart'" size="20"></ng-icon>
+        </button>
+    </div>
 </div>

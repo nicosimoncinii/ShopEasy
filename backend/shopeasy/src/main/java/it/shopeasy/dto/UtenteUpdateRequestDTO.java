@@ -4,7 +4,6 @@ import it.shopeasy.enums.LanguagePreferences;
 import it.shopeasy.enums.RuoloUtente;
 import it.shopeasy.enums.StatoUtente;
 import it.shopeasy.enums.ThemePreferences;
-import it.shopeasy.model.Ruolo;
 import jakarta.validation.constraints.*;
 
 public class UtenteUpdateRequestDTO {

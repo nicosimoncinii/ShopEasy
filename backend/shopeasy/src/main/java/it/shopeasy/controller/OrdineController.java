@@ -47,4 +47,13 @@ public class OrdineController {
         OrdineResponseDTO aggiornato = service.aggiornaOrdine(id, ordine);
         return ResponseEntity.ok(aggiornato);
     }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENTE')")
+    public ResponseEntity<Void> cancellaOrdine(@PathVariable Long id, Principal principal){
+        service.cancellaOrdine(id,principal.getName());
+
+        return ResponseEntity.noContent().build();
+    }
+
 }

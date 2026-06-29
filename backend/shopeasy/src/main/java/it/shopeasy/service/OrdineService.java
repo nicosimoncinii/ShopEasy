@@ -1,6 +1,7 @@
 package it.shopeasy.service;
 
 import it.shopeasy.dto.OrdineRequestDTO;
+import it.shopeasy.enums.RuoloUtente;
 import it.shopeasy.enums.StatoOrdine;
 import it.shopeasy.model.DettaglioOrdine;
 import it.shopeasy.model.Ordine;
@@ -45,7 +46,12 @@ public class OrdineService {
                 .orElseThrow(() -> new RuntimeException("Ordine non trovato con id: " + id));
     }
 
-    public void cancellaOrdine(Long id) {
+    public void cancellaOrdine(Long id,String email) {
+        Ordine ordine = prendiOrdinePerId(id);
+        if (!ordine.getUtente().getEmail().equals(email) && !(utenteService.prendiUtentePerId(ordine.getUtente().getId()).getRuolo().getNome().equals(RuoloUtente.ADMIN))) {
+            throw new RuntimeException("Non sei autorizzato a cancellare questo ordine");
+        }
+
         ordineRepository.deleteById(id);
     }
 

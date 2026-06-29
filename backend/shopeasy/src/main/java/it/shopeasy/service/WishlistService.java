@@ -104,4 +104,48 @@ public class WishlistService {
                 prodottiDTO
         );
     }
+
+/*
+    public WhishlistResponseDTO checkoutOrdine(String email) {
+        Utente utente = utenteRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Utente non trovato"));
+        Wishlist wishlist = wishlistRepository.findByUtente(utente)
+                .orElseThrow(() -> new RuntimeException("Wishlist non trovata"));
+        
+        Ordine ordine = new Ordine();
+        ordine.setUtente(utente);
+        ordine.setStato(StatoOrdine.ORDINATO);
+        ordine.setData(LocalDateTime.now());
+
+
+        Set<DettaglioOrdine> dettagli = wishlist.getProdotti().stream()
+                .map(prodotto -> {
+                        DettaglioOrdine dettaglio = new DettaglioOrdine();
+                        dettaglio.setProdotto(prodotto);
+                        dettaglio.setQuantita(1);
+                        
+                        dettaglio.setPrezzoUnitario(prodotto.getPrezzo()); 
+                        dettaglio.setOrdine(ordine);
+                        return dettaglio;
+                })
+                .collect(Collectors.toSet()); 
+
+        
+        double sommaTotale = dettagli.stream()
+                .mapToDouble(DettaglioOrdine::getPrezzoUnitario) 
+                .sum();
+                
+        ordine.setTotale(sommaTotale);
+        ordine.setDettagli(dettagli);
+        
+        
+        ordineRepository.save(ordine);
+
+        
+        wishlist.svuotaWishlist();
+        wishlistRepository.save(wishlist);
+
+        return wishlistMapper.toResponseDTO(wishlist);
+        }*/
+
 }

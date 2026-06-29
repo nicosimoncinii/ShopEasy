@@ -31,7 +31,7 @@ public class DettaglioOrdine {
         this.ordine = ordine;
         this.prodotto = prodotto;
         this.quantita = quantita;
-        this.prezzoUnitario = prezzoUnitario;
+        this.prezzoUnitario = prodotto.getPrezzo()*quantita;
     }
 
     public Long getId() {

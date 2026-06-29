@@ -34,7 +34,7 @@ public class WishlistController {
     }
 
     @GetMapping("/{utenteId}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<WishlistResponseDTO> prendiWishlistPerUtente(@PathVariable Long utenteId) {
         return ResponseEntity.ok(wishlistService.prendiWishlistPerUtenteId(utenteId));
     }

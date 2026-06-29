@@ -7,8 +7,10 @@ import it.shopeasy.service.OrdineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -23,22 +25,25 @@ public class OrdineController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENTE')")
     public ResponseEntity<List<OrdineResponseDTO>> prendiTuttiOrdini() {
         return ResponseEntity.ok(service.prendiTuttiOrdini());
     }
 
-    @GetMapping("/my-orders/{utente_id}")
-    public ResponseEntity<List<OrdineResponseDTO>> prendiOrdiniPerUtente(@PathVariable Long utente_id) {
-        return ResponseEntity.ok(service.prendiOrdiniPerUtente(utente_id));
+    @GetMapping("/my-orders")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENTE')")
+    public ResponseEntity<List<OrdineResponseDTO>> prendiOrdiniPerUtente(Principal principal) {
+        return ResponseEntity.ok(service.prendiOrdiniPerUtente(principal.getName()));
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<OrdineResponseDTO> salvaOrdine(@RequestBody OrdineRequestDTO ordine) {
-        OrdineResponseDTO creato = service.salvaOrdine(ordine);
-        return ResponseEntity.status(HttpStatus.CREATED).body(creato);
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.salvaOrdine(ordine));
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<OrdineResponseDTO> aggiornaOrdine(@RequestBody OrdineRequestDTO ordine, @PathVariable Long id) {
         OrdineResponseDTO aggiornato = service.aggiornaOrdine(id, ordine);
         return ResponseEntity.ok(aggiornato);

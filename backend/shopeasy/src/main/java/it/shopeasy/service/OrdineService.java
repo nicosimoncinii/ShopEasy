@@ -9,6 +9,7 @@ import it.shopeasy.dto.OrdineResponseDTO;
 import it.shopeasy.model.Prodotto;
 import it.shopeasy.repository.OrdineRepository;
 import it.shopeasy.repository.ProdottoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,23 +49,20 @@ public class OrdineService {
         ordineRepository.deleteById(id);
     }
 
+    @Transactional
     public OrdineResponseDTO salvaOrdine(OrdineRequestDTO ordineR) {
         Ordine ordine = new Ordine();
         ordine.setData(LocalDateTime.now());
         ordine.setStato(StatoOrdine.ORDINATO);
         ordine.setUtente(utenteService.prendiUtentePerId(ordineR.getUtenteId()));
 
-        // prima salva l'ordine per avere l'id
-        Ordine ordineSalvato = ordineRepository.save(ordine);
-
-        // mappa i dettagli
         Set<DettaglioOrdine> dettagli = ordineR.getDettagli()
                 .stream()
                 .map(d -> {
                     Prodotto prodotto = prodottoRepository.findById(d.getProdottoId())
                             .orElseThrow(() -> new RuntimeException("Prodotto non trovato con id: " + d.getProdottoId()));
                     DettaglioOrdine dettaglio = new DettaglioOrdine();
-                    dettaglio.setOrdine(ordineSalvato);
+                    dettaglio.setOrdine(ordine);
                     dettaglio.setProdotto(prodotto);
                     dettaglio.setQuantita(d.getQuantita());
                     dettaglio.setPrezzoUnitario(prodotto.getPrezzo() * d.getQuantita());
@@ -72,19 +70,39 @@ public class OrdineService {
                 })
                 .collect(Collectors.toSet());
 
-        ordineSalvato.setDettagli(dettagli);
+        ordine.setDettagli(dettagli);
 
         // calcola il totale sommando i prezzi dei dettagli
         Double totale = dettagli.stream()
                 .mapToDouble(DettaglioOrdine::getPrezzoUnitario)
                 .sum();
-        ordineSalvato.setTotale(totale);
+        ordine.setTotale(totale);
 
-        return toResponse(ordineRepository.save(ordineSalvato));
+        ordine.getDettagli().forEach(dettaglio -> {
+            Prodotto prodotto = dettaglio.getProdotto();
+            if (prodotto.getQuantita() < dettaglio.getQuantita())
+                throw new IllegalArgumentException("Quantità insufficiente per il prodotto: " + prodotto.getNome());
+            prodotto.setQuantita(prodotto.getQuantita() - dettaglio.getQuantita());
+            prodottoRepository.save(prodotto);
+        });
+
+
+        return toResponse(ordineRepository.save(ordine));
+
+
+
+
     }
 
     public List<OrdineResponseDTO> prendiOrdiniPerUtente(Long utenteId) {
         return ordineRepository.findByUtenteId(utenteId)
+                .stream()
+                .map(this::toResponse)
+                .toList();
+    }
+
+    public List<OrdineResponseDTO> prendiOrdiniPerUtente(String email) {
+        return ordineRepository.findByEmail(email)
                 .stream()
                 .map(this::toResponse)
                 .toList();

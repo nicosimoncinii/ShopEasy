@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface OrdineRepository extends JpaRepository<Ordine, Long>{
     public List<Ordine> findByUtenteId(Long utente_id);
+    public List<Ordine> findByEmail(String email);
 }

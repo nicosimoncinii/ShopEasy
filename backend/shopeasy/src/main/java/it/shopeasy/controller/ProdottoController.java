@@ -22,11 +22,13 @@ public class ProdottoController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENTE')")
     public ResponseEntity<List<ProdottoResponseDTO>> prendiTuttiProdotti() {
         return ResponseEntity.ok(prodottoService.prendiTuttiProdotti());
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENTE')")
     public ResponseEntity<ProdottoResponseDTO> prendiProdottoPerId(@PathVariable Long id){
         return ResponseEntity.ok(prodottoService.prendiProdottoResponsePerId(id));
     }

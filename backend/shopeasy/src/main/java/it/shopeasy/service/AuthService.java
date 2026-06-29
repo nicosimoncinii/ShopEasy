@@ -11,9 +11,11 @@ import it.shopeasy.enums.ThemePreferences;
 import it.shopeasy.model.PasswordResetToken;
 import it.shopeasy.model.Ruolo;
 import it.shopeasy.model.Utente;
+import it.shopeasy.model.Wishlist;
 import it.shopeasy.repository.PasswordResetTokenRepository;
 import it.shopeasy.repository.RuoloRepository;
 import it.shopeasy.repository.UtenteRepository;
+import it.shopeasy.repository.WishlistRepository;
 import it.shopeasy.security.JwtService;
 import it.shopeasy.enums.RuoloUtente;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,9 @@ import java.util.UUID;
 
 @Service
 public class AuthService {
+    @Autowired
+    private WishlistRepository wishlistRepository;
+
     @Autowired
     private UtenteRepository utenteRepository;
 
@@ -63,11 +68,8 @@ public class AuthService {
             throw new RuntimeException("Le password non coincidono");
         }
 
-        Ruolo ruolo = ruoloRepository.findByNome(RuoloUtente.CLIENTE).orElse(null);
-        if (ruolo == null) {
-            ruolo = new Ruolo();
-            ruolo.setId(1L);
-        }
+        Ruolo ruolo = ruoloRepository.findByNome(RuoloUtente.CLIENTE)
+                .orElseThrow(() -> new RuntimeException("Ruolo CLIENTE non trovato nel database"));
 
 
         Utente utente = new Utente();
@@ -80,7 +82,11 @@ public class AuthService {
         utente.setLanguagePreference(LanguagePreferences.IT);
         utente.setThemePreference(ThemePreferences.LIGHT);
 
-        utenteRepository.save(utente);
+        Utente utenteSalvato =utenteRepository.save(utente);
+
+        Wishlist wishlist = new Wishlist();
+        wishlist.setUtente(utenteSalvato);
+        wishlistRepository.save(wishlist);
 
         emailService.sendWelcomeEmail(utente);
 

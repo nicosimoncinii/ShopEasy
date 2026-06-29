@@ -11,6 +11,7 @@ import it.shopeasy.repository.UtenteRepository;
 import it.shopeasy.repository.WishlistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.util.List;
 import java.util.Set;
@@ -59,6 +60,8 @@ public class WishlistService {
         if (wishlist.getProdotti().contains(prodotto)) {
             throw new RuntimeException("Prodotto già presente nella wishlist");
         }
+        if(prodotto.getQuantita() == 0)
+            throw new IllegalArgumentException("Il prodotto deve essere in magazzino");
 
         wishlist.aggiungiProdotto(prodotto);
         return toResponse(wishlistRepository.save(wishlist));
@@ -90,8 +93,8 @@ public class WishlistService {
                         prodotto.getPrezzo(),
                         prodotto.getQuantita(),
                         prodotto.getImmagine(),
-                        prodotto.getCategoria().getId(),
-                        prodotto.getCategoria().getNome()
+                        prodotto.getCategoria() != null ? prodotto.getCategoria().getId() : null,
+                        prodotto.getCategoria() != null ? prodotto.getCategoria().getNome() : null
                 ))
                 .collect(Collectors.toSet());
 

@@ -1,33 +1,53 @@
 <div class="cart-page">
 
-    <div *ngIf="cartService.getProdotti().length === 0">
-        <h1>{{ langService.traduci('CARRELLOVUOTO') }}</h1>
-    </div>
-
-    <div *ngIf="cartService.getProdotti().length > 0">
-
-        <p>{{ cartService.getProdotti().length }} {{ langService.traduci('ARTICOLI') }}</p>
-
-        <div *ngFor="let prodotto of cartService.getProdotti()" class="product-row">
-            <img [src]="prodotto.imageUrl" [alt]="prodotto.name" class="product-img">
-            <span class="product-name">{{ nomeProdotto(prodotto) }}</span>
-            <span class="product-price">{{ prodotto.prezzo }}€</span>
-
-            <div class="quantity-controls">
-                <button (click)="modificaQuantita(prodotto.id, prodotto.quantita - 1)">-</button>
-                <span>{{ prodotto.quantita }}</span>
-                <button (click)="modificaQuantita(prodotto.id, prodotto.quantita + 1)">+</button>
-            </div>
-
-            <button class="elimina-btn" (click)="eliminaProdotto(prodotto.id)">
-                {{ langService.traduci('ELIMINA') }}
+    @if (cartService.getProdotti().length === 0) {
+        <div class="empty-cart-container">
+            <i class="pi pi-shopping-bag empty-icon"></i>
+            <h1>{{ langService.traduci('CARRELLOVUOTO') }}</h1>
+            <button class="torna-btn" (click)="tornaAlloShopping()">
+                <i class="pi pi-arrow-left"></i> {{ langService.traduci('TORNA') }}
             </button>
-            <hr>
+        </div>
+    } @else {
+        <p><i class="pi pi-box"></i> {{ cartService.getProdotti().length }} {{ langService.traduci('ARTICOLI') }}</p>
+
+        <div class="cart-items-container">
+            @for (prodotto of cartService.getProdotti(); track prodotto.id) {
+                <div class="product-row">
+                    <img [src]="prodotto.imageUrl" [alt]="prodotto.name" class="product-img">
+
+                    <span class="product-name">{{ nomeProdotto(prodotto) }}</span>
+
+                    <span class="product-price">{{ prodotto.price | currency:'EUR':'symbol':'1.2-2' }}</span>
+
+                    <div class="quantity-controls">
+                        <button (click)="modificaQuantita(prodotto.id, prodotto.quantita - 1)" [disabled]="prodotto.quantita <= 1">
+                            <i class="pi pi-minus"></i>
+                        </button>
+                        <span>{{ prodotto.quantita }}</span>
+                        <button (click)="modificaQuantita(prodotto.id, prodotto.quantita + 1)">
+                            <i class="pi pi-plus"></i>
+                        </button>
+                    </div>
+
+                    <button class="elimina-btn" (click)="eliminaProdotto(prodotto.id)">
+                        <i class="pi pi-trash"></i> {{ langService.traduci('ELIMINA') }}
+                    </button>
+                </div>
+            }
         </div>
 
         <div class="cart-footer">
-            <strong>{{ langService.traduci('TOTALE') }}: {{ cartService.getTotale() }}€</strong>
+            <div class="total-box">
+                <strong>{{ langService.traduci('TOTALE') }}: <span class="total-price">{{ cartService.getTotale() | currency:'EUR':'symbol':'1.2-2' }}</span></strong>
+            </div>
+
+            <div class="checkout-box">
+                <button class="btn-checkout" (click)="vaiAlPagamento()">
+                    <i class="pi pi-credit-card"></i> {{ langService.traduci('VAI_AL_PAGAMENTO') }}
+                </button>
+            </div>
         </div>
-    </div>
+    }
 
 </div>

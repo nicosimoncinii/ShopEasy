@@ -6,6 +6,7 @@ import { Login } from './pages/login/login';
 import { RegisterComponent } from './pages/register/register'; // Corretto il nome dell'import
 import { Cart } from './pages/cart/cart';
 import { Wishlist } from './pages/wishlist/wishlist';
+import {Checkout} from "./pages/checkout/checkout";
 import { NotFoundComponent } from './pages/not-found/not-found';
 
 export const routes: Routes = [
@@ -15,5 +16,7 @@ export const routes: Routes = [
     { path: 'register', component: RegisterComponent }, // Corretto il nome del componente
     { path: 'cart', component: Cart },
     { path: 'wishlist', component: Wishlist },
+    { path: 'checkout', component: Checkout },
     { path: '**', component: NotFoundComponent }
+
 ];

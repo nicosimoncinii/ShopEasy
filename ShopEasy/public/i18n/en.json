@@ -48,6 +48,12 @@
   "FAQ3_RISPOSTA": "Yes, you have 30 days from receipt to make a free return.",
   "FAQ4_DOMANDA": "How long does delivery take?",
   "FAQ4_RISPOSTA": "Standard delivery takes 2-3 working days.",
+  "AREA_PERSONALE": "Personal Area",
+  "MODIFICA_BUTTON_PERSONAL": "Edit",
+  "TELEFONO": "Phone",
+  "INDIRIZZO": "Address",
+  "LINGUA_PREFERITA": "Preferred language",
+  "TEMAFOTO": "Theme",
   "HOME": {
     "BANNER_PATH": "/assets/banner-en.png"
   },

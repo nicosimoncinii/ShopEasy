@@ -31,7 +31,7 @@ public class Statistiche {
     public Statistiche() {
     }
 
-    public Statistiche(private Double fatturatoTotale, private Long visualizzazioni, private Long utenti_registrati, private Long ordini_totali, private Long prodotti_totali) {
+    public Statistiche(Double fatturatoTotale, Long visualizzazioni, Long utenti_registrati, Long ordini_totali,  Long prodotti_totali) {
         this.fatturatoTotale = fatturatoTotale;
         this.visualizzazioni = visualizzazioni;
         this.utenti_registrati = utenti_registrati;

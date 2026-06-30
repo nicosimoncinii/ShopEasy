@@ -19,8 +19,8 @@ CREATE TABLE UTENTE (
   email VARCHAR(100) NOT NULL UNIQUE,
   indirizzo VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
-  language_preference VARCHAR(10) NOT NULL DEFAULT 'it',
-  theme_preference VARCHAR(10) NOT NULL DEFAULT 'light',
+  language_preference ENUM('IT', 'EN') NOT NULL DEFAULT 'IT',
+  theme_preference ENUM('LIGHT', 'DARK') NOT NULL DEFAULT 'LIGHT',
   ruolo ENUM('UTENTE', 'ADMIN') DEFAULT 'UTENTE',
   stato ENUM('ATTIVO', 'DISABILITATO') NOT NULL DEFAULT 'ATTIVO',
   FOREIGN KEY (ruolo) REFERENCES RUOLO(id)
@@ -73,4 +73,13 @@ CREATE TABLE WISHLIST_PRODOTTO (
   PRIMARY KEY (wishlist_id, prodotto_id),
   FOREIGN KEY (wishlist_id) REFERENCES WISHLIST(id) ON DELETE CASCADE,
   FOREIGN KEY (prodotto_id) REFERENCES PRODOTTO(id) ON DELETE CASCADE
+);
+
+CREATE TABLE STATISTICHE (
+  fatturato_totale BIGINT DEFAULT 0,
+  visualizzazioni BIGINT DEFAULT 0,
+  utenti_registrati BIGINT DEFAULT 0,
+  ordini_totali BIGINT DEFAULT 0,
+  prodotti_totali BIGINT DEFAULT 0
+  
 );

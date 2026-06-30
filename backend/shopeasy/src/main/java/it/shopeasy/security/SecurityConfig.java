@@ -47,34 +47,35 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(session ->
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(
-                    "/api/auth/**",
-                    "/swagger-ui/**",
-                    "/swagger-ui.html",
-                    "/swagger-initializer.js",
-                    "/v3/api-docs/**",
-                    "/api-docs/**",
-                    "/webjars/**"
-                ).permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/products", "/api/products/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/products/**").hasAuthority("ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/api/products/**").hasAuthority("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/api/products/**").hasAuthority("ADMIN")
-                .requestMatchers(HttpMethod.GET, "/api/users", "/api/users/**").hasAuthority("ADMIN")
-                .requestMatchers(HttpMethod.POST, "/api/users").hasAuthority("ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/api/users/**").hasAuthority("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasAuthority("ADMIN")
-                .requestMatchers("/api/wishlist/me").authenticated()
-                .requestMatchers("/api/wishlist/add/**").authenticated()
-                .requestMatchers("/api/wishlist/remove/**").authenticated()
-                .anyRequest().authenticated()
-            )
-            .authenticationProvider(authenticationProvider())
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/api/auth/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/swagger-initializer.js",
+                                "/v3/api-docs/**",
+                                "/api-docs/**",
+                                "/webjars/**"
+                        ).permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/products", "/api/products/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/products/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/products/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/products/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/users", "/api/users/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/users").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/users/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasAuthority("ADMIN")
+                        .requestMatchers("/api/wishlist/me").authenticated()
+                        .requestMatchers("/api/wishlist/add/**").authenticated()
+                        .requestMatchers("/api/wishlist/remove/**").authenticated()
+                        .requestMatchers(("/api/dashboard")).authenticated()
+                        .anyRequest().authenticated()
+                )
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

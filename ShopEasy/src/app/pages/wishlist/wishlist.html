@@ -1,43 +1,47 @@
 <div class="wishlist-page">
 
-    <div *ngIf="wishlistService.getProdotti().length === 0">
-        <h1>{{ langService.traduci('WISHLISTVUOTA') }}</h1>
-        <button class="torna-btn" (click)="tornaAiProdotti()">
-            {{ langService.traduci('TORNA') }}
-        </button>
-    </div>
+    @if (wishlistService.getProdotti().length === 0) {
+        <div class="empty-wishlist-container">
+            <i class="pi pi-heart empty-icon"></i>
+            <h1>{{ langService.traduci('WISHLISTVUOTA') }}</h1>
+            <button class="torna-btn" (click)="tornaAiProdotti()">
+                <i class="pi pi-arrow-left"></i> {{ langService.traduci('TORNA') }}
+            </button>
+        </div>
+    } @else {
 
-    <div *ngIf="wishlistService.getProdotti().length > 0">
+        <h2><i class="pi pi-heart-fill"></i> {{ langService.traduci('WISHLIST') }}</h2>
+        <p><i class="pi pi-box"></i> {{ wishlistService.getProdotti().length }} {{ langService.traduci('WISHLISTARTICOLI') }}</p>
 
-        <h2>{{ langService.traduci('WISHLIST') }}</h2>
-        <p>{{ wishlistService.getProdotti().length }} {{ langService.traduci('WISHLISTARTICOLI') }}</p>
+        <div class="wishlist-items-container">
+            @for (prodotto of wishlistService.getProdotti(); track prodotto.id) {
+                <div class="wishlist-row">
 
-        <div *ngFor="let prodotto of wishlistService.getProdotti()" class="wishlist-row">
+                    <img [src]="prodotto.imageUrl" [alt]="prodotto.name" class="product-img">
 
-            <img [src]="prodotto.imageUrl" [alt]="prodotto.name" class="product-img">
+                    <div class="product-info">
+                        <strong>{{ prodotto.name }}</strong>
+                        <span class="product-price">{{ prodotto.price | currency:'EUR':'symbol':'1.2-2' }}</span>
+                    </div>
 
-            <div class="product-info">
-                <strong>{{ prodotto.name }}</strong>
-                <span class="product-price">{{ prodotto.price | currency:'EUR':'symbol':'1.2-2':'it-IT' }}</span>
-            </div>
+                    <div class="actions">
+                        <button class="cart-btn" (click)="aggiungiAlCarrello(prodotto)">
+                            <i class="pi pi-shopping-cart"></i> {{ langService.traduci('AGGIUNGI') }}
+                        </button>
+                        <button class="remove-btn" (click)="rimuoviDaWishlist(prodotto.id)">
+                            <i class="pi pi-trash"></i> {{ langService.traduci('ELIMINA') }}
+                        </button>
+                    </div>
 
-            <div class="actions">
-                <button class="cart-btn" (click)="aggiungiAlCarrello(prodotto)">
-                    {{ langService.traduci('AGGIUNGI') }}
-                </button>
-                <button class="remove-btn" (click)="rimuoviDaWishlist(prodotto.id)">
-                    {{ langService.traduci('ELIMINA') }}
-                </button>
-            </div>
-
+                </div>
+            }
         </div>
 
         <div class="wishlist-footer">
             <button class="torna-btn" (click)="tornaAiProdotti()">
-                {{ langService.traduci('TORNA') }}
+                <i class="pi pi-arrow-left"></i> {{ langService.traduci('TORNA') }}
             </button>
         </div>
-
-    </div>
+    }
 
 </div>

@@ -62,4 +62,8 @@ public class Wishlist {
     public void rimuoviProdotto(Prodotto prodotto) {
         prodotti.remove(prodotto);
     }
+
+    public void svuotaWishlist() {
+        prodotti.clear();
+    }
 }

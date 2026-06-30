@@ -48,6 +48,12 @@
   "FAQ3_RISPOSTA": "Sì, hai 30 giorni dal ricevimento per effettuare un reso gratuito.",
   "FAQ4_DOMANDA": "Quanto tempo richiede la consegna?",
   "FAQ4_RISPOSTA": "La consegna standard richiede 2-3 giorni lavorativi.",
+  "AREA_PERSONALE": "Area Personale",
+  "MODIFICA_BUTTON_PERSONAL": "Modifica",
+  "TELEFONO": "Telefono",
+  "INDIRIZZO": "Indirizzo",
+  "LINGUA_PREFERITA": "Lingua preferita",
+  "TEMAFOTO": "Tema grafico",
   "HOME": {
     "BANNER_PATH": "/assets/banner-it.png"
   },

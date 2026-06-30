@@ -1,6 +1,6 @@
 <div class="wishlist-page">
 
-    @if (wishlistService.getProdotti().length === 0) {
+    @if (wishlistService.prodotti().length === 0) {
         <div class="empty-wishlist-container">
             <i class="pi pi-heart empty-icon"></i>
             <h1>{{ langService.traduci('WISHLISTVUOTA') }}</h1>
@@ -11,10 +11,10 @@
     } @else {
 
         <h2><i class="pi pi-heart-fill"></i> {{ langService.traduci('WISHLIST') }}</h2>
-        <p><i class="pi pi-box"></i> {{ wishlistService.getProdotti().length }} {{ langService.traduci('WISHLISTARTICOLI') }}</p>
+        <p><i class="pi pi-box"></i> {{ wishlistService.prodotti().length }} {{ langService.traduci('WISHLISTARTICOLI') }}</p>
 
         <div class="wishlist-items-container">
-            @for (prodotto of wishlistService.getProdotti(); track prodotto.id) {
+            @for (prodotto of wishlistService.prodotti(); track prodotto.id) {
                 <div class="wishlist-row">
 
                     <img [src]="prodotto.imageUrl" [alt]="prodotto.name" class="product-img">

@@ -1,11 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class WishlistService {
 
-    private wishlist: any[] = [];
+    // 1. Canale privato reattivo (Signal)
+    private wishlistSignal = signal<any[]>([]);
+
+
     private readonly API_BASE_URL = '/api/wishlist/me';
+    // private readonly API_BASE_URL = '/api/wishlist/me'; // Usa questa se usi il proxy.conf.json
+
+    // 2. Altoparlante pubblico per l'HTML
+    public readonly prodotti = computed(() => this.wishlistSignal());
 
     constructor(private http: HttpClient) {
         this.caricaDaBackend();
@@ -14,23 +21,21 @@ export class WishlistService {
     private caricaDaBackend() {
         this.http.get<any>(this.API_BASE_URL).subscribe({
             next: (res) => {
-                this.aggiornaLista(res.prodotti);
+                // Riconosce automaticamente se il server manda un oggetto o un array puro
+                const dati = res?.prodotti ? res.prodotti : (Array.isArray(res) ? res : null);
+                this.aggiornaLista(dati);
             },
             error: (err) => console.error('Errore durante il caricamento della wishlist dal DB', err)
         });
     }
 
-    getProdotti() {
-        return this.wishlist;
-    }
-
     aggiungi(prodotto: any) {
-        const giaPresente = this.wishlist.find(p => p.id === prodotto.id);
+        const giaPresente = this.wishlistSignal().some(p => p.id === prodotto.id);
         if (!giaPresente) {
-            // Chiamata POST: il body è vuoto perché passiamo l'ID nell'URL come da specifiche API
             this.http.post<any>(`${this.API_BASE_URL}/prodotti/${prodotto.id}`, {}).subscribe({
                 next: (res) => {
-                    this.aggiornaLista(res.prodotti);
+                    const dati = res?.prodotti ? res.prodotti : (Array.isArray(res) ? res : null);
+                    this.aggiornaLista(dati);
                 },
                 error: (err) => console.error('Errore durante l\'aggiunta del prodotto alla wishlist', err)
             });
@@ -38,34 +43,33 @@ export class WishlistService {
     }
 
     rimuovi(id: number) {
-        // Chiamata DELETE: passiamo l'ID nell'URL
         this.http.delete<any>(`${this.API_BASE_URL}/prodotti/${id}`).subscribe({
             next: (res) => {
-                this.aggiornaLista(res.prodotti);
+                const dati = res?.prodotti ? res.prodotti : (Array.isArray(res) ? res : null);
+                this.aggiornaLista(dati);
             },
             error: (err) => console.error('Errore durante la rimozione del prodotto dalla wishlist', err)
         });
     }
 
     isInWishlist(id: number): boolean {
-        return this.wishlist.some(p => p.id === id);
+        return this.wishlistSignal().some(p => p.id === id);
     }
 
-    /**
-     * Metodo di supporto per mappare le chiavi del JSON del backend 
-     * con le proprietà lette dal tuo HTML (es. nome -> name, prezzo -> price).
-     */
-    private aggiornaLista(prodottiBackend: any[]) {
+    private aggiornaLista(prodottiBackend: any[] | null) {
         if (!prodottiBackend) {
-            this.wishlist = [];
+            this.wishlistSignal.set([]);
             return;
         }
-        
-        this.wishlist = prodottiBackend.map(p => ({
+
+        // Mappa i campi del DB italiano/inglese per renderli compatibili con il tuo HTML
+        const mappati = prodottiBackend.map(p => ({
             ...p,
             name: p.nome || p.name,
             price: p.prezzo || p.price,
             imageUrl: p.immagine || p.imageUrl
         }));
+
+        this.wishlistSignal.set(mappati);
     }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { LangService } from '../../services/lang.service';
@@ -20,8 +20,6 @@ export class Wishlist {
       public cartService: CartService,
       private router: Router
   ) {}
-
-
 
   rimuoviDaWishlist(id: number) {
     this.wishlistService.rimuovi(id);

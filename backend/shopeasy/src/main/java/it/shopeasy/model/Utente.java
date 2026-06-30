@@ -27,7 +27,8 @@ public class Utente {
     @Column(nullable = false)
     private String password;
 
-   // private String telefono;
+
+   private String telefono;
 
     private String indirizzo;
 
@@ -55,7 +56,7 @@ public class Utente {
     }
 
     public Utente(String nome, String cognome, String email, String password,
-                 /* String telefono,*/ String indirizzo,
+                 String telefono, String indirizzo,
                   LanguagePreferences languagePreference, ThemePreferences themePreference,
                   Ruolo ruolo, StatoUtente stato) {
 
@@ -63,7 +64,7 @@ public class Utente {
         this.cognome = cognome;
         this.email = email;
         this.password = password;
-      // this.telefono = telefono;
+        this.telefono = telefono;
         this.indirizzo = indirizzo;
         this.languagePreference = languagePreference;
         this.themePreference = themePreference;
@@ -106,7 +107,7 @@ public class Utente {
     public void setPassword(String password) {
         this.password = password;
     }
-/*
+
     public String getTelefono() {
         return telefono;
     }
@@ -116,7 +117,7 @@ public class Utente {
     }
 
 
- */
+
     public String getIndirizzo() {
         return indirizzo;
     }

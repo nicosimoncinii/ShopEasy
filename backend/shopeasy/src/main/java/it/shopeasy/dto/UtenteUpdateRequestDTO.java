@@ -24,9 +24,9 @@ public class UtenteUpdateRequestDTO {
     )
     private String password;
 
-    /*@Size(min = 11, max = 11, message = "Inserisci un numero di telefono valdio")
+    @Size(min = 11, max = 11, message = "Inserisci un numero di telefono valdio")
     private String telefono;
-    */
+
 
     @NotNull(message = "L'indirizzo è necessario")
     @NotBlank(message = "L'indirizzo non può essere vuoto")
@@ -40,12 +40,12 @@ public class UtenteUpdateRequestDTO {
     public UtenteUpdateRequestDTO() {
     }
 
-    public UtenteUpdateRequestDTO(String nome, String cognome, String email, String password, /*String telefono,*/ String indirizzo, LanguagePreferences languagePreference, ThemePreferences themePreference, RuoloUtente ruolo, StatoUtente stato) {
+    public UtenteUpdateRequestDTO(String nome, String cognome, String email, String password, String telefono, String indirizzo, LanguagePreferences languagePreference, ThemePreferences themePreference, RuoloUtente ruolo, StatoUtente stato) {
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
         this.password = password;
-       // this.telefono = telefono;
+        this.telefono = telefono;
         this.indirizzo = indirizzo;
         this.languagePreference = languagePreference;
         this.themePreference = themePreference;
@@ -85,14 +85,14 @@ public class UtenteUpdateRequestDTO {
         this.password = password;
     }
 
-   /* public String getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-    */
+
 
 
     public String getIndirizzo() {

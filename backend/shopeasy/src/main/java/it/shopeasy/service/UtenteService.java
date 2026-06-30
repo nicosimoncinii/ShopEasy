@@ -96,7 +96,8 @@ public class UtenteService {
         if (request.getPassword() != null && !request.getPassword().isEmpty()) {
             utente.setPassword(passwordEncoder.encode(request.getPassword()));
         }
-        if (request.getIndirizzo() != null) utente.setIndirizzo(request.getIndirizzo());
+        utente.setTelefono(request.getTelefono());
+        utente.setIndirizzo(request.getIndirizzo());
         if (request.getLanguagePreference() != null) utente.setLanguagePreference(request.getLanguagePreference());
         if (request.getThemePreference() != null) utente.setThemePreference(request.getThemePreference());
         if (request.getStato() != null) utente.setStato(request.getStato());

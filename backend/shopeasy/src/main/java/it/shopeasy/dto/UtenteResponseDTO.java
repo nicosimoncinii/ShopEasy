@@ -12,7 +12,7 @@ public class UtenteResponseDTO {
     private String nome;
     private String cognome;
     private String email;
-    //private String telefono;
+    private String telefono;
     private String indirizzo;
     private LanguagePreferences languagePreference;
     private ThemePreferences themePreference;
@@ -30,7 +30,7 @@ public class UtenteResponseDTO {
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
-        //this.telefono = telefono;
+        this.telefono = telefono;
         this.indirizzo = indirizzo;
         this.languagePreference = languagePreference;
         this.themePreference = themePreference;
@@ -69,7 +69,7 @@ public class UtenteResponseDTO {
     public void setEmail(String email) {
         this.email = email;
     }
-    /*
+
     public String getTelefono() {
         return telefono;
     }
@@ -78,7 +78,7 @@ public class UtenteResponseDTO {
         this.telefono = telefono;
     }
 
-     */
+
 
     public String getIndirizzo() {
         return indirizzo;

@@ -7,12 +7,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.security.Principal;
 import java.util.List;
 
 
 @RestController
 @RequestMapping("/api/wishlist")
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 public class WishlistController {
 
     @Autowired

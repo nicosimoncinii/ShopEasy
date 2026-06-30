@@ -1,0 +1,120 @@
+<div class="page-container">
+    <img id="img-area-personale" 
+         [src]="langService.getLingua() === 'en' 
+                ? (themeService.getIsDarkMode() ? '/PersonalAreaDark.png' : '/PersonalAreaLight.png')
+                : (themeService.getIsDarkMode() ? '/AreaPersonaleScura.png' : '/AreaPersonaleChiara.png')" 
+         alt="Area Personale">
+</div>
+
+
+<div class="campi-container">
+    
+    <!-- Nome -->
+    <div class="campo-row" [ngClass]="themeService.getIsDarkMode() ? 'text-white' : 'text-black'">
+        <div class="campo-info">
+            <span class="label" >{{langService.traduci('NOME')}}</span>
+            @if (inModifica['nome']) {
+                <input type="text" [(ngModel)]="utente.nome" class="input-modifica">
+            } @else {
+                <span class="valore">{{ utente.nome }}</span>
+            }
+        </div>
+        @if (inModifica['nome']) {
+            <button class="btn-salva" (click)="salvaModifica('nome')">Salva</button>
+        } @else {
+            <button class="btn-modifica" (click)="attivaModifica('nome')">{{langService.traduci('MODIFICA_BUTTON_PERSONAL')}}</button>
+        }
+    </div>
+
+    <!-- Cognome -->
+    <div class="campo-row" [ngClass]="themeService.getIsDarkMode() ? 'text-white' : 'text-black'">
+        <div class="campo-info">
+            <span class="label">{{langService.traduci('COGNOME')}}</span>
+            @if (inModifica['cognome']) {
+                <input type="text" [(ngModel)]="utente.cognome" class="input-modifica">
+            } @else {
+                <span class="valore">{{ utente.cognome }}</span>
+            }
+        </div>
+        @if (inModifica['cognome']) {
+            <button class="btn-salva" (click)="salvaModifica('cognome')">Salva</button>
+        } @else {
+            <button class="btn-modifica" (click)="attivaModifica('cognome')">{{langService.traduci('MODIFICA_BUTTON_PERSONAL')}}</button>
+        }
+    </div>
+
+    <!-- Telefono -->
+    <div class="campo-row" [ngClass]="themeService.getIsDarkMode() ? 'text-white' : 'text-black'">
+        <div class="campo-info">
+            <span class="label">{{langService.traduci('TELEFONO')}}</span>
+            @if (inModifica['telefono']) {
+                <input type="text" [(ngModel)]="utente.telefono" class="input-modifica">
+            } @else {
+                <span class="valore">{{ utente.telefono }}</span>
+            }
+        </div>
+        @if (inModifica['telefono']) {
+            <button class="btn-salva" (click)="salvaModifica('telefono')">Salva</button>
+        } @else {
+            <button class="btn-modifica" (click)="attivaModifica('telefono')">{{langService.traduci('MODIFICA_BUTTON_PERSONAL')}}</button>
+        }
+    </div>
+
+    <!-- Indirizzo -->
+    <div class="campo-row" [ngClass]="themeService.getIsDarkMode() ? 'text-white' : 'text-black'">
+        <div class="campo-info">
+            <span class="label">{{langService.traduci('INDIRIZZO')}}</span>
+            @if (inModifica['indirizzo']) {
+                <input type="text" [(ngModel)]="utente.indirizzo" class="input-modifica">
+            } @else {
+                <span class="valore">{{ utente.indirizzo }}</span>
+            }
+        </div>
+        @if (inModifica['indirizzo']) {
+            <button class="btn-salva" (click)="salvaModifica('indirizzo')">Salva</button>
+        } @else {
+            <button class="btn-modifica" (click)="attivaModifica('indirizzo')">{{langService.traduci('MODIFICA_BUTTON_PERSONAL')}}</button>
+        }
+    </div>
+
+    <!-- Lingua Preferita (Vincolata a Italiano o Inglese) -->
+    <div class="campo-row" [ngClass]="themeService.getIsDarkMode() ? 'text-white' : 'text-black'">
+        <div class="campo-info">
+            <span class="label">{{langService.traduci('LINGUA_PREFERITA')}}</span>
+            @if (inModifica['linguaPreferita']) {
+                <select [(ngModel)]="utente.linguaPreferita" class="select-modifica">
+                    <option value="Italiano">Italiano</option>
+                    <option value="Inglese">Inglese</option>
+                </select>
+            } @else {
+                <span class="valore">{{ utente.linguaPreferita }}</span>
+            }
+        </div>
+        @if (inModifica['linguaPreferita']) {
+            <button class="btn-salva" (click)="salvaModifica('linguaPreferita')">Salva</button>
+        } @else {
+            <button class="btn-modifica" (click)="attivaModifica('linguaPreferita')">{{langService.traduci('MODIFICA_BUTTON_PERSONAL')}}</button>
+        }
+    </div>
+
+    <!-- Tema Grafico (Vincolato a Chiaro o Scuro) -->
+    <div class="campo-row" [ngClass]="themeService.getIsDarkMode() ? 'text-white' : 'text-black'">
+        <div class="campo-info">
+            <span class="label">{{langService.traduci('TEMAFOTO')}}</span>
+            @if (inModifica['temaGrafico']) {
+                <select [(ngModel)]="utente.temaGrafico" class="select-modifica">
+                    <option value="Chiaro">Chiaro</option>
+                    <option value="Scuro">Scuro</option>
+                </select>
+            } @else {
+                <span class="valore">{{ utente.temaGrafico }}</span>
+            }
+        </div>
+        @if (inModifica['temaGrafico']) {
+            <button class="btn-salva" (click)="salvaModifica('temaGrafico')">Salva</button>
+        } @else {
+            <button class="btn-modifica" (click)="attivaModifica('temaGrafico')">{{langService.traduci('MODIFICA_BUTTON_PERSONAL')}}</button>
+        }
+    </div>
+
+</div>

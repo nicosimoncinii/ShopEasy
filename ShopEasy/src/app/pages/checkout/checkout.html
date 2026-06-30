@@ -1,0 +1,151 @@
+<div class="checkout-container">
+    <h2>{{ langService.traduci('CHECKOUT_TITLE') }}</h2>
+
+    <div class="checkout-layout">
+
+        @if (cartService.getProdotti().length > 0) {
+            <form (ngSubmit)="confermaOrdine()" #checkoutForm="ngForm" class="checkout-form">
+
+                <div class="form-group">
+                    <label for="indirizzo">
+                        <i class="pi pi-map-marker"></i> {{ langService.traduci('CHECKOUT_ADDRESS_LABEL') }}
+                    </label>
+                    <input
+                            type="text"
+                            id="indirizzo"
+                            name="indirizzo"
+                            [(ngModel)]="indirizzo"
+                            required
+                            [placeholder]="langService.traduci('CHECKOUT_ADDRESS_PLACEHOLDER')">
+                </div>
+
+                <div class="form-group">
+                    <label for="telefono">
+                        <i class="pi pi-phone"></i> {{ langService.traduci('CHECKOUT_PHONE_LABEL') }}
+                    </label>
+                    <input
+                            type="tel"
+                            id="telefono"
+                            name="telefono"
+                            [(ngModel)]="telefono"
+                            required
+                            [placeholder]="langService.traduci('CHECKOUT_PHONE_PLACEHOLDER')">
+                </div>
+
+                <div class="form-group">
+                    <label for="metodoPagamento">
+                        <i class="pi pi-wallet"></i> {{ langService.traduci('CHECKOUT_PAYMENT_LABEL') }}
+                    </label>
+                    <select id="metodoPagamento" name="metodoPagamento" [(ngModel)]="metodoPagamento">
+                        <option value="carta">{{ langService.traduci('CHECKOUT_PAYMENT_CARD') }}</option>
+                        <option value="paypal">{{ langService.traduci('CHECKOUT_PAYMENT_PAYPAL') }}</option>
+                        <option value="contrassegno">{{ langService.traduci('CHECKOUT_PAYMENT_CASH') }}</option>
+                    </select>
+                </div>
+
+                @if (metodoPagamento === 'carta') {
+                    <div class="payment-extra-fields">
+
+                        <div class="form-group">
+                            <label for="numeroCarta">
+                                <i class="pi pi-credit-card"></i> {{ langService.traduci('CHECKOUT_CARD_NUMBER') }}
+                            </label>
+                            <input
+                                    type="text"
+                                    id="numeroCarta"
+                                    name="numeroCarta"
+                                    [(ngModel)]="numeroCarta"
+                                    required
+                                    placeholder="1234 5678 1234 5678">
+                        </div>
+
+                        <div class="form-row-double">
+                            <div class="form-group">
+                                <label for="scadenza">
+                                    <i class="pi pi-calendar"></i> {{ langService.traduci('CHECKOUT_CARD_EXPIRY') }}
+                                </label>
+                                <input
+                                        type="text"
+                                        id="scadenza"
+                                        name="scadenza"
+                                        [(ngModel)]="scadenza"
+                                        required
+                                        placeholder="MM/AA">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="cvv">
+                                    <i class="pi pi-lock"></i> {{ langService.traduci('CHECKOUT_CARD_CVV') }}
+                                </label>
+                                <input
+                                        type="text"
+                                        id="cvv"
+                                        name="cvv"
+                                        [(ngModel)]="cvv"
+                                        required
+                                        placeholder="123">
+                            </div>
+                        </div>
+
+                    </div>
+                }
+
+                @if (metodoPagamento === 'paypal') {
+                    <div class="payment-extra-fields">
+                        <div class="form-group">
+                            <label for="emailPaypal">
+                                <i class="pi pi-user"></i> {{ langService.traduci('CHECKOUT_PAYPAL_EMAIL') }}
+                            </label>
+                            <input
+                                    type="email"
+                                    id="emailPaypal"
+                                    name="emailPaypal"
+                                    [(ngModel)]="emailPaypal"
+                                    required
+                                    placeholder="name@example.com">
+                        </div>
+                    </div>
+                }
+
+                @if (metodoPagamento === 'contrassegno') {
+                    <div class="payment-extra-fields alert-info">
+                        <p>
+                            <i class="pi pi-info-circle"></i> {{ langService.traduci('CHECKOUT_CASH_INFO') }}
+                        </p>
+                    </div>
+                }
+
+                <button type="submit" class="btn-conferma" [disabled]="!checkoutForm.form.valid">
+                    <i class="pi pi-check-circle"></i> {{ langService.traduci('CHECKOUT_CONFIRM_BUTTON') }}
+                </button>
+            </form>
+        }
+
+        <div class="checkout-summary">
+            <h3>
+                <i class="pi pi-shopping-bag"></i> {{ langService.traduci('CHECKOUT_SUMMARY_TITLE') }}
+            </h3>
+
+            @if (cartService.getProdotti().length === 0) {
+                <div class="empty-cart">
+                    <p>{{ langService.traduci('CHECKOUT_EMPTY_CART') }}</p>
+                </div>
+            } @else {
+                <ul class="product-list">
+                    @for (item of cartService.getProdotti(); track item.id) {
+                        <li class="product-item">
+                            <span class="product-name">{{ item.name }}</span>
+                            <span class="product-quantity">x{{ item.quantita }}</span>
+                            <span class="product-price">{{ item.price * item.quantita | currency:'EUR':'symbol':'1.2-2' }}</span>
+                        </li>
+                    }
+                </ul>
+
+                <div class="cart-total">
+                    <strong>{{ langService.traduci('CHECKOUT_TOTAL') }}: {{ cartService.getTotale() | currency:'EUR':'symbol':'1.2-2' }}</strong>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>

@@ -54,6 +54,7 @@
   "INDIRIZZO": "Indirizzo",
   "LINGUA_PREFERITA": "Lingua preferita",
   "TEMAFOTO": "Tema grafico",
+  "NESSUN_ORDINE": "Non hai ancora effettuato nessun ordine.",
   "HOME": {
     "BANNER_PATH": "/assets/banner-it.png"
   },

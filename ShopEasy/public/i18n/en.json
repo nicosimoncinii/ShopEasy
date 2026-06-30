@@ -54,6 +54,7 @@
   "INDIRIZZO": "Address",
   "LINGUA_PREFERITA": "Preferred language",
   "TEMAFOTO": "Theme",
+  "NESSUN_ORDINE": "You have no orders yet.",
   "HOME": {
     "BANNER_PATH": "/assets/banner-en.png"
   },

@@ -57,9 +57,10 @@
                 <div class="profilo" (click)="toggleProfilo()">
                     <span class="profilo-email">{{ authService.getEmail() }}</span>
                     <div class="profilo-dropdown" [class.open]="profiloAperto">
-                        <!--aggiunto collegamento area personale-->
+                        <!--aggiunto collegamento area personale (roggi)-->
                         <div routerLink="/personal-area">{{ langService.traduci('AREA_PERSONALE') }}</div>
-                        <div routerLink="/ordini">{{ langService.traduci('ORDINI') }}</div>
+                        <!--aggiunto collegamento storico ordini (roggi)-->
+                        <div routerLink="/storico-ordini">{{ langService.traduci('ORDINI') }}</div>
                         <div (click)="logout()">{{ langService.traduci('LOGOUT') }}</div>
                     </div>
                 </div>

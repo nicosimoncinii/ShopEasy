@@ -1,5 +1,6 @@
 package it.shopeasy.service;
 
+
 import it.shopeasy.dto.UtenteResponseDTO;
 import it.shopeasy.dto.UtenteUpdateRequestDTO;
 import it.shopeasy.enums.LanguagePreferences;
@@ -7,9 +8,11 @@ import it.shopeasy.enums.RuoloUtente;
 import it.shopeasy.enums.StatoUtente;
 import it.shopeasy.enums.ThemePreferences;
 import it.shopeasy.model.Ruolo;
+import it.shopeasy.model.Statistiche;
 import it.shopeasy.model.Utente;
 import it.shopeasy.model.Wishlist;
 import it.shopeasy.repository.RuoloRepository;
+import it.shopeasy.repository.StatisticheRepository;
 import it.shopeasy.repository.UtenteRepository;
 import it.shopeasy.repository.WishlistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,8 @@ public class UtenteService {
     private WishlistRepository wishlistRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private StatisticheRepository statisticheRepository;
 
     public List<UtenteResponseDTO> prendiTuttiUtenti() {
         return utenteRepository.findAll()
@@ -52,7 +57,7 @@ public class UtenteService {
         utenteRepository.deleteById(id);
     }
 
-    public UtenteResponseDTO salvaUtente(UtenteUpdateRequestDTO request) {
+    private UtenteResponseDTO salvaUtente(UtenteUpdateRequestDTO request) {
         if (utenteRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email già registrata: " + request.getEmail());
         }
@@ -127,6 +132,18 @@ public class UtenteService {
         Utente utente = utenteRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Utente non trovato"));
         cancellaUtente(utente.getId());
+    }
+
+    public UtenteResponseDTO creaUtente(UtenteUpdateRequestDTO utente){
+
+        Statistiche statistiche = statisticheRepository.findById(StatisticheRepository.ID)
+                .orElseThrow(() -> new RuntimeException("Errore nella fetch dei dati nelle statistiche, riferirsi ad un amministratore"));
+
+        statistiche.setUtentiRegistrati(statistiche.getUtentiRegistrati() +1);
+
+        statisticheRepository.save(statistiche);
+
+        return salvaUtente(utente);
     }
 
     private UtenteResponseDTO toResponse(Utente utente) {

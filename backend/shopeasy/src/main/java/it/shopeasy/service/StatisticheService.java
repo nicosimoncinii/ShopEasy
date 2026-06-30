@@ -23,9 +23,9 @@ public class StatisticheService {
         return new StatisticheResponseDTO(
                 statistiche.getFatturatoTotale(),
                 statistiche.getVisualizzazioni(),
-                statistiche.getUtenti_registrati(),
-                statistiche.getOrdini_totali(),
-                statistiche.getProdotti_totali()
+                statistiche.getUtentiRegistrati(),
+                statistiche.getOrdiniTotali(),
+                statistiche.getProdottiTotali()
         );
     }
 

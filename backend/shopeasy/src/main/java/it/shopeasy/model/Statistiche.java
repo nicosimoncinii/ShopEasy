@@ -19,24 +19,24 @@ public class Statistiche {
     private Long visualizzazioni;
 
     @Column(name = "utenti_registrati")
-    private Long utenti_registrati;
+    private Long utentiRegistrati;
 
     @Column(name = "ordini_totali")
-    private Long ordini_totali;
+    private Long ordiniTotali;
 
     @Column(name = "prodotti_totali")
-    private Long prodotti_totali;
+    private Long prodottiTotali;
 
 
     public Statistiche() {
     }
 
-    public Statistiche(Double fatturatoTotale, Long visualizzazioni, Long utenti_registrati, Long ordini_totali,  Long prodotti_totali) {
+    public Statistiche(Double fatturatoTotale, Long visualizzazioni, Long utentiRegistrati, Long ordiniTotali,  Long prodottiTotali) {
         this.fatturatoTotale = fatturatoTotale;
         this.visualizzazioni = visualizzazioni;
-        this.utenti_registrati = utenti_registrati;
-        this.ordini_totali = ordini_totali;
-        this.prodotti_totali = prodotti_totali;
+        this.utentiRegistrati = utentiRegistrati;
+        this.ordiniTotali = ordiniTotali;
+        this.prodottiTotali = prodottiTotali;
     }
 
     // --- GETTER & SETTER ---
@@ -62,28 +62,28 @@ public class Statistiche {
         this.visualizzazioni = visualizzazioni;
     }
 
-    public Long getUtenti_registrati() {
-        return utenti_registrati;
+    public Long getUtentiRegistrati() {
+        return utentiRegistrati;
     }
 
-    public void setUtenti_registrati(Long utenti_registrati) {
-        this.utenti_registrati = utenti_registrati;
+    public void setUtentiRegistrati(Long utenti_registrati) {
+        this.utentiRegistrati = utenti_registrati;
     }
 
-    public Long getOrdini_totali() {
-        return ordini_totali;
+    public Long getOrdiniTotali() {
+        return ordiniTotali;
     }
 
-    public void setOrdini_totali(Long ordini_totali) {
-        this.ordini_totali = ordini_totali;
+    public void setOrdiniTotali(Long ordini_totali) {
+        this.ordiniTotali = ordini_totali;
     }
 
-    public Long getProdotti_totali() {
-        return prodotti_totali;
+    public Long getProdottiTotali() {
+        return prodottiTotali;
     }
 
-    public void setProdotti_totali(Long prodotti_totali) {
-        this.prodotti_totali = prodotti_totali;
+    public void setProdottiTotali(Long prodotti_totali) {
+        this.prodottiTotali = prodotti_totali;
     }
 
 }

@@ -1,11 +1,15 @@
 package it.shopeasy.service;
 
+import it.shopeasy.dto.OrdineRequestDTO;
+import it.shopeasy.dto.OrdineResponseDTO;
 import it.shopeasy.dto.ProdottoRequestDTO;
 import it.shopeasy.dto.ProdottoResponseDTO;
 import it.shopeasy.model.Categoria;
 import it.shopeasy.model.Prodotto;
+import it.shopeasy.model.Statistiche;
 import it.shopeasy.repository.CategoriaRepository;
 import it.shopeasy.repository.ProdottoRepository;
+import it.shopeasy.repository.StatisticheRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +23,8 @@ public class ProdottoService {
 
     @Autowired
     private CategoriaRepository categoriaRepository;
+    @Autowired
+    private StatisticheRepository statisticheRepository;
 
     public List<ProdottoResponseDTO> prendiTuttiProdotti() {
         return prodottoRepository.findAll()
@@ -74,7 +80,17 @@ public class ProdottoService {
         return toResponse(prodottoRepository.save(prodotto));
     }
 
+    public ProdottoResponseDTO creaProdotto(ProdottoRequestDTO prodotto){
 
+        Statistiche statistiche = statisticheRepository.findById(StatisticheRepository.ID)
+                .orElseThrow(() -> new RuntimeException("Errore nella fetch dei dati nelle statistiche, riferirsi ad un amministratore"));
+
+        statistiche.setProdottiTotali(statistiche.getProdottiTotali() +1);
+
+        statisticheRepository.save(statistiche);
+
+        return salvaProdotto(prodotto);
+    }
     private ProdottoResponseDTO toResponse(Prodotto prodotto)
     {
         return new ProdottoResponseDTO(
@@ -88,6 +104,7 @@ public class ProdottoService {
                 prodotto.getCategoria().getNome()
         );
     }
+
 
 
 }

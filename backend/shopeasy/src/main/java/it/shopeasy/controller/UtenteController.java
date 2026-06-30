@@ -36,7 +36,7 @@ public class UtenteController {
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<UtenteResponseDTO> salvaUtente(@RequestBody UtenteUpdateRequestDTO request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(utenteService.salvaUtente(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(utenteService.creaUtente(request));
     }
 
     @PutMapping("/{id}")

@@ -8,14 +8,17 @@ import it.shopeasy.model.Ordine;
 
 import it.shopeasy.dto.OrdineResponseDTO;
 import it.shopeasy.model.Prodotto;
+import it.shopeasy.model.Statistiche;
 import it.shopeasy.repository.OrdineRepository;
 import it.shopeasy.repository.ProdottoRepository;
+import it.shopeasy.repository.StatisticheRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -29,6 +32,8 @@ public class OrdineService {
     private UtenteService utenteService;
     @Autowired
     private ProdottoRepository prodottoRepository;
+    @Autowired
+    private StatisticheRepository statisticheRepository;
 
     public List<OrdineResponseDTO> prendiTuttiOrdini() {
         return ordineRepository.findAll()
@@ -56,7 +61,7 @@ public class OrdineService {
     }
 
     @Transactional
-    public OrdineResponseDTO salvaOrdine(OrdineRequestDTO ordineR) {
+    private OrdineResponseDTO salvaOrdine(OrdineRequestDTO ordineR) {
         Ordine ordine = new Ordine();
         ordine.setData(LocalDateTime.now());
         ordine.setStato(StatoOrdine.ORDINATO);
@@ -83,6 +88,10 @@ public class OrdineService {
                 .mapToDouble(DettaglioOrdine::getPrezzoUnitario)
                 .sum();
         ordine.setTotale(totale);
+        Statistiche statistiche = statisticheRepository.findById(StatisticheRepository.ID)
+                .orElseThrow(() -> new RuntimeException("Errore nella fetch dei dati nelle statistiche, riferirsi ad un amministratore"));
+        statistiche.setFatturatoTotale(statistiche.getFatturatoTotale() + ordine.getTotale());
+        statisticheRepository.save(statistiche);
 
         ordine.getDettagli().forEach(dettaglio -> {
             Prodotto prodotto = dettaglio.getProdotto();
@@ -150,5 +159,17 @@ public class OrdineService {
             ordine.getDettagli()
         );
     }
+    public OrdineResponseDTO creaOrdine(OrdineRequestDTO ordine){
+
+        Statistiche statistiche = statisticheRepository.findById(StatisticheRepository.ID)
+                .orElseThrow(() -> new RuntimeException("Errore nella fetch dei dati nelle statistiche, riferirsi ad un amministratore"));
+
+        statistiche.setOrdiniTotali(statistiche.getOrdiniTotali() +1);
+
+        statisticheRepository.save(statistiche);
+
+        return salvaOrdine(ordine);
+    }
+
 
 }

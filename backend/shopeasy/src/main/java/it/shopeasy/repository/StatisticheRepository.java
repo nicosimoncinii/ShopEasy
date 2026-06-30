@@ -4,4 +4,5 @@ import it.shopeasy.model.Statistiche;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StatisticheRepository extends JpaRepository<Statistiche, Long> {
+    final Long ID = 1L;
 }

@@ -37,8 +37,7 @@ public class ProdottoController {
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<ProdottoResponseDTO> creaProdotto(@RequestBody ProdottoRequestDTO prodotto) {
-        ProdottoResponseDTO creato = prodottoService.salvaProdotto(prodotto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(creato);
+        return ResponseEntity.status(HttpStatus.CREATED).body(prodottoService.creaProdotto(prodotto));
     }
 
     @PutMapping("/{id}")

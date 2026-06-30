@@ -39,7 +39,7 @@ public class OrdineController {
     @PostMapping
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<OrdineResponseDTO> salvaOrdine(@RequestBody OrdineRequestDTO ordine) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.salvaOrdine(ordine));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.creaOrdine(ordine));
     }
 
     @PutMapping("/{id}")

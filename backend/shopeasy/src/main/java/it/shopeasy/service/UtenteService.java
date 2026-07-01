@@ -64,6 +64,7 @@ public class UtenteService {
         utente.setNome(request.getNome());
         utente.setCognome(request.getCognome());
         utente.setEmail(request.getEmail());
+        utente.setTelefono(request.getTelefono());
         utente.setPassword(passwordEncoder.encode(request.getPassword()));
         utente.setIndirizzo(request.getIndirizzo());
         utente.setLanguagePreference(request.getLanguagePreference() != null ? request.getLanguagePreference() : LanguagePreferences.IT);
@@ -135,11 +136,13 @@ public class UtenteService {
                 utente.getNome(),
                 utente.getCognome(),
                 utente.getEmail(),
+                utente.getTelefono(),
                 utente.getIndirizzo(),
                 utente.getLanguagePreference(),
                 utente.getThemePreference(),
                 utente.getRuolo().getNome(),
                 utente.getStato()
+                
         );
     }
 }

@@ -11,20 +11,21 @@ public class UtenteUpdateRequestDTO {
     @Size(min = 3, message = "Il nome deve avere almeno 3 caratteri")
     private String nome;
     @NotNull
-    @Size(min = 3, message = "Il nome deve avere almeno 3 caratteri")
+    @Size(min = 3, message = "Il cognome deve avere almeno 3 caratteri")
     private String cognome;
     @NotNull
     @Email(message = "Email non valida")
     private String email;
-    @NotNull
-    @NotBlank
+    
+    //rimosso notNull e notBlank in quanto per cambiare il profilo personale altrimenti la richiedeva ogni volta (roggi)
     @Pattern(
             regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!]).{6,}$",
-            message = "La password deve contenere almeno 8 caratteri, una maiuscola, una minuscola, un numero e un carattere speciale"
+            message = "La password deve contenere almeno 6 caratteri, una maiuscola, una minuscola, un numero e un carattere speciale"
     )
     private String password;
 
-    @Size(min = 11, max = 11, message = "Inserisci un numero di telefono valdio")
+    //a livello nazionale il range risulta questo (roggi)
+    @Size(min = 4, max = 15, message = "Il numero di telefono deve avere tra 4 e 15 cifre")
     private String telefono;
 
 

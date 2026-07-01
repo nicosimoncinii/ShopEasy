@@ -1,6 +1,6 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, LOCALE_ID } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideIcons } from '@ng-icons/core';
 import { registerLocaleData } from '@angular/common';
 import localeIt from '@angular/common/locales/it';
@@ -22,18 +22,22 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    provideHttpClient(),
+    provideHttpClient(
+      withInterceptors([
+        (req, next) => {
+          const token = localStorage.getItem('token'); 
+          if (token) {
+            req = req.clone({
+              setHeaders: {
+                Authorization: `Bearer ${token}`
+              }
+            });
+          }
+          return next(req);
+        }
+      ])
+    ),
     { provide: LOCALE_ID, useValue: 'it-IT' },
-    provideIcons({
-      heroBuildingOffice2,
-      heroEnvelope,
-      heroPhone,
-      heroClock,
-      heroGlobeAlt,
-      heroHeart,
-      heroHeartSolid,
-      simpleFacebook,
-      simpleInstagram
-    })
   ]
+
 };

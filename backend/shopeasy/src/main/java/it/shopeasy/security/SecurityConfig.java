@@ -52,7 +52,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Adesso troverà il metodo sotto!
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -70,11 +70,18 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/products/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/products/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/products/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/users", "/api/users/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/users").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/users/**").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasAuthority("ADMIN")
+                        
+                        // REGOLE PROFILO PERSONALE (Precedenza di lettura per CLIENTE e ADMIN)
+                        .requestMatchers(HttpMethod.GET, "/api/users/me").hasAnyAuthority("ADMIN", "CLIENTE")
+                        .requestMatchers(HttpMethod.PUT, "/api/users/me").hasAnyAuthority("ADMIN", "CLIENTE")
+                        .requestMatchers(HttpMethod.DELETE, "/api/users/me").hasAnyAuthority("ADMIN", "CLIENTE")
 
+                        // REGOLE DI GESTIONE UTENTI (Ristrette solo all'ADMIN)
+                        .requestMatchers(HttpMethod.GET, "/api/users").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/users/{id}").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/users").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/users/{id}").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/users/{id}").hasAuthority("ADMIN")
 
                         .requestMatchers("/api/wishlist/me/**").authenticated()
                         .requestMatchers("/api/wishlist/me").authenticated()
@@ -91,7 +98,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4200")); // Il tuo frontend Angular
+        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With"));
         configuration.setAllowCredentials(true);

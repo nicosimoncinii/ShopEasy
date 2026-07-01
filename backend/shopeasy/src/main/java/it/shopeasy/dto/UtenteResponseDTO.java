@@ -23,7 +23,7 @@ public class UtenteResponseDTO {
     }
 
     public UtenteResponseDTO(Long id, String nome, String cognome, String email,
-                             /*String telefono,*/ String indirizzo,
+                             String telefono, String indirizzo,
                              LanguagePreferences languagePreference, ThemePreferences themePreference,
                              RuoloUtente ruolo, StatoUtente stato) {
         this.id = id;

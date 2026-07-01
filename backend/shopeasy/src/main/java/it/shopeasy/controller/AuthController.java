@@ -21,6 +21,8 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+    
+
     @PostMapping("/register")
     public ResponseEntity<RegisterResponse> registra(@Valid @RequestBody RegisterRequest request) {
         RegisterResponse response = authService.registra(request);
@@ -33,15 +35,5 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/forgot-password")
-    public ResponseEntity<String> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
-        authService.forgotPassword(request);
-        return ResponseEntity.ok("Email di reset inviata a: " + request.getEmail());
-    }
-
-    @PostMapping("/reset-password")
-    public ResponseEntity<String> resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
-        authService.resetPassword(request);
-        return ResponseEntity.ok("Password reimpostata con successo");
-    }
+    
 }

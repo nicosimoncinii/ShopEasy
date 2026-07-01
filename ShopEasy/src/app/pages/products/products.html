@@ -1,9 +1,15 @@
 <div class="products-page">
     <h2>{{ langService.traduci('PRODOTTITITOLO') }}</h2>
 
+    <!-- Lasciamo il componente figlio totalmente isolato -->
     <app-product-list (loginRichiesto)="mostraModal.set(true)"></app-product-list>
 
     @if (mostraModal()) {
         <app-modal-login (chiudi)="mostraModal.set(false)"></app-modal-login>
     }
+</div>
+
+<!-- Controllato direttamente dall'effect del file TypeScript -->
+<div class="snackbar" [class.active]="mostraSnackbar">
+    <p>{{ langService.traduci('PRODOTTO_AGGINUNTO_AL_CARRELLO') }}</p>
 </div>

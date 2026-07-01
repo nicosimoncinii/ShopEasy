@@ -157,3 +157,32 @@
     }
   }
 }
+
+
+.snackbar {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px); /* Parte leggermente più in basso */
+  background-color: #333333;
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 9999; 
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  /* 1. STATO INIZIALE: NASCOSTO E TRASPARENTE */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+  
+  /* 2. STATO ATTIVO: APPARE QUANDO ANGULAR APPLICA LA CLASSE .active */
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0); /* Torna alla posizione corretta salendo */
+  }
+}

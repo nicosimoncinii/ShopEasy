@@ -1,12 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { WishlistService } from './wishlist.service';
+import { CartService } from './cart.service'; // 1. Importa il CartService
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private apiUrl = 'http://localhost:8080/api/auth';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+      private http: HttpClient,
+      private wishlistService: WishlistService,
+      private cartService: CartService // 2. Inietta il CartService qui nel costruttore
+  ) {}
 
   login(email: string, password: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, { email, password });
@@ -30,7 +36,10 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('token');
+    this.wishlistService.svuota(); // ← svuota la wishlist (già presente)
+    this.cartService.svuota();     // 3. Inserisci questa riga per azzerare il carrello al logout!
   }
+
   getEmail(): string | null {
     const token = this.getToken();
     if (!token) return null;

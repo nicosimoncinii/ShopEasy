@@ -76,4 +76,12 @@ export class WishlistService {
         }));
         this.wishlistSignal.set(mappati);
     }
+
+    svuota() {
+        this.wishlistSignal.set([]);
+    }
+
+    ricarica() {
+        this.caricaDaBackend();
+    }
 }

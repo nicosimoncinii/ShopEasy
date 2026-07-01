@@ -49,5 +49,8 @@
             </div>
         </div>
     }
-
+    <app-modal-login
+            *ngIf="mostraModale"
+            (chiudi)="mostraModale = false">
+    </app-modal-login>
 </div>

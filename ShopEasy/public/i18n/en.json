@@ -81,5 +81,7 @@
   "CHECKOUT_CARD_EXPIRY": "Expiry Date:",
   "CHECKOUT_CARD_CVV": "CVV:",
   "CHECKOUT_PAYPAL_EMAIL": "PayPal Email:",
-  "CHECKOUT_CASH_INFO": "You will pay in cash directly to the courier upon delivery. Exact change is required."
+  "CHECKOUT_CASH_INFO": "You will pay in cash directly to the courier upon delivery. Exact change is required.",
+  "MODAL_TITOLO": "Access required",
+  "MODAL_TESTO": "You need to be registered or logged in to perform this action."
 }

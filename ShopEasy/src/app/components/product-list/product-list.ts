@@ -4,15 +4,17 @@ import { ProductCard } from '../product-card/product-card';
 import { CartService } from '../../services/cart.service';
 import { WishlistService } from '../../services/wishlist.service';
 import { Product } from '../../models/product';
+import { ModalLogin } from '../modal-login/modal-login';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, ProductCard],
+  imports: [CommonModule, ProductCard, ModalLogin],
   templateUrl: './product-list.html',
   styleUrl: './product-list.scss',
 })
 export class ProductList {
+  mostraModale: boolean = false;
 
   constructor(
       public cartService: CartService,

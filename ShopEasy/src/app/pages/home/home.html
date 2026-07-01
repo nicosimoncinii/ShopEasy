@@ -13,8 +13,8 @@
                     [product]="prodotto"
                     [isInWishlist]="wishlistService.isInWishlist(prodotto.id)"
                     (aggiungiAlCarrello)="aggiungiAlCarrello($event)"
-                    (toggleWishlist)="toggleWishlist($event)">
-            </app-product-card>
+                    (toggleWishlist)="toggleWishlist($event)"
+                    (nonLoggato)="mostraModale = true"> </app-product-card>
         </div>
     </section>
 
@@ -47,3 +47,8 @@
     </section>
 
 </div>
+
+<app-modal-login
+        *ngIf="mostraModale"
+        (chiudi)="mostraModale = false">
+</app-modal-login>

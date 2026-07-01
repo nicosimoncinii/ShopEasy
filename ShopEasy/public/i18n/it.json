@@ -81,5 +81,7 @@
   "CHECKOUT_CARD_EXPIRY": "Scadenza:",
   "CHECKOUT_CARD_CVV": "CVV:",
   "CHECKOUT_PAYPAL_EMAIL": "Email PayPal:",
-  "CHECKOUT_CASH_INFO": "Pagherai in contanti direttamente al corriere quando arriverà il pacco. È richiesto l'importo esatto."
+  "CHECKOUT_CASH_INFO": "Pagherai in contanti direttamente al corriere quando arriverà il pacco. È richiesto l'importo esatto.",
+  "MODAL_TITOLO": "Accesso richiesto",
+  "MODAL_TESTO": "Devi essere registrato o aver effettuato l'accesso per eseguire questa azione."
 }

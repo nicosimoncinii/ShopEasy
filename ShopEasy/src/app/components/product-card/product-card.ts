@@ -1,31 +1,44 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgIconComponent } from '@ng-icons/core';
-import { Product } from '../../models/product';
 import { LangService } from '../../services/lang.service';
+import { AuthService } from '../../services/auth.service';
+// 1. IMPORTA IL COMPONENTE DELLE ICONE
+import { NgIconComponent } from '@ng-icons/core';
 
 @Component({
   selector: 'app-product-card',
   standalone: true,
+  // 2. AGGIUNGI NgIconComponent QUI NEGLI IMPORTS
   imports: [CommonModule, NgIconComponent],
   templateUrl: './product-card.html',
-  styleUrl: './product-card.scss',
+  styleUrl: './product-card.scss'
 })
-
 export class ProductCard {
-  constructor(public langService: LangService){
-
-  }
-  @Input() product!: Product;
-  @Output() aggiungiAlCarrello = new EventEmitter<Product>();
-  @Output() toggleWishlist = new EventEmitter<Product>();
+  @Input() product!: any;
   @Input() isInWishlist: boolean = false;
 
+  @Output() aggiungiAlCarrello = new EventEmitter<any>();
+  @Output() toggleWishlist = new EventEmitter<any>();
+  @Output() nonLoggato = new EventEmitter<void>();
+
+  constructor(
+      public langService: LangService,
+      private authService: AuthService
+  ) {}
+
   onAggiungiAlCarrello() {
-    this.aggiungiAlCarrello.emit(this.product);
+    if (this.authService.isLoggato()) {
+      this.aggiungiAlCarrello.emit(this.product);
+    } else {
+      this.nonLoggato.emit();
+    }
   }
 
   onToggleWishlist() {
-    this.toggleWishlist.emit(this.product);
+    if (this.authService.isLoggato()) {
+      this.toggleWishlist.emit(this.product);
+    } else {
+      this.nonLoggato.emit();
+    }
   }
 }

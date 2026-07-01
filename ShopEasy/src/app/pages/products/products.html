@@ -1,4 +1,9 @@
 <div class="products-page">
     <h2>{{ langService.traduci('PRODOTTITITOLO') }}</h2>
-    <app-product-list></app-product-list>
+
+    <app-product-list (loginRichiesto)="mostraModal.set(true)"></app-product-list>
+
+    @if (mostraModal()) {
+        <app-modal-login (chiudi)="mostraModal.set(false)"></app-modal-login>
+    }
 </div>

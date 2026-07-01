@@ -1,0 +1,23 @@
+<div class="modal-overlay" (click)="chiudi.emit()">
+    <div class="modal-box" (click)="$event.stopPropagation()">
+
+        <button class="close-btn" (click)="chiudi.emit()">✕</button>
+
+        <div class="modal-icon">
+            <i class="pi pi-lock"></i>
+        </div>
+
+        <h2>{{ langService.traduci('MODAL_TITOLO') }}</h2>
+        <p>{{ langService.traduci('MODAL_TESTO') }}</p>
+
+        <div class="modal-actions">
+            <button class="login-btn" (click)="vaiAlLogin()">
+                {{ langService.traduci('ACCEDI') }}
+            </button>
+            <button class="register-btn" (click)="vaiAllaRegistrazione()">
+                {{ langService.traduci('REGISTER') }}
+            </button>
+        </div>
+
+    </div>
+</div>

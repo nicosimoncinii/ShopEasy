@@ -5,17 +5,21 @@ import { LangService } from '../../services/lang.service';
 import { CartService } from '../../services/cart.service';
 import { WishlistService } from '../../services/wishlist.service';
 import { ProductCard } from '../../components/product-card/product-card';
-import { ThemeService} from "../../services/theme.service";
-
+import { ThemeService } from "../../services/theme.service";
+// 1. IMPORTA IL MODALE
+import { ModalLogin } from '../../components/modal-login/modal-login';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, ProductCard],
+  // 2. AGGIUNGI ModalLogin NEGLI IMPORTS
+  imports: [CommonModule, ProductCard, ModalLogin],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
 export class Home {
+  // 3. DICHIARA LA VARIABILE PER CONTROLLARE IL MODALE
+  mostraModale: boolean = false;
 
   constructor(
       public langService: LangService,
@@ -26,12 +30,10 @@ export class Home {
   ) {}
 
   get bannerUrl(): string {
-
     const lingua = this.langService.getLingua();
     const isDark = this.themeService.getIsDarkMode();
 
     if (isDark) {
-
       return lingua === 'it' ? '/darkbannerIT.png' : '/darkbannerIG.png';
     } else {
       return lingua === 'it' ? '/banner.png' : '/bannerIG.png';

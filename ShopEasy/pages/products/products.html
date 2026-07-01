@@ -1,26 +1,57 @@
 <div class="products-page">
-    <h2>{{ langService.traduci('prodottiTitolo') }}</h2>
-  
+    <h2>{{ langService.traduci('PRODOTTITITOLO') }}</h2>
+
     @if (caricamento) {
-      <div class="loading">Caricamento prodotti...</div>
+        <div class="loading">Caricamento prodotti...</div>
     } @else if (errore) {
-      <div class="errore">{{ errore }}</div>
+        <div class="errore">{{ errore }}</div>
     } @else if (prodottiVisualizzati.length > 0) {
-      <div class="products-list">
-        @for (prodotto of prodottiVisualizzati; track prodotto.id) {
-          <div class="product-row">
-            <img [src]="prodotto.img || prodotto.immagine" [alt]="prodotto.nome" class="product-img">
-            <div class="product-info">
-              <strong>{{ prodotto.nome }}</strong>
-              <span class="product-price">{{ prodotto.prezzo }}€</span>
-            </div>
-            <button class="add-to-cart-btn" (click)="onAggiungiAlCarrello(prodotto)">
-              {{ langService.traduci('aggiungi') }}
-            </button>
-          </div>
-        }
-      </div>
+        <div class="products-list">
+            @for (prodotto of prodottiVisualizzati; track prodotto.id) {
+                <div class="product-row" style="position: relative;">
+
+                    <img [src]="prodotto.img || prodotto.immagine"
+                         [alt]="prodotto.nome"
+                         class="product-img"
+                         (click)="apriPopUp(prodotto.id, $event)"
+                         style="cursor: pointer;">
+
+                    <div class="product-info">
+                        <strong>{{ prodotto.nome }}</strong>
+                        <span class="product-price">{{ prodotto.prezzo }}€</span>
+                    </div>
+
+                    <button class="add-to-cart-btn" (click)="onAggiungiAlCarrello(prodotto)">
+                        {{ langService.traduci('AGGIUNGI') }}
+                    </button>
+
+                    @if (popupAttivoId() === prodotto.id) {
+                        <div class="card-popup-overlay" (click)="chiudiPopUp($event)">
+                            <div class="card-popup-content" (click)="$event.stopPropagation()">
+                                <span class="popup-close-x" (click)="chiudiPopUp($event)">&times;</span>
+
+                                <h4>{{ prodotto.nome }}</h4>
+                                <p class="popup-desc">{{ prodotto.descrizionePopUp }}</p>
+
+                                <div class="popup-status">
+                                    @if (prodotto.disponibilePopUp) {
+                                        <span class="badge available">
+                        {{ langService.getLingua() === 'it' ? 'Disponibile' : 'In Stock' }}
+                      </span>
+                                    } @else {
+                                        <span class="badge unavailable">
+                        {{ langService.getLingua() === 'it' ? 'Esaurito' : 'Out of Stock' }}
+                      </span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            }
+        </div>
     } @else {
-      <p class="no-results">{{ langService.traduci('nessunProdotto') }}</p>
+        <p class="no-results">{{ langService.traduci('CARRELLOVUOTO') }}</p>
     }
-  </div>
+</div>

@@ -88,5 +88,8 @@
   "CHECKOUT_PAYPAL_EMAIL": "PayPal Email:",
   "CHECKOUT_CASH_INFO": "You will pay in cash directly to the courier upon delivery. Exact change is required.",
   "MODAL_TITOLO": "Access required",
-  "MODAL_TESTO": "You need to be registered or logged in to perform this action."
+  "MODAL_TESTO": "You need to be registered or logged in to perform this action.",
+  "DISPONIBILE": "In Stock",
+  "ESAURITO": "Out of Stock",
+  "DESC_PRODOTTO": "Premium quality product, built with the best materials on the market and designed for maximum reliability over time."
 }

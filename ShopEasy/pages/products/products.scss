@@ -17,6 +17,12 @@
   height: 60px;
   object-fit: contain;
   border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.08);
+  }
 }
 
 .products-list {
@@ -26,6 +32,7 @@
 }
 
 .product-row {
+  position: relative; /* CRITICO: Permette al pop-up di agganciarsi perfettamente a questa riga */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -38,11 +45,13 @@
   .product-info {
     font-family: Arial, sans-serif;
     font-size: 1.1rem;
-    color: var(--text-color); /* <-- Dinamico */
+    color: var(--text-color);
     transition: color 0.3s;
+    flex: 1;
+    margin-left: 20px;
 
     .product-price {
-      color: #1bcf8c; /* Mantiene il verde brillante sia in light che dark */
+      color: #1bcf8c;
       font-weight: bold;
       margin-left: 10px;
     }
@@ -67,83 +76,162 @@
       opacity: 0.9;
     }
   }
-  .products-page {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
 
-    h2 {
-      font-size: 2rem;
-      color: var(--text-color);
-      margin-bottom: 25px;
+  /* ==========================================================================
+     STRUTTURA DEL POP-UP LATO FRONTEND (SOVRASTANTE LA CARD / ROW)
+     ========================================================================== */
+  .card-popup-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-card); /* Eredita lo sfondo corretto in Light e Dark mode */
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 25px;
+    z-index: 10; /* Copre il contenuto standard della riga */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    animation: fadeInFast 0.15s ease-in-out;
+  }
+
+  .card-popup-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
+    padding-right: 30px; /* Lascia spazio alla 'X' di chiusura */
+
+    .popup-details {
+      text-align: left;
       font-family: Arial, sans-serif;
-      transition: color 0.3s;
+      color: var(--text-color);
+      max-width: 75%;
+
+      h4 {
+        margin: 0 0 4px 0;
+        font-size: 1.05rem;
+        font-weight: bold;
+      }
+
+      .popup-desc {
+        margin: 0 0 6px 0;
+        font-size: 0.85rem;
+        opacity: 0.85;
+        line-height: 1.3;
+      }
+    }
+
+    .popup-status {
+      display: inline-flex;
+
+      .badge {
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+
+        &.available {
+          background-color: rgba(27, 207, 140, 0.15);
+          color: #1bcf8c;
+        }
+
+        &.unavailable {
+          background-color: rgba(231, 76, 60, 0.15);
+          color: #e74c3c;
+        }
+      }
     }
   }
 
-  .products-list {
-    background-color: beige;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  .popup-close-x {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 26px;
+    cursor: pointer;
+    color: #888;
+    line-height: 1;
+    transition: color 0.15s;
+
+    &:hover {
+      color: var(--text-color);
+    }
   }
 
-  .product-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--bg-card);
-    padding: 15px 25px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    transition: background-color 0.3s;
+  /* ==========================================================================
+     MEDIA QUERIES RESPONSIVE
+     ========================================================================== */
+  @media (max-width: 768px) {
+    padding: 12px 15px;
 
     .product-info {
-      font-family: Arial, sans-serif;
-      font-size: 1.1rem;
-      color: var(--text-color);
-      transition: color 0.3s;
-
-      .product-price {
-        color: #1bcf8c;
-        font-weight: bold;
-        margin-left: 10px;
-      }
+      font-size: 1rem;
+      margin-left: 15px;
     }
 
     .add-to-cart-btn {
-      background-color: #1bcf8c;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      font-size: 1rem;
-      font-weight: bold;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.2s, opacity 0.2s;
-
-      &:hover { background-color: #15a36f; }
-      &:active { opacity: 0.9; }
+      padding: 10px 16px;
+      font-size: 0.9rem;
     }
 
-
-    @media (max-width: 768px) {
+    .card-popup-overlay {
       padding: 12px 15px;
+    }
+  }
 
-      .product-info { font-size: 1rem; }
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
 
-      .add-to-cart-btn {
-        padding: 10px 16px;
-        font-size: 0.9rem;
+    .product-info {
+      margin-left: 0;
+    }
+
+    .add-to-cart-btn {
+      width: 100%;
+      text-align: center;
+    }
+
+    /* Adatta il pop-up al layout verticale sui telefoni */
+    .card-popup-overlay {
+      height: auto;
+      min-height: 100%;
+    }
+
+    .card-popup-content {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      padding-right: 20px;
+
+      .popup-details {
+        max-width: 100%;
       }
     }
 
-    @media (max-width: 480px) {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 10px;
-
-      .add-to-cart-btn { width: 100%; text-align: center; }
+    .popup-close-x {
+      top: 5px;
+      transform: none;
     }
+  }
+}
+
+/* Animazione di comparsa rapida del pop-up */
+@keyframes fadeInFast {
+  from {
+    opacity: 0;
+    transform: scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LangService } from '../../src/app/services/lang.service';
 import { CartService } from '../../src/app/services/cart.service';
@@ -22,12 +22,15 @@ export class Products implements OnInit, OnDestroy {
   caricamento = true;
   errore = '';
 
+  // Signal per tracciare l'ID del prodotto che ha il pop-up aperto (null = nessun pop-up aperto)
+  popupAttivoId = signal<number | null>(null);
+
   constructor(
-    public langService: LangService,
-    private cartService: CartService,
-    private searchService: SearchService,
-    private productService: ProductService,
-    private cdr: ChangeDetectorRef
+      public langService: LangService,
+      private cartService: CartService,
+      private searchService: SearchService,
+      private productService: ProductService,
+      private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -58,11 +61,30 @@ export class Products implements OnInit, OnDestroy {
     const query = this.searchQuery.toLowerCase().trim();
     const lingua = this.langService.getLingua();
     this.prodottiVisualizzati = this.prodottiTutti
-      .map(p => ({
-        ...p,
-        nome: lingua === 'it' ? (p.nomeIt || p.nome) : (p.nomeEn || p.nome)
-      }))
-      .filter(p => !query || p.nome.toLowerCase().includes(query));
+        .map(p => ({
+          ...p,
+          nome: lingua === 'it' ? (p.nomeIt || p.nome) : (p.nomeEn || p.nome),
+
+          // Generazione al volo di descrizioni e disponibilità mockate solo frontend
+          descrizionePopUp: lingua === 'it'
+              ? `Fantastico ${p.nomeIt || p.nome} di ultima generazione, ideale per soddisfare ogni tua esigenza quotidiana.`
+              : `Amazing next-gen ${p.nomeEn || p.nome}, designed to perfectly fit all your daily needs.`,
+
+          // Esempio logico frontend: se l'id è dispari è disponibile, se è pari è esaurito
+          disponibilePopUp: (p.id % 2 !== 0)
+        }))
+        .filter(p => !query || p.nome.toLowerCase().includes(query));
+  }
+
+  // Metodi di controllo del Pop-up agganciati alla card
+  apriPopUp(id: number, event: Event) {
+    event.stopPropagation();
+    this.popupAttivoId.set(id);
+  }
+
+  chiudiPopUp(event: Event) {
+    event.stopPropagation();
+    this.popupAttivoId.set(null);
   }
 
   onAggiungiAlCarrello(prodotto: any) {

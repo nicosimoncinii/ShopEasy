@@ -89,5 +89,8 @@
   "CHECKOUT_PAYPAL_EMAIL": "Email PayPal:",
   "CHECKOUT_CASH_INFO": "Pagherai in contanti direttamente al corriere quando arriverà il pacco. È richiesto l'importo esatto.",
   "MODAL_TITOLO": "Accesso richiesto",
-  "MODAL_TESTO": "Devi essere registrato o aver effettuato l'accesso per eseguire questa azione."
+  "MODAL_TESTO": "Devi essere registrato o aver effettuato l'accesso per eseguire questa azione.",
+  "DISPONIBILE": "Disponibile",
+  "ESAURITO": "Esaurito",
+  "DESC_PRODOTTO": "Prodotto di qualità premium, costruito con i migliori materiali sul mercato e progettato per garantire la massima affidabilità nel tempo."
 }

@@ -1,22 +1,20 @@
-<div class="product-card" *ngIf="product">
-    <div class="product-image">
-        <img [src]="product.imageUrl" [alt]="product.name">
+<div class="product-card" *ngIf="product" style="position: relative;">
+
+    <div class="product-image" (click)="apriPopUp($event)">
+        <img [src]="product.imageUrl || product.img || product.immagine" [alt]="product.name">
     </div>
-
-
 
     <div class="product-info">
         <h3 class="product-title">{{ product.name }}</h3>
 
-
         <div class="product-price-section">
             <div class="current-price-row">
-                <span class="price-prefix"><h1>{{langService.traduci('PREZZO')}}</h1></span>
+                <span class="price-prefix"><h1>{{ langService.traduci('PREZZO') }}</h1></span>
                 <span class="current-price">{{ product.price | currency:'EUR':'symbol':'1.2-2':'it-IT' }}</span>
             </div>
             <div class="list-price-row" *ngIf="product.listPrice">
                 <span class="list-price">{{ product.listPrice | currency:'EUR':'symbol':'1.2-2':'it-IT' }}</span>
-                <span class="condition" ><h1>{{langService.traduci('NUOVO')}}</h1></span>
+                <span class="condition"><h1>{{ langService.traduci('NUOVO') }}</h1></span>
             </div>
         </div>
     </div>
@@ -25,8 +23,24 @@
         <button class="add-to-cart-btn" (click)="onAggiungiAlCarrello()">
             <span>{{ langService.traduci('ADDCARRELLO') }}</span>
         </button>
+
         <button class="wishlist-btn" (click)="onToggleWishlist()">
-            <ng-icon [name]="isInWishlist ? 'heroHeartSolid' : 'heroHeart'" size="20"></ng-icon>
+            <i [ngClass]="isInWishlist ? 'pi pi-heart-fill' : 'pi pi-heart'" style="font-size: 20px;"></i>
         </button>
+    </div>
+
+    <div class="card-popup-overlay" *ngIf="isPopupOpen()" (click)="chiudiPopUp($event)">
+        <div class="card-popup-content" (click)="$event.stopPropagation()">
+            <span class="popup-close-x" (click)="chiudiPopUp($event)">&times;</span>
+
+            <h4 class="popup-title">{{ product.name }}</h4>
+            <p class="popup-desc">{{ langService.traduci('DESC_PRODOTTO') }}</p>
+
+            <div class="popup-status-wrapper">
+                <span class="badge" [ngClass]="disponibileProdotto ? 'available' : 'unavailable'">
+                    {{ disponibileProdotto ? langService.traduci('DISPONIBILE') : langService.traduci('ESAURITO') }}
+                </span>
+            </div>
+        </div>
     </div>
 </div>

@@ -55,6 +55,10 @@
   "LINGUA_PREFERITA": "Preferred language",
   "TEMAFOTO": "Theme",
   "NESSUN_ORDINE": "You have no orders yet.",
+  "ITALIANO": "Italy",
+  "INGLESE": "English",
+  "CHIARO": "Light",
+  "SCURO": "Dark",
   "HOME": {
     "BANNER_PATH": "/assets/banner-en.png"
   },

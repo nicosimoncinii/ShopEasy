@@ -44,4 +44,15 @@ export class ThemeService {
   getTemaSignal() {
     return this.temaAttuale.asReadonly();
   }
+  
+  setTema(nuovoTema: string) {
+    this.temaAttuale.set(nuovoTema);
+
+    if (this.isBrowser) {
+      localStorage.setItem('theme', nuovoTema);
+      this.applicaTema(nuovoTema);
+    }
+  }
+
+
 }

@@ -81,19 +81,19 @@
     <div class="campo-row" [ngClass]="themeService.getIsDarkMode() ? 'text-white' : 'text-black'">
         <div class="campo-info">
             <span class="label">{{langService.traduci('LINGUA_PREFERITA')}}</span>
-            @if (inModifica['linguaPreferita']) {
-                <select [(ngModel)]="utente.linguaPreferita" class="select-modifica">
-                    <option value="Italiano">Italiano</option>
-                    <option value="Inglese">Inglese</option>
+            @if (inModifica['languagePreference']) {
+                <select [(ngModel)]="utente.languagePreference" class="select-modifica">
+                    <option value="IT">{{langService.traduci('ITALIANO')}}</option>
+                    <option value="EN">{{langService.traduci('INGLESE')}}</option>
                 </select>
             } @else {
-                <span class="valore">{{ utente.linguaPreferita }}</span>
+                <span class="valore">{{ utente.languagePreference === 'IT' ? 'Italiano' : 'Inglese' }}</span>
             }
         </div>
-        @if (inModifica['linguaPreferita']) {
-            <button class="btn-salva" (click)="salvaModifica('linguaPreferita')">Salva</button>
+        @if (inModifica['languagePreference']) {
+            <button class="btn-salva" (click)="salvaModifica('languagePreference')">Salva</button>
         } @else {
-            <button class="btn-modifica" (click)="attivaModifica('linguaPreferita')">{{langService.traduci('MODIFICA_BUTTON_PERSONAL')}}</button>
+            <button class="btn-modifica" (click)="attivaModifica('languagePreference')">{{langService.traduci('MODIFICA_BUTTON_PERSONAL')}}</button>
         }
     </div>
 
@@ -101,19 +101,19 @@
     <div class="campo-row" [ngClass]="themeService.getIsDarkMode() ? 'text-white' : 'text-black'">
         <div class="campo-info">
             <span class="label">{{langService.traduci('TEMAFOTO')}}</span>
-            @if (inModifica['temaGrafico']) {
-                <select [(ngModel)]="utente.temaGrafico" class="select-modifica">
-                    <option value="Chiaro">Chiaro</option>
-                    <option value="Scuro">Scuro</option>
+            @if (inModifica['themePreference']) {
+                <select [(ngModel)]="utente.themePreference" class="select-modifica">
+                    <option value="LIGHT">{{langService.traduci('CHIARO')}}</option>
+                    <option value="DARK">{{langService.traduci('SCURO')}}</option>
                 </select>
             } @else {
-                <span class="valore">{{ utente.temaGrafico }}</span>
+                <span class="valore">{{ utente.themePreference === 'LIGHT' ? 'Chiaro' : 'Scuro' }}</span>
             }
         </div>
-        @if (inModifica['temaGrafico']) {
-            <button class="btn-salva" (click)="salvaModifica('temaGrafico')">Salva</button>
+        @if (inModifica['themePreference']) {
+            <button class="btn-salva" (click)="salvaModifica('themePreference')">Salva</button>
         } @else {
-            <button class="btn-modifica" (click)="attivaModifica('temaGrafico')">{{langService.traduci('MODIFICA_BUTTON_PERSONAL')}}</button>
+            <button class="btn-modifica" (click)="attivaModifica('themePreference')">{{langService.traduci('MODIFICA_BUTTON_PERSONAL')}}</button>
         }
     </div>
 

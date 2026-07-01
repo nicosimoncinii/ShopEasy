@@ -19,9 +19,9 @@ CREATE TABLE UTENTE (
   email VARCHAR(100) NOT NULL UNIQUE,
   indirizzo VARCHAR(255),
   password VARCHAR(255) NOT NULL,
-  telefono VARCHAR(20),
   language_preference VARCHAR(10) NOT NULL DEFAULT 'it',
   theme_preference VARCHAR(10) NOT NULL DEFAULT 'light',
+  telefono VARCHAR(20),
   ruolo BIGINT,
   stato VARCHAR(20) NOT NULL DEFAULT 'ATTIVO',
   FOREIGN KEY (ruolo) REFERENCES RUOLO(id)

@@ -64,7 +64,8 @@ public class SecurityConfig {
                                 "/swagger-initializer.js",
                                 "/v3/api-docs/**",
                                 "/api-docs/**",
-                                "/webjars/**"
+                                "/webjars/**",
+                                "/api/users/**"
                         ).permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/products", "/api/products/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/products/**").hasAuthority("ADMIN")

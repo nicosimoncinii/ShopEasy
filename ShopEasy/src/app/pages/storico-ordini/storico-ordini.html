@@ -1,0 +1,55 @@
+<div class="storico-container">
+  <h1>Il tuo Storico Ordini</h1>
+
+  <div *ngIf="loading" class="status-box">
+    <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+    <p>Caricamento ordini in corso...</p>
+  </div>
+
+  <div *ngIf="errorMessage" class="status-box error">
+    <i class="pi pi-exclamation-triangle" style="font-size: 2rem"></i>
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <div *ngIf="!loading && !errorMessage && ordini.length === 0" class="status-box">
+    <i class="pi pi-box" style="font-size: 2rem"></i>
+    <p>Non hai ancora effettuato nessun ordine.</p>
+  </div>
+
+  <div class="ordini-list" *ngIf="!loading && ordini.length > 0">
+    <div class="ordine-card" *ngFor="let ordine of ordini">
+      
+      <div class="ordine-header">
+        <div class="ordine-info">
+          <span class="ordine-id">Ordine #{{ ordine.id }}</span>
+          <span class="ordine-data"><i class="pi pi-calendar"></i> {{ ordine.data | date:'dd/MM/yyyy HH:mm' }}</span>
+        </div>
+        <div class="ordine-stato" [ngClass]="ordine.stato.toLowerCase()">
+          {{ ordine.stato }}
+        </div>
+      </div>
+
+      <div class="ordine-dettagli">
+        <div class="prodotto-item" *ngFor="let dettaglio of ordine.dettagli">
+          
+          <img *ngIf="dettaglio.prodotto.immagine" [src]="dettaglio.prodotto.immagine" [alt]="dettaglio.prodotto.nome" class="prodotto-img">
+          
+          <div *ngIf="!dettaglio.prodotto.immagine" class="prodotto-img-placeholder">
+            <i class="pi pi-image"></i>
+          </div>
+          
+          <div class="prodotto-info">
+            <h4>{{ dettaglio.prodotto.nome }}</h4>
+            <p class="text-muted">
+              {{ dettaglio.quantita }} x {{ dettaglio.prezzoUnitario | currency:'EUR':'symbol':'1.2-2' }}            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ordine-footer">
+        <span class="totale-label">Totale Ordine:</span>
+        <span class="totale-valore">{{ ordine.totale | currency:'EUR':'symbol':'1.2-2' }}</span>      </div>
+      
+    </div>
+  </div>
+</div>

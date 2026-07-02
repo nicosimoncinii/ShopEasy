@@ -36,10 +36,12 @@ public class OrdineController {
         return ResponseEntity.ok(service.prendiOrdiniPerUtente(principal.getName()));
     }
 
+
+
     @PostMapping
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<OrdineResponseDTO> salvaOrdine(@RequestBody OrdineRequestDTO ordine) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.creaOrdine(ordine));
+    @PreAuthorize("hasAnyAuthority('ADMIN','CLIENTE')")
+    public ResponseEntity<OrdineResponseDTO> salvaOrdine(Principal principal, @RequestBody OrdineRequestDTO ordine) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.creaOrdine(ordine,principal.getName()));
     }
 
     @PutMapping("/{id}")

@@ -3,19 +3,18 @@ package it.shopeasy.service;
 import it.shopeasy.dto.OrdineRequestDTO;
 import it.shopeasy.enums.RuoloUtente;
 import it.shopeasy.enums.StatoOrdine;
-import it.shopeasy.model.DettaglioOrdine;
-import it.shopeasy.model.Ordine;
+import it.shopeasy.model.*;
 
 import it.shopeasy.dto.OrdineResponseDTO;
-import it.shopeasy.model.Prodotto;
-import it.shopeasy.model.Statistiche;
 import it.shopeasy.repository.OrdineRepository;
 import it.shopeasy.repository.ProdottoRepository;
 import it.shopeasy.repository.StatisticheRepository;
+import it.shopeasy.repository.UtenteRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.naming.NoPermissionException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +33,8 @@ public class OrdineService {
     private ProdottoRepository prodottoRepository;
     @Autowired
     private StatisticheRepository statisticheRepository;
+    @Autowired
+    private UtenteRepository utenteRepository;
 
     public List<OrdineResponseDTO> prendiTuttiOrdini() {
         return ordineRepository.findAll()
@@ -159,16 +160,26 @@ public class OrdineService {
             ordine.getDettagli()
         );
     }
-    public OrdineResponseDTO creaOrdine(OrdineRequestDTO ordine){
+    public OrdineResponseDTO creaOrdine(OrdineRequestDTO ordine,String email){
 
         Statistiche statistiche = statisticheRepository.findById(StatisticheRepository.ID)
                 .orElseThrow(() -> new RuntimeException("Errore nella fetch dei dati nelle statistiche, riferirsi ad un amministratore"));
 
-        statistiche.setOrdiniTotali(statistiche.getOrdiniTotali() +1);
+        Utente utente = utenteRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Utente non esistente"));
 
-        statisticheRepository.save(statistiche);
+        if(utente.getRuolo().equals(RuoloUtente.ADMIN)){
+            return salvaOrdine(ordine);
+        }
+        else {
+            if(ordine.getUtenteId().equals(utente.getId()))
+                return salvaOrdine(ordine);
+            else
+                throw new RuntimeException("Nessun permesso per creare il seguente ordine");
+        }
 
-        return salvaOrdine(ordine);
+
+
     }
 
 

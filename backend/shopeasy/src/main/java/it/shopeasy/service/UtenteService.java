@@ -50,6 +50,8 @@ public class UtenteService {
                 .orElseThrow(() -> new RuntimeException("Utente non trovato con id: " + id));
     }
 
+
+
     public void cancellaUtente(Long id) {
         if (!utenteRepository.existsById(id)) {
             throw new RuntimeException("Utente non trovato con id: " + id);

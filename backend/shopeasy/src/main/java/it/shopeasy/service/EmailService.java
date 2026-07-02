@@ -25,9 +25,9 @@ public class EmailService {
         context.setVariable("nomeUtente", utente.getNome());
         context.setVariable("salutoIniziale", "Ciao");
         context.setVariable("messaggioPrincipale", "Benvenuto su <b>ShopEasy</b>! Siamo felici di averti con noi.");
-        context.setVariable("messaggioAzione", "Per iniziare, conferma il tuo account cliccando il pulsante qui sotto.");
-        context.setVariable("linkBottone", "http://localhost:4200/conferma-account");
-        context.setVariable("testoBottone", "Conferma account");
+        context.setVariable("messaggioAzione", "Premi il pulsante per iniziare a fare compere!");
+        context.setVariable("linkBottone", "http://localhost:4200/home");
+        context.setVariable("testoBottone", "Home");
         context.setVariable("messaggioAssistenza", "Per qualsiasi domanda, contatta il nostro supporto.");
         context.setVariable("salutoFinale", "Team ShopEasy");
         context.setVariable("testoCopyright", "© 2026 ShopEasy. Tutti i diritti riservati.");

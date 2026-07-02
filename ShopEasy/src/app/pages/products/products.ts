@@ -1,9 +1,10 @@
-import { Component, signal, effect, ChangeDetectorRef, computed } from '@angular/core';
+import { Component, signal, effect, ChangeDetectorRef, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductList } from '../../components/product-list/product-list';
 import { LangService } from '../../services/lang.service';
 import { CartService } from '../../services/cart.service';
 import { SearchService } from '../../services/search.service';
+import { ProductService } from '../../services/product.service'; // Aggiunto
 import { ModalLogin } from '../../components/modal-login/modal-login';
 import { toSignal } from '@angular/core/rxjs-interop';
 
@@ -14,7 +15,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
   templateUrl: './products.html',
   styleUrl: './products.scss'
 })
-export class Products {
+export class Products implements OnInit { // Aggiunto OnInit
   mostraModal = signal<boolean>(false);
   mostraSnackbar: boolean = false;
   snackbarTimer: any;
@@ -24,8 +25,11 @@ export class Products {
 
   prodottiFiltrati = computed(() => {
     const testo = this.testoCerca?.() ?? '';
-    if (!testo.trim()) return this.cartService.prodottiTutti;
-    return this.cartService.prodottiTutti.filter(p =>
+    // Leggiamo dal ProductService
+    const tutti = this.productService.prodottiTutti();
+    
+    if (!testo.trim()) return tutti;
+    return tutti.filter(p =>
         p.name.toLowerCase().includes(testo.toLowerCase().trim())
     );
   });
@@ -34,10 +38,10 @@ export class Products {
       public langService: LangService,
       private cartService: CartService,
       private searchService: SearchService,
+      private productService: ProductService, // Aggiunto
       private cdr: ChangeDetectorRef
   ) {
     this.testoCerca = toSignal(this.searchService.searchText$, { initialValue: '' });
-
     this.conteggioPrecedente = this.cartService.numeroProdotti();
 
     effect(() => {
@@ -47,6 +51,13 @@ export class Products {
       }
       this.conteggioPrecedente = conteggioAttuale;
     });
+  }
+
+  ngOnInit() {
+    // Chiamata GET in caso l'utente atterri direttamente qui
+    if (this.productService.prodottiTutti().length === 0) {
+      this.productService.caricaProdotti().subscribe();
+    }
   }
 
   attivaSnackbar() {

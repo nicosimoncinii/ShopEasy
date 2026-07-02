@@ -1,10 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { LangService } from '../../services/lang.service';
-import { AuthService } from '../../services/auth.service';
-import { WishlistService } from '../../services/wishlist.service';
 
 @Component({
   selector: 'app-login',
@@ -16,38 +14,28 @@ import { WishlistService } from '../../services/wishlist.service';
 export class Login {
   email = '';
   password = '';
-  errore = signal('');
-  caricamento = signal(false);
+  messaggioErrore = '';    
+  isCaricamento = false;  
 
   constructor(
       private router: Router,
-      public langService: LangService,
-      private authService: AuthService,
-      private wishlistService: WishlistService
+      public langService: LangService
   ) {}
 
-  onLogin() {
-    if (!this.email || !this.password) {
-      this.errore.set('Compila tutti i campi');
-      return;
-    }
-    this.caricamento.set(true);
-    this.errore.set('');
-
-    this.authService.login(this.email.toLowerCase(), this.password).subscribe({
-      next: (res) => {
-        this.authService.salvaToken(res.token);
-        this.wishlistService.ricarica(); // ← carica la wishlist dell'utente
-        this.caricamento.set(false);
-        this.router.navigate(['/']);
-      },
-      error: (err) => {
-        this.errore.set('Email o password errati');
-        this.caricamento.set(false);
-      }
-    });
+  onLogin() { 
+    this.router.navigate(['/']); 
   }
-
-  goToRegister() { this.router.navigate(['/register']); }
-  goBack() { this.router.navigate(['/']); }
+  
+  goToRegister() { 
+    this.router.navigate(['/register']); 
+  }
+  
+  goBack() { 
+    this.router.navigate(['/']); 
+  }
+  
+  goToResetPassword() { 
+    // CORREZIONE: Usa lo stesso path definito in app.routes.ts
+    this.router.navigate(['/resetpsw']); 
+  }
 }

@@ -59,7 +59,11 @@
   "INGLESE": "English",
   "CHIARO": "Light",
   "SCURO": "Dark",
+  "INVIA" : "Submit",
+  "RIPRISTINA_PASSWORD": "Reset Password",
+  "PASSWORDDIMENTICATA" : "Forgot password?",
   "PRODOTTO_AGGINUNTO_AL_CARRELLO": "Product added to cart!",
+  
   "HOME": {
     "BANNER_PATH": "/assets/banner-en.png"
   },

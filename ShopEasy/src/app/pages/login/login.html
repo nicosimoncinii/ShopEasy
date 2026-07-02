@@ -2,8 +2,8 @@
     <div class="login-card">
       <h2>{{ langService.traduci('LOGINTITOLO') }}</h2>
   
-      @if (errore()) {
-        <div class="errore">{{ errore() }}</div>
+      @if (messaggioErrore) {
+        <div class="errore">{{ messaggioErrore }}</div>
       }
   
       <div class="form-group">
@@ -16,22 +16,29 @@
         <input type="password" [(ngModel)]="password" [placeholder]="langService.traduci('PASSWORD')" />
       </div>
   
-      <button class="login-btn" (click)="onLogin()" [disabled]="caricamento()">
-          @if (caricamento()) {
-              Caricamento...
-          } @else {
-              {{ langService.traduci('ACCEDI') }}
-          }
+      <button class="login-btn" (click)="onLogin()" [disabled]="isCaricamento">
+        @if (isCaricamento) {
+          Caricamento...
+        } @else {
+          {{ langService.traduci('ACCEDI') }}
+        }
+      </button>
 
+      <!-- Sezione Link di Navigazione Inferiori -->
+      <div class="login-actions" style="margin-top: 20px; display: flex; flex-direction: column; gap: 12px; text-align: center;">
+        
+        <button type="button" (click)="goToResetPassword()" style="background: transparent; border: none; color: #1e293b; font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: underline;">
+          {{ langService.traduci('PASSWORDDIMENTICATA') }}
+        </button>
+  
+        <button type="button" class="login-link" (click)="goToRegister()">
+          {{ langService.traduci('NONHAIACCOUNT') }}
+        </button>
+    
+        <button type="button" class="back-btn" (click)="goBack()">
+          {{ langService.traduci('TORNA') }}
+        </button>
 
-      </button>
-  
-      <button class="login-link" (click)="goToRegister()">
-        {{ langService.traduci('NONHAIACCOUNT') }}
-      </button>
-  
-      <button class="back-btn" (click)="goBack()">
-        {{ langService.traduci('TORNA') }}
-      </button>
+      </div>
     </div>
-  </div>
+</div>

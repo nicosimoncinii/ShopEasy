@@ -10,6 +10,7 @@ import {Checkout} from "./pages/checkout/checkout";
 import { NotFoundComponent } from './pages/not-found/not-found';
 import { PersonalArea } from './pages/personal-area/personal-area';
 import { StoricoOrdini } from './pages/storico-ordini/storico-ordini'; // Importa il componente StoricoOrdini
+import { ResetpswComponent } from './pages/resetpsw/resetpsw';
 
 
 export const routes: Routes = [
@@ -21,6 +22,7 @@ export const routes: Routes = [
     { path: 'wishlist', component: Wishlist },
     { path: 'personal-area', component: PersonalArea },
     { path: 'storico-ordini', component: StoricoOrdini }, // Aggiunta la rotta per StoricoOrdini (roggi)
+    { path: 'resetpsw', component: ResetpswComponent }, // Aggiunta la rotta per reset password (roggi)
     { path: 'checkout', component: Checkout },
     { path: '**', component: NotFoundComponent }
 

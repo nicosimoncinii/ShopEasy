@@ -7,7 +7,7 @@
 }
 
 .login-card {
-  background: var(--bg-navbar);
+  background: white;
   padding: 2.5rem;
   border-radius: 12px;
   box-shadow: 0 2px 16px rgba(0,0,0,0.1);
@@ -20,7 +20,7 @@
   h2 {
     margin: 0 0 0.5rem;
     font-size: 1.6rem;
-    color: var(--text-coloree);
+    color: #1a1a1a;
   }
 }
 
@@ -33,7 +33,6 @@
     font-size: 0.9rem;
     color: #555;
     font-weight: 500;
-
   }
 
   input {
@@ -66,7 +65,25 @@
   }
 }
 
-.register-link {
+// Stile per il pulsante reset password aggiunto
+.reset-btn {
+  background: transparent;
+  border: none;
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: underline;
+  text-align: center;
+  padding: 0.2rem;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #34495e;
+  }
+}
+
+// Allineato con la classe .login-link presente nell'HTML
+.login-link {
   padding: 0.75rem;
   background: transparent;
   color: #2ecc71;
@@ -96,21 +113,11 @@
     border-color: #aaa;
     color: #555;
   }
-
-
-  @media (max-width: 480px) {
-    .login-card {
-      padding: 1.5rem;
-      margin: 0 1rem;
-    }
-  }
 }
 
-.errore {
-  background: #ffe0e0;
-  color: #c0392b;
-  padding: 10px 16px;
-  border-radius: 8px;
-  margin-bottom: 16px;
-  font-size: 0.9rem;
+@media (max-width: 480px) {
+  .login-card {
+    padding: 1.5rem;
+    margin: 0 1rem;
+  }
 }

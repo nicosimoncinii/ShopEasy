@@ -59,6 +59,9 @@
   "INGLESE": "Inglese",
   "CHIARO": "Chiaro",
   "SCURO": "Scuro",
+  "INVIA" : "Invia",
+  "RIPRISTINA_PASSWORD": "Ripristina la password",
+  "PASSWORDDIMENTICATA" : "Password dimenticata?",
   "PRODOTTO_AGGINUNTO_AL_CARRELLO": "Prodotto aggiunto al carrello!",
 
   "HOME": {

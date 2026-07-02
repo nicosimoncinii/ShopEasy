@@ -36,6 +36,10 @@ public class OrdineService {
     @Autowired
     private UtenteRepository utenteRepository;
 
+    // MODIFICA 1: Iniettiamo il servizio Email che abbiamo aggiornato nello step precedente
+    @Autowired
+    private EmailService emailService;
+
     public List<OrdineResponseDTO> prendiTuttiOrdini() {
         return ordineRepository.findAll()
                 .stream()
@@ -66,7 +70,8 @@ public class OrdineService {
         Ordine ordine = new Ordine();
         ordine.setData(LocalDateTime.now());
         ordine.setStato(StatoOrdine.ORDINATO);
-        ordine.setUtente(utenteService.prendiUtentePerId(ordineR.getUtenteId()));
+        Utente utenteCaricato = utenteService.prendiUtentePerId(ordineR.getUtenteId());
+        ordine.setUtente(utenteCaricato);
 
         Set<DettaglioOrdine> dettagli = ordineR.getDettagli()
                 .stream()
@@ -102,12 +107,38 @@ public class OrdineService {
             prodottoRepository.save(prodotto);
         });
 
+        // Salva definitivamente l'ordine sul database
+        Ordine ordineSalvato = ordineRepository.save(ordine);
 
-        return toResponse(ordineRepository.save(ordine));
+        // MODIFICA 2: Generiamo dinamicamente il testo HTML del riepilogo leggendo i dati dal Database
+        StringBuilder riepilogoBuilder = new StringBuilder("<ul>");
+        for (DettaglioOrdine d : ordineSalvato.getDettagli()) {
+            riepilogoBuilder.append("<li>")
+                    .append(d.getProdotto().getNome())
+                    .append(" - x")
+                    .append(d.getQuantita())
+                    .append(" (€ ")
+                    .append(String.format("%.2f", d.getPrezzoUnitario()))
+                    .append(")</li>");
+        }
+        riepilogoBuilder.append("</ul>");
 
+        String riepilogoProdottiHtml = riepilogoBuilder.toString();
+        String totaleFormattato = String.format("%.2f", ordineSalvato.getTotale());
 
+        // MODIFICA 3: Chiamiamo l'invio asincrono della mail reale all'utente
+        try {
+            emailService.sendOrderConfirmationEmail(
+                    utenteCaricato,
+                    riepilogoProdottiHtml,
+                    totaleFormattato
+            );
+        } catch (Exception e) {
+            // Se l'email dovesse fallire, stampiamo l'errore ma NON blocchiamo l'acquisto dell'utente
+            System.err.println("Errore durante l'invio dell'email di conferma: " + e.getMessage());
+        }
 
-
+        return toResponse(ordineSalvato);
     }
 
     public List<OrdineResponseDTO> prendiOrdiniPerUtente(Long utenteId) {
@@ -151,13 +182,13 @@ public class OrdineService {
 
     private OrdineResponseDTO toResponse(Ordine ordine) {
         return new OrdineResponseDTO(
-            ordine.getId(),
-            ordine.getData(),
-            ordine.getStato(),
-            ordine.getTotale(),
-            ordine.getUtente().getId(),
-            ordine.getUtente().getNome(),
-            ordine.getDettagli()
+                ordine.getId(),
+                ordine.getData(),
+                ordine.getStato(),
+                ordine.getTotale(),
+                ordine.getUtente().getId(),
+                ordine.getUtente().getNome(),
+                ordine.getDettagli()
         );
     }
     public OrdineResponseDTO creaOrdine(OrdineRequestDTO ordine,String email){
@@ -177,10 +208,5 @@ public class OrdineService {
             else
                 throw new RuntimeException("Nessun permesso per creare il seguente ordine");
         }
-
-
-
     }
-
-
 }

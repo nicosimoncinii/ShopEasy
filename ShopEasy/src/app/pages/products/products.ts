@@ -1,9 +1,11 @@
-import { Component, signal, effect, ChangeDetectorRef } from '@angular/core';
+import { Component, signal, effect, ChangeDetectorRef, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductList } from '../../components/product-list/product-list';
 import { LangService } from '../../services/lang.service';
 import { CartService } from '../../services/cart.service';
+import { SearchService } from '../../services/search.service';
 import { ModalLogin } from '../../components/modal-login/modal-login';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-products',
@@ -14,47 +16,46 @@ import { ModalLogin } from '../../components/modal-login/modal-login';
 })
 export class Products {
   mostraModal = signal<boolean>(false);
-
-  // Gestione snackbar classica della pagina
   mostraSnackbar: boolean = false;
   snackbarTimer: any;
-  
-  // Memorizza il numero precedente di prodotti per evitare che appaia all'apertura della pagina
   private conteggioPrecedente = 0;
 
+  private testoCerca!: ReturnType<typeof toSignal<string>>;
+
+  prodottiFiltrati = computed(() => {
+    const testo = this.testoCerca?.() ?? '';
+    if (!testo.trim()) return this.cartService.prodottiTutti;
+    return this.cartService.prodottiTutti.filter(p =>
+        p.name.toLowerCase().includes(testo.toLowerCase().trim())
+    );
+  });
+
   constructor(
-    public langService: LangService,
-    private cartService: CartService,
-    private cdr: ChangeDetectorRef
+      public langService: LangService,
+      private cartService: CartService,
+      private searchService: SearchService,
+      private cdr: ChangeDetectorRef
   ) {
-    // Salviamo il numero iniziale di prodotti presenti nel carrello
+    this.testoCerca = toSignal(this.searchService.searchText$, { initialValue: '' });
+
     this.conteggioPrecedente = this.cartService.numeroProdotti();
 
-    // L'EFFECT ASCOLTA IN AUTOMATICO QUALSIASI CAMBIAMENTO DEL CARRELLO
     effect(() => {
       const conteggioAttuale = this.cartService.numeroProdotti();
-
-      // Se il numero attuale è maggiore di quello precedente, l'utente ha aggiunto un prodotto!
       if (conteggioAttuale > this.conteggioPrecedente) {
         this.attivaSnackbar();
       }
-      
-      // Tiene aggiornato il conteggio per i click successivi
       this.conteggioPrecedente = conteggioAttuale;
     });
   }
 
   attivaSnackbar() {
-    if (this.snackbarTimer) {
-      clearTimeout(this.snackbarTimer);
-    }
-
+    if (this.snackbarTimer) clearTimeout(this.snackbarTimer);
     this.mostraSnackbar = true;
-    this.cdr.detectChanges(); // Forza l'aggiornamento visivo immediato
-
+    this.cdr.detectChanges();
     this.snackbarTimer = setTimeout(() => {
       this.mostraSnackbar = false;
-      this.cdr.detectChanges(); // Nasconde la snackbar dopo 3 secondi
+      this.cdr.detectChanges();
     }, 3000);
   }
 }

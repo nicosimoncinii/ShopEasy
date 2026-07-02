@@ -4,17 +4,18 @@
         <img [src]="bannerUrl" alt="ShopEasy Promo Banner">
     </section>
 
-    <section class="offerte">
+    <section class="offerte" id="prodotti-home">
         <h2>{{ langService.traduci('OFFERTE') }}</h2>
 
         <div class="products-grid">
             <app-product-card
-                    *ngFor="let prodotto of prodottiInEvidenza"
+                    *ngFor="let prodotto of prodottiFiltrati()"
                     [product]="prodotto"
                     [isInWishlist]="wishlistService.isInWishlist(prodotto.id)"
                     (aggiungiAlCarrello)="aggiungiAlCarrello($event)"
                     (toggleWishlist)="toggleWishlist($event)"
-                    (nonLoggato)="mostraModale = true"> </app-product-card>
+                    (nonLoggato)="mostraModale = true">
+            </app-product-card>
         </div>
     </section>
 
@@ -22,34 +23,28 @@
         <h2>{{ langService.traduci('FAQ') }}</h2>
 
         <div class="faq-list">
-
             <div class="faq-item">
                 <h3>{{ langService.traduci('FAQ1_DOMANDA') }}</h3>
                 <p>{{ langService.traduci('FAQ1_RISPOSTA') }}</p>
             </div>
-
             <div class="faq-item">
                 <h3>{{ langService.traduci('FAQ2_DOMANDA') }}</h3>
                 <p>{{ langService.traduci('FAQ2_RISPOSTA') }}</p>
             </div>
-
             <div class="faq-item">
                 <h3>{{ langService.traduci('FAQ3_DOMANDA') }}</h3>
                 <p>{{ langService.traduci('FAQ3_RISPOSTA') }}</p>
             </div>
-
             <div class="faq-item">
                 <h3>{{ langService.traduci('FAQ4_DOMANDA') }}</h3>
                 <p>{{ langService.traduci('FAQ4_RISPOSTA') }}</p>
             </div>
-
         </div>
     </section>
 
     <div class="snackbar" [class.active]="mostraSnackbar">
         <p>{{ langService.traduci('PRODOTTO_AGGINUNTO_AL_CARRELLO') }}</p>
     </div>
-
 
 </div>
 

@@ -1,17 +1,19 @@
 <div class="product-list-container">
+
     <div class="products-grid">
         <app-product-card
-                *ngFor="let product of products"
+                *ngFor="let product of prodottiFiltrati"
                 [product]="product"
                 [isInWishlist]="wishlistService.isInWishlist(product.id)"
-                (aggiungiAlCarrello)="onAggiungiAlCarrello(product)"
-                (toggleWishlist)="onToggleWishlist(product)"
-                (nonLoggato)="mostraModale = true">
+                (aggiungiAlCarrello)="onAggiungiAlCarrello($event)"
+                (toggleWishlist)="onToggleWishlist($event)"
+                (nonLoggato)="loginRichiesto.emit()">
         </app-product-card>
     </div>
-</div>
 
-<app-modal-login
-        *ngIf="mostraModale"
-        (chiudi)="mostraModale = false">
-</app-modal-login>
+    <app-modal-login
+            *ngIf="mostraModale"
+            (chiudi)="mostraModale = false">
+    </app-modal-login>
+
+</div>

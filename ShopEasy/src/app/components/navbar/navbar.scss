@@ -3,6 +3,11 @@
   --secondary-color: #f0a500;
 }
 
+header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
 
 .wishlist-nav-btn {
   background-color: var(--btn-heart);

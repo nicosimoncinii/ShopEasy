@@ -34,7 +34,13 @@ export class Navbar {
   }
 
   onSearch(event: any) {
-    this.searchService.cerca(event.target.value);
+    const testo = event.target.value;
+    this.searchService.cerca(testo);
+
+    const elemento = document.getElementById('prodotti-home');
+    if (elemento && testo.trim()) {
+      elemento.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 
   toggleDropdown() {

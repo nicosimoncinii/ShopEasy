@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductCard } from '../product-card/product-card';
 import { CartService } from '../../services/cart.service';
@@ -14,16 +14,16 @@ import { ModalLogin } from '../modal-login/modal-login';
   styleUrl: './product-list.scss',
 })
 export class ProductList {
+
+  @Input() prodottiFiltrati: Product[] = [];
+  @Output() loginRichiesto = new EventEmitter<void>();
+
   mostraModale: boolean = false;
 
   constructor(
       public cartService: CartService,
       public wishlistService: WishlistService
   ) {}
-
-  get products() {
-    return this.cartService.prodottiTutti;
-  }
 
   onAggiungiAlCarrello(product: Product) {
     this.cartService.aggiungiProdotto(product);

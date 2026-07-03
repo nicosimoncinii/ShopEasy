@@ -1,0 +1,224 @@
+<div class="admin-layout">
+
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <img src="/Logo.png" alt="Logo">
+            <span>Admin</span>
+        </div>
+
+        <nav class="sidebar-nav">
+            <button [class.active]="sezioneAttiva() === 'dashboard'" (click)="cambiaSezione('dashboard')">
+                <i class="pi pi-home"></i> Dashboard
+            </button>
+            <button [class.active]="sezioneAttiva() === 'prodotti'" (click)="cambiaSezione('prodotti')">
+                <i class="pi pi-box"></i> Prodotti
+            </button>
+            <button [class.active]="sezioneAttiva() === 'utenti'" (click)="cambiaSezione('utenti')">
+                <i class="pi pi-users"></i> Utenti
+            </button>
+            <button [class.active]="sezioneAttiva() === 'ordini'" (click)="cambiaSezione('ordini')">
+                <i class="pi pi-shopping-bag"></i> Ordini
+            </button>
+        </nav>
+
+        <button class="logout-btn" (click)="logout()">
+            <i class="pi pi-sign-out"></i> Logout
+        </button>
+    </aside>
+
+    <main class="admin-content">
+
+        @if (sezioneAttiva() === 'dashboard') {
+            <div class="section">
+                <h1>Dashboard</h1>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="pi pi-euro"></i>
+                        <div>
+                            <span class="stat-label">Fatturato Totale</span>
+                            <span class="stat-value">{{ statistiche()?.fatturatoTotale | currency:'EUR':'symbol':'1.2-2' }}</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="pi pi-users"></i>
+                        <div>
+                            <span class="stat-label">Utenti Registrati</span>
+                            <span class="stat-value">{{ statistiche()?.utentiRegistrati || utenti().length }}</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="pi pi-shopping-bag"></i>
+                        <div>
+                            <span class="stat-label">Ordini Totali</span>
+                            <span class="stat-value">{{ statistiche()?.ordiniTotali || ordini().length }}</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="pi pi-box"></i>
+                        <div>
+                            <span class="stat-label">Prodotti Totali</span>
+                            <span class="stat-value">{{ statistiche()?.prodottiTotali || prodotti().length }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>Ultimi Ordini</h2>
+                <table class="admin-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Utente</th>
+                        <th>Totale</th>
+                        <th>Stato</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        @for (ordine of ordini().slice(0, 5); track ordine.id) {
+                            <tr>
+                                <td>#{{ ordine.id }}</td>
+                                <td>{{ ordine.emailUtente || ordine.utente }}</td>
+                                <td>{{ ordine.totale | currency:'EUR':'symbol':'1.2-2' }}</td>
+                                <td><span class="badge">{{ ordine.stato }}</span></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+        @if (sezioneAttiva() === 'prodotti') {
+            <div class="section">
+                <div class="section-header">
+                    <h1>Prodotti</h1>
+                    <button class="btn-add" (click)="apriModale()">
+                        <i class="pi pi-plus"></i> Aggiungi Prodotto
+                    </button>
+                </div>
+
+                <table class="admin-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Prezzo</th>
+                        <th>Azioni</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        @for (prodotto of prodotti(); track prodotto.id) {
+                            <tr>
+                                <td>#{{ prodotto.id }}</td>
+                                <td>{{ prodotto.nome || prodotto.name }}</td>
+                                <td>{{ prodotto.prezzo || prodotto.price | currency:'EUR':'symbol':'1.2-2' }}</td>
+                                <td>
+                                    <button class="btn-delete" (click)="cancellaProdotto(prodotto.id)">
+                                        <i class="pi pi-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+        @if (sezioneAttiva() === 'utenti') {
+            <div class="section">
+                <h1>Utenti</h1>
+                <table class="admin-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Ruolo</th>
+                        <th>Azioni</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        @for (utente of utenti(); track utente.id) {
+                            <tr>
+                                <td>#{{ utente.id }}</td>
+                                <td>{{ utente.nome }} {{ utente.cognome }}</td>
+                                <td>{{ utente.email }}</td>
+                                <td><span class="badge">{{ utente.ruolo }}</span></td>
+                                <td>
+                                    <button class="btn-delete" (click)="cancellaUtente(utente.id)">
+                                        <i class="pi pi-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+        @if (sezioneAttiva() === 'ordini') {
+            <div class="section">
+                <h1>Ordini</h1>
+                <table class="admin-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Utente</th>
+                        <th>Totale</th>
+                        <th>Stato</th>
+                        <th>Azioni</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        @for (ordine of ordini(); track ordine.id) {
+                            <tr>
+                                <td>#{{ ordine.id }}</td>
+                                <td>{{ ordine.emailUtente || ordine.utente }}</td>
+                                <td>{{ ordine.totale | currency:'EUR':'symbol':'1.2-2' }}</td>
+                                <td><span class="badge">{{ ordine.stato }}</span></td>
+                                <td>
+                                    <button class="btn-delete" (click)="cancellaOrdine(ordine.id)">
+                                        <i class="pi pi-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+    </main>
+</div>
+
+@if (modaleAperta()) {
+    <div class="modal-overlay" (click)="chiudiModale()">
+        <div class="modal-container" (click)="$event.stopPropagation()">
+            <div class="modal-header">
+                <h2>Nuovo Prodotto</h2>
+                <button class="btn-close" (click)="chiudiModale()">&times;</button>
+            </div>
+            <form (ngSubmit)="aggiungiProdotto()">
+                <div class="form-group">
+                    <label>Nome Prodotto</label>
+                    <input type="text" [(ngModel)]="nuovoProdotto.nome" name="nome" required placeholder="Es. Scarpe Nike">
+                </div>
+                <div class="form-group">
+                    <label>Prezzo (€)</label>
+                    <input type="number" step="0.01" [(ngModel)]="nuovoProdotto.prezzo" name="prezzo" required placeholder="0.00">
+                </div>
+                <div class="form-group">
+                    <label>URL Immagine</label>
+                    <input type="text" [(ngModel)]="nuovoProdotto.immagineUrl" name="immagineUrl" placeholder="Es. /images/scarpe.png">
+                </div>
+                <div class="form-group">
+                    <label>Descrizione</label>
+                    <textarea [(ngModel)]="nuovoProdotto.descrizione" name="descrizione" rows="3" placeholder="Descrivi il prodotto..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" (click)="chiudiModale()">Annulla</button>
+                    <button type="submit" class="btn-primary">Salva Prodotto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+}

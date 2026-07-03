@@ -1,0 +1,365 @@
+// LAYOUT PRINCIPALE DELLA DASHBOARD
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg-dark);
+  color: var(--text-light);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+// MENU LATERALE (SIDEBAR)
+.sidebar {
+  width: 240px;
+  background: var(--bg-navbar);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem;
+  position: fixed;
+  height: 100vh;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  transition: background-color 0.3s ease;
+
+  // Correzione bordi se si è in dark mode
+  .dark-mode & {
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+    .dark-mode & { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+
+    img { width: 40px; }
+    span {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-coloree);
+    }
+  }
+
+  .sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+
+    button {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: transparent;
+      color: var(--text-light);
+      border: none;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.05);
+        .dark-mode & { background: rgba(255, 255, 255, 0.05); }
+      }
+
+      &.active {
+        background: var(--primary-color);
+        color: #2E2E2E; // Colore testo scuro leggibile sul pastello
+        font-weight: 600;
+      }
+
+      i { font-size: 1rem; }
+    }
+  }
+
+  .logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: transparent;
+    color: #e74c3c;
+    border: 1px solid #e74c3c;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background: #e74c3c;
+      color: white;
+    }
+  }
+}
+
+// CONTENUTO DELLA PAGINA (A DESTRA DELLA SIDEBAR)
+.admin-content {
+  margin-left: 240px;
+  padding: 2rem;
+  flex: 1;
+  min-width: 0;
+
+  .section {
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      color: var(--block-text-color);
+    }
+
+    h2 {
+      font-size: 1.2rem;
+      margin: 2rem 0 1rem;
+      color: var(--text-muted);
+    }
+  }
+}
+
+// STRUTTURA AD INTESTAZIONE PER LE SEZIONI
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+
+  h1 { margin-bottom: 0 !important; }
+}
+
+// BOTTONE AGGIUNGI PRODOTTO (Sfrutta lo stile base del tuo bottone globale)
+.btn-add {
+  background-color: var(--primary-color);
+  color: #2E2E2E;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+// GRIGLIA DEI REQUADRI RIASSUNTIVI
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+
+  @media (max-width: 1024px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 480px) { grid-template-columns: 1fr; }
+}
+
+// CARD DEL REQUADRO STATISTICHE
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: background-color 0.3s, border-color 0.3s;
+
+  .dark-mode & { border-color: rgba(255, 255, 255, 0.05); }
+
+  i {
+    font-size: 2rem;
+    color: var(--text-muted);
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .stat-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-light);
+  }
+}
+
+// TABELLE AMMINISTRATIVE DI DATI
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bg-card);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: background-color 0.3s;
+
+  th {
+    background: var(--primary-color);
+    color: #2E2E2E;
+    padding: 1rem;
+    text-align: left;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  td {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    font-size: 0.9rem;
+    color: var(--text-light);
+
+    .dark-mode & { border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td {
+    background: rgba(0, 0, 0, 0.02);
+    .dark-mode & { background: rgba(255, 255, 255, 0.02); }
+  }
+}
+
+// ETICHETTE DI STATO (BADGE)
+.badge {
+  background: var(--accent-color);
+  color: #2E2E2E;
+  padding: 0.3rem 0.7rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+// BOTTONE DI CANCELLAZIONE (CESTELLO)
+.btn-delete {
+  background: transparent;
+  border: 1px solid #e74c3c;
+  color: #e74c3c;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background: #e74c3c;
+    color: white;
+  }
+}
+
+// --- SEZIONE MODALE (FORM DI AGGIUNTA PRODOTTO) ---
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+
+  .dark-mode & { background: rgba(0, 0, 0, 0.75); }
+}
+
+.modal-container {
+  background: var(--bg-card);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 500px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  animation: modalFadeIn 0.2s ease-out;
+  transition: background-color 0.3s;
+
+  .dark-mode & { border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.25rem;
+
+    .dark-mode & { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+
+    h2 { font-size: 1.3rem; color: var(--block-text-color); margin: 0; }
+
+    .btn-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      &:hover { color: var(--text-light); }
+    }
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+
+    label { font-size: 0.85rem; color: var(--text-muted); }
+
+    input, textarea {
+      background: var(--bg-dark);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 6px;
+      padding: 0.6rem;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      outline: none;
+      transition: background-color 0.3s, border-color 0.2s;
+
+      .dark-mode & { border-color: rgba(255, 255, 255, 0.1); }
+
+      &:focus { border-color: var(--primary-color); }
+    }
+  }
+
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+
+    .dark-mode & { border-top: 1px solid rgba(255, 255, 255, 0.1); }
+
+    button {
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      color: var(--text-muted);
+
+      .dark-mode & { border-color: rgba(255, 255, 255, 0.1); }
+      &:hover { background: rgba(0, 0, 0, 0.05); color: var(--text-light); }
+    }
+
+    .btn-primary {
+      background: var(--primary-color);
+      border: none;
+      color: #2E2E2E;
+      &:hover { opacity: 0.9; }
+    }
+  }
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}

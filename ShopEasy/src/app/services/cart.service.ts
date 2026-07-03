@@ -23,7 +23,7 @@ aggiungiProdotto(prodotto: any) {
   const giaPresente = lista.find(item => item.id === prodotto.id);
 
   // Blocco se il prodotto è esaurito
-  if (prodotto.quantitaMagazzino === 0 || prodotto.quantitaMagazzino === undefined) {
+  if (prodotto.quantita === 0 || prodotto.quantita === undefined) {
     console.warn('Prodotto esaurito, impossibile aggiungere al carrello');
     return;
   }
@@ -35,8 +35,8 @@ aggiungiProdotto(prodotto: any) {
   } else {
     lista.push({
       ...prodotto,
-      stockDisponibile: prodotto.quantitaMagazzino, // <-- corretto qui
-      quantita: 1
+      stockDisponibile: prodotto.quantita, // stock originale del prodotto
+      quantita: 1                          // quantita nel carrello parte da 1
     });
   }
 

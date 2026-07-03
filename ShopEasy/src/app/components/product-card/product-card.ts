@@ -27,7 +27,7 @@ export class ProductCard {
 
   get disponibileProdotto(): boolean {
     if (!this.product) return false;
-    return this.product.quantitaMagazzino > 0;
+    return this.product.quantita > 0;
   }
 
   apriPopUp(event: Event) {

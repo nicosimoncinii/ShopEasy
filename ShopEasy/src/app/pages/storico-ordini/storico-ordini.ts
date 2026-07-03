@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { HttpClient, HttpHeaders } from "@angular/common/http"; // <-- IMPORTANTE: aggiunto HttpHeaders
 
@@ -45,6 +45,7 @@ export class StoricoOrdini implements OnInit {
   ordini: Ordine[] = [];
   loading: boolean = true;
   errorMessage: string = '';
+  private cdr = inject(ChangeDetectorRef);
 
   private http = inject(HttpClient);
 
@@ -67,13 +68,18 @@ export class StoricoOrdini implements OnInit {
       return;
     }
 
+    
     // 3. Fai la chiamata API all'indirizzo completo della porta 8080 includendo gli headers
     this.http.get<Ordine[]>('http://localhost:8080/api/ordini/my-orders', { headers }).subscribe({
       next: (data) => {
+        //debugger;
         this.ordini = data;
+        console.log(this.ordini);
         this.loading = false;
+        this.cdr.detectChanges();
       },
       error: (err) => {
+        //debugger;
         console.error('Errore nel recupero degli ordini', err);
         if (err.status === 403) {
           this.errorMessage = 'Sessione scaduta o permesso negato. Effettua nuovamente il login.';

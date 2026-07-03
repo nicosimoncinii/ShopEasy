@@ -1,18 +1,25 @@
 package it.shopeasy.dto.auth;
 
+import it.shopeasy.enums.RuoloUtente;
+import it.shopeasy.enums.StatoUtente;
+
 public class LoginResponse {
 
     private String token;
     private String email;
     private String ruolo;
+    private StatoUtente statoUtente;
 
     public LoginResponse() {
     }
 
-    public LoginResponse(String token, String email, String ruolo) {
+
+
+    public LoginResponse(String token, String email,String ruolo,StatoUtente statoUtente) {
         this.token = token;
-        this.email = email;
+        this.statoUtente = statoUtente;
         this.ruolo = ruolo;
+        this.email = email;
     }
 
     public String getToken() {
@@ -37,5 +44,13 @@ public class LoginResponse {
 
     public void setRuolo(String ruolo) {
         this.ruolo = ruolo;
+    }
+
+    public StatoUtente getStatoUtente() {
+        return statoUtente;
+    }
+
+    public void setStatoUtente(StatoUtente statoUtente) {
+        this.statoUtente = statoUtente;
     }
 }

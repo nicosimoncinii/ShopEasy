@@ -66,16 +66,21 @@ public class UtenteController {
         return ResponseEntity.ok(utenteService.aggiornaUtentePerEmail(principal.getName(), request));
     }
 
-
-
-
-
-
-
     @DeleteMapping("/me")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'CLIENTE')")
     public ResponseEntity<Void> cancellaProfiloCorrente(Principal principal) {
         utenteService.cancellaUtentePerEmail(principal.getName());
         return ResponseEntity.noContent().build();
     }
+    @PutMapping("/deactivate/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<UtenteResponseDTO> disattivaAccount(@PathVariable Long id) {
+        return ResponseEntity.ok().body(utenteService.disattivaUtente(id));
+    }
+    @PutMapping("/activate/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<UtenteResponseDTO> attivaAccount(@PathVariable Long id) {
+        return ResponseEntity.ok().body(utenteService.attivaUtente(id));
+    }
+
 }

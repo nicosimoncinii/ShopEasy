@@ -10,6 +10,7 @@ import {Checkout} from "./pages/checkout/checkout";
 import { NotFoundComponent } from './pages/not-found/not-found';
 import { PersonalArea } from './pages/personal-area/personal-area';
 import { StoricoOrdini } from './pages/storico-ordini/storico-ordini'; // Importa il componente StoricoOrdini
+import { Admin } from './pages/admin/admin';
 
 
 export const routes: Routes = [
@@ -22,6 +23,7 @@ export const routes: Routes = [
     { path: 'personal-area', component: PersonalArea },
     { path: 'storico-ordini', component: StoricoOrdini }, // Aggiunta la rotta per StoricoOrdini (roggi)
     { path: 'checkout', component: Checkout },
+    { path: 'admin', component: Admin },
     { path: '**', component: NotFoundComponent }
 
 ];

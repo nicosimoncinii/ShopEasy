@@ -92,5 +92,6 @@
   "MODAL_TESTO": "Devi essere registrato o aver effettuato l'accesso per eseguire questa azione.",
   "DISPONIBILE": "Disponibile",
   "ESAURITO": "Esaurito",
-  "DESC_PRODOTTO": "Prodotto di qualità premium, costruito con i migliori materiali sul mercato e progettato per garantire la massima affidabilità nel tempo."
+  "DESC_PRODOTTO": "Prodotto di qualità premium, costruito con i migliori materiali sul mercato e progettato per garantire la massima affidabilità nel tempo.",
+  "DASHBOARD": "Dashboard Admin"
 }

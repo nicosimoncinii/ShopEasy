@@ -37,7 +37,7 @@
 
             <h4 class="popup-title">{{ product.name }}</h4>
             <p class="popup-desc">{{ langService.traduci('DESC_PRODOTTO') }}</p>
-
+            
             <div class="popup-status-wrapper">
                 <span class="badge" [ngClass]="disponibileProdotto ? 'available' : 'unavailable'">
                     {{ disponibileProdotto ? langService.traduci('DISPONIBILE') : langService.traduci('ESAURITO') }}

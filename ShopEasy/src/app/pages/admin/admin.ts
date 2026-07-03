@@ -24,9 +24,11 @@ export class Admin implements OnInit {
   modaleAperta = signal<boolean>(false);
   nuovoProdotto = {
     nome: '',
-    prezzo: 0,
     descrizione: '',
-    immagineUrl: ''
+    prezzo: 0,
+    quantita: 0,
+    immagineUrl: '',
+    categoriaId: 0
   };
 
   constructor(
@@ -125,15 +127,17 @@ export class Admin implements OnInit {
   resetForm() {
     this.nuovoProdotto = {
       nome: '',
-      prezzo: 0,
       descrizione: '',
-      immagineUrl: ''
+      prezzo: 0,
+      quantita: 0,
+      immagineUrl: '',
+      categoriaId: 0
     };
   }
 
   aggiungiProdotto() {
-    if (!this.nuovoProdotto.nome || this.nuovoProdotto.prezzo <= 0) {
-      alert('Inserisci un nome e un prezzo validi!');
+    if (!this.nuovoProdotto.nome || this.nuovoProdotto.categoriaId  <= 0 || this.nuovoProdotto.prezzo <= 0) {
+      alert('Inserisci un nome, una categoria validi ed un prezzo valido!');
       return;
     }
 

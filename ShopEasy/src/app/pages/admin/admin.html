@@ -207,6 +207,14 @@
                     <input type="number" step="0.01" [(ngModel)]="nuovoProdotto.prezzo" name="prezzo" required placeholder="0.00">
                 </div>
                 <div class="form-group">
+                    <label>Quantità</label>
+                    <input type="number" step="1" [(ngModel)]="nuovoProdotto.quantita" name="quantita" required placeholder="0">
+                </div>
+                <div class="form-group">
+                    <label>CategoriaId</label>
+                    <input type="number" [(ngModel)]="nuovoProdotto.categoriaId" name="categoriaId" required placeholder="0">
+                </div>
+                <div class="form-group">
                     <label>URL Immagine</label>
                     <input type="text" [(ngModel)]="nuovoProdotto.immagineUrl" name="immagineUrl" placeholder="Es. /images/scarpe.png">
                 </div>

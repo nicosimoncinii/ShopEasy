@@ -23,7 +23,7 @@ export class ProductService {
           nomeEn: p.nome, // Da aggiornare in futuro se il DB gestirà le lingue
           price: p.prezzo,
           imageUrl: p.immagine,
-          quantitaMagazzino: p.quantita,
+          quantita: p.quantita,
           categoriaId: p.categoriaId,
           categoriaNome: p.categoriaNome,
           // Valori di default per non rompere la UI se assenti nel DB

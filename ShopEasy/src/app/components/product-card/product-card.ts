@@ -26,9 +26,13 @@ export class ProductCard {
   ) {}
 
   get disponibileProdotto(): boolean {
-    if (!this.product) return true;
-    const idUnico = this.product.id || this.product._id || 1;
-    return (idUnico % 2 !== 0);
+    if (!this.product) return false;
+    const quantitaProdotto = this.product.quantita; 
+    console.debug(this.product, "->", quantitaProdotto);
+     if (quantitaProdotto > 0){
+      return true;
+     }
+    return false;
   }
 
   apriPopUp(event: Event) {

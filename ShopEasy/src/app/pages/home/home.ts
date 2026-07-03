@@ -1,10 +1,11 @@
-import { Component, ChangeDetectorRef, computed } from '@angular/core';
+import { Component, ChangeDetectorRef, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { LangService } from '../../services/lang.service';
 import { CartService } from '../../services/cart.service';
 import { WishlistService } from '../../services/wishlist.service';
 import { SearchService } from '../../services/search.service';
+import { ProductService } from '../../services/product.service'; // Aggiunto
 import { ProductCard } from '../../components/product-card/product-card';
 import { ThemeService } from '../../services/theme.service';
 import { ModalLogin } from '../../components/modal-login/modal-login';
@@ -17,7 +18,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
-export class Home {
+export class Home implements OnInit { // Aggiunto OnInit
   mostraModale: boolean = false;
   mostraSnackbar: boolean = false;
   snackbarTimer: any;
@@ -26,8 +27,11 @@ export class Home {
 
   prodottiFiltrati = computed(() => {
     const testo = this.testoCerca?.() ?? '';
-    if (!testo.trim()) return this.cartService.prodottiTutti.slice(0, 4);
-    return this.cartService.prodottiTutti.filter(p =>
+    // Leggiamo i prodotti dal ProductService invece che dal CartService
+    const tutti = this.productService.prodottiTutti(); 
+    
+    if (!testo.trim()) return tutti.slice(0, 4);
+    return tutti.filter(p =>
         p.name.toLowerCase().includes(testo.toLowerCase().trim())
     );
   });
@@ -38,10 +42,18 @@ export class Home {
       public cartService: CartService,
       public wishlistService: WishlistService,
       private searchService: SearchService,
+      private productService: ProductService, // Aggiunto
       private router: Router,
       private cdr: ChangeDetectorRef
   ) {
     this.testoCerca = toSignal(this.searchService.searchText$, { initialValue: '' });
+  }
+
+  ngOnInit() {
+    // Se la lista è vuota, scateniamo la chiamata GET
+    if (this.productService.prodottiTutti().length === 0) {
+      this.productService.caricaProdotti().subscribe();
+    }
   }
 
   get bannerUrl(): string {

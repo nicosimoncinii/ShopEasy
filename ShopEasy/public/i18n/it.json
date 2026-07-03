@@ -59,6 +59,34 @@
   "INGLESE": "Inglese",
   "CHIARO": "Chiaro",
   "SCURO": "Scuro",
+
+
+  "ADMIN": "Amministratore",
+  "PRODOTTI": "Prodotti",
+  "UTENTI": "Utenti",
+  "ORDINI": "Ordini",
+  "FATTURATO_TOTALE": "Fatturato Totale",
+  "UTENTI_REGISTRATI": "Utenti Registrati",
+  "ORDINI_TOTALI": "Ordini Totali",
+  "PRODOTTI_TOTALI": "Prodotti Totali",
+  "UTENTE": "Utente",
+  "STATO": "Stato",
+  "AGGIUNGI_PRODOTTO": "Aggiungi Prodotto",
+  "PREZZO": "Prezzo",
+  "AZIONI": "Azioni",
+  "RUOLO": "Ruolo",
+  "NUOVO_PRODOTTO": "Nuovo Prodotto",
+  "NOME_PRODOTTO": "Nome Prodotto",
+  "QUANTITA": "Quantità",
+  "CATEGORIA_ID": "Categoria ID",
+  "URL_IMMAGINE": "URL Immagine",
+  "DESCRIZIONE": "Descrizione",
+  "ANNULLA": "Annulla",
+  "SALVA_PRODOTTO": "Salva Prodotto",
+
+
+
+
   "PASSWORDDIMENTICATA": "Password dimenticata?",
   "PRODOTTO_AGGINUNTO_AL_CARRELLO": "Prodotto aggiunto al carrello!",
 

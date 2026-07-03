@@ -32,7 +32,10 @@ public class JwtFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String path = request.getRequestURI();
-        if (path.startsWith("/swagger-ui") ||
+        
+        // AGGIORNATO: Aggiunto il controllo per bypassare gli endpoint di autenticazione pubblica
+        if (path.startsWith("/api/auth") ||
+            path.startsWith("/swagger-ui") ||
             path.startsWith("/swagger-ui/") ||
             path.equals("/swagger-ui.html") ||
             path.equals("/swagger-initializer.js") ||

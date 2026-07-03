@@ -16,6 +16,7 @@ import it.shopeasy.repository.StatisticheRepository;
 import it.shopeasy.repository.UtenteRepository;
 import it.shopeasy.repository.WishlistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +36,7 @@ public class UtenteService {
     private StatisticheRepository statisticheRepository;
 
     public List<UtenteResponseDTO> prendiTuttiUtenti() {
-        return utenteRepository.findAll()
+        return utenteRepository.findAll(Sort.by("id").ascending())
                 .stream()
                 .map(this::toResponse)
                 .toList();

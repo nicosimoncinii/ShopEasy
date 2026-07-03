@@ -1,0 +1,113 @@
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  background-color: #f8fafc; /* Grigio chiarissimo di sfondo */
+  font-family: sans-serif;
+}
+
+.login-card {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+
+  h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1e293b;
+    margin-bottom: 24px;
+  }
+}
+
+.form-group {
+  text-align: left;
+  margin-bottom: 20px;
+
+  label {
+    display: block;
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 6px;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background-color: #eff6ff; /* Celeste leggero come nel tuo input */
+    font-size: 16px;
+    box-sizing: border-box;
+    outline: none;
+
+    &:focus {
+      border-color: #3b82f6;
+    }
+  }
+}
+
+.login-btn {
+  width: 100%;
+  background-color: #10b981; /* Verde esatto del tuo bottone */
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background-color: #059669;
+  }
+
+  &:disabled {
+    background-color: #a7f3d0;
+    cursor: not-allowed;
+  }
+}
+
+.error {
+  color: #ef4444;
+  background-color: #fee2e2;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.success {
+  color: #10b981;
+  background-color: #d1fae5;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.actions {
+  margin-top: 24px;
+
+  .back-home-btn {
+    width: 100%;
+    background: transparent;
+    border: 1px solid #cbd5e1;
+    color: #64748b;
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: #f1f5f9;
+      color: #1e293b;
+    }
+  }
+}

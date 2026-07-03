@@ -22,9 +22,12 @@
           } @else {
               {{ langService.traduci('ACCEDI') }}
           }
-
-
       </button>
+
+      <button class="login-link" (click)="goToResetPassword()">
+        {{ langService.traduci('PASSWORDDIMENTICATA') }}
+      </button>
+
   
       <button class="login-link" (click)="goToRegister()">
         {{ langService.traduci('NONHAIACCOUNT') }}

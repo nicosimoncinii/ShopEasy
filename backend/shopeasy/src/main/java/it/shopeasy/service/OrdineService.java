@@ -12,6 +12,7 @@ import it.shopeasy.repository.StatisticheRepository;
 import it.shopeasy.repository.UtenteRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.naming.NoPermissionException;
@@ -41,7 +42,7 @@ public class OrdineService {
     private EmailService emailService;
 
     public List<OrdineResponseDTO> prendiTuttiOrdini() {
-        return ordineRepository.findAll()
+        return ordineRepository.findAll(Sort.by("id").ascending())
                 .stream()
                 .map(this::toResponse)
                 .toList();
@@ -83,6 +84,7 @@ public class OrdineService {
                     dettaglio.setProdotto(prodotto);
                     dettaglio.setQuantita(d.getQuantita());
                     dettaglio.setPrezzoUnitario(prodotto.getPrezzo() * d.getQuantita());
+
                     return dettaglio;
                 })
                 .collect(Collectors.toSet());
@@ -200,11 +202,14 @@ public class OrdineService {
                 .orElseThrow(() -> new RuntimeException("Utente non esistente"));
 
         if(utente.getRuolo().equals(RuoloUtente.ADMIN)){
+            statistiche.setOrdiniTotali(statistiche.getOrdiniTotali()+1);
             return salvaOrdine(ordine);
         }
         else {
-            if(ordine.getUtenteId().equals(utente.getId()))
+            if(ordine.getUtenteId().equals(utente.getId())){
+                statistiche.setOrdiniTotali(statistiche.getOrdiniTotali()+1);
                 return salvaOrdine(ordine);
+            }
             else
                 throw new RuntimeException("Nessun permesso per creare il seguente ordine");
         }

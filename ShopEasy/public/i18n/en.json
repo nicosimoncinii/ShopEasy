@@ -59,6 +59,33 @@
   "INGLESE": "English",
   "CHIARO": "Light",
   "SCURO": "Dark",
+
+  "ADMIN": "Admin",
+  "PRODOTTI": "Products",
+  "UTENTI": "Users",
+  "ORDINI": "Orders",
+  "FATTURATO_TOTALE": "Total Revenue",
+  "UTENTI_REGISTRATI": "Registered Users",
+  "ORDINI_TOTALI": "Total Orders",
+  "PRODOTTI_TOTALI": "Total Products",
+  "UTENTE": "User",
+  "STATO": "Status",
+  "AGGIUNGI_PRODOTTO": "Add Product",
+  "PREZZO": "Price",
+  "AZIONI": "Actions",
+  "RUOLO": "Role",
+  "NUOVO_PRODOTTO": "New Product",
+  "NOME_PRODOTTO": "Product Name",
+  "QUANTITA": "Quantity",
+  "CATEGORIA_ID": "Category ID",
+  "URL_IMMAGINE": "Image URL",
+  "DESCRIZIONE": "Description",
+  "ANNULLA": "Cancel",
+  "SALVA_PRODOTTO": "Save Product",
+
+
+
+
   "PASSWORDDIMENTICATA": "Forgot password?",
   "PRODOTTO_AGGINUNTO_AL_CARRELLO": "Product added to cart!",
   "HOME": {

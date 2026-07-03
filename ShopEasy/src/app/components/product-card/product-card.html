@@ -20,8 +20,10 @@
     </div>
 
     <div class="product-actions">
-        <button class="add-to-cart-btn" (click)="onAggiungiAlCarrello()">
-            <span>{{ langService.traduci('ADDCARRELLO') }}</span>
+        <button class="add-to-cart-btn"
+            [disabled]="!disponibileProdotto"
+            (click)="onAggiungiAlCarrello()">
+            <span>{{ disponibileProdotto ? langService.traduci('ADDCARRELLO') : langService.traduci('ESAURITO') }}</span>
         </button>
 
         <button class="wishlist-btn" (click)="onToggleWishlist()">
@@ -35,7 +37,7 @@
 
             <h4 class="popup-title">{{ product.name }}</h4>
             <p class="popup-desc">{{ langService.traduci('DESC_PRODOTTO') }}</p>
-
+            
             <div class="popup-status-wrapper">
                 <span class="badge" [ngClass]="disponibileProdotto ? 'available' : 'unavailable'">
                     {{ disponibileProdotto ? langService.traduci('DISPONIBILE') : langService.traduci('ESAURITO') }}

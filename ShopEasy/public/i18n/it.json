@@ -44,7 +44,7 @@
   "FAQ1_RISPOSTA": "Dopo la conferma dell'ordine riceverai un'email con il codice di tracciamento.",
   "FAQ2_DOMANDA": "Quali metodi di pagamento accettate?",
   "FAQ2_RISPOSTA": "Accettiamo carte di credito, PayPal e contrassegno.",
-  "FAQ3_DOMANDA": "Posso restituire un prodotto?",
+  "FAQ3_DOMANDA": "Posso restituire un product?",
   "FAQ3_RISPOSTA": "Sì, hai 30 giorni dal ricevimento per effettuare un reso gratuito.",
   "FAQ4_DOMANDA": "Quanto tempo richiede la consegna?",
   "FAQ4_RISPOSTA": "La consegna standard richiede 2-3 giorni lavorativi.",
@@ -59,12 +59,8 @@
   "INGLESE": "Inglese",
   "CHIARO": "Chiaro",
   "SCURO": "Scuro",
-
-
   "ADMIN": "Amministratore",
-  "PRODOTTI": "Prodotti",
   "UTENTI": "Utenti",
-  "ORDINI": "Ordini",
   "FATTURATO_TOTALE": "Fatturato Totale",
   "UTENTI_REGISTRATI": "Utenti Registrati",
   "ORDINI_TOTALI": "Ordini Totali",
@@ -72,7 +68,7 @@
   "UTENTE": "Utente",
   "STATO": "Stato",
   "AGGIUNGI_PRODOTTO": "Aggiungi Prodotto",
-  "PREZZO": "Prezzo",
+  "PREZZO": "A partire da",
   "AZIONI": "Azioni",
   "RUOLO": "Ruolo",
   "NUOVO_PRODOTTO": "Nuovo Prodotto",
@@ -83,19 +79,13 @@
   "DESCRIZIONE": "Descrizione",
   "ANNULLA": "Annulla",
   "SALVA_PRODOTTO": "Salva Prodotto",
-
-
-
-
   "PASSWORDDIMENTICATA": "Password dimenticata?",
   "PRODOTTO_AGGINUNTO_AL_CARRELLO": "Prodotto aggiunto al carrello!",
-
   "HOME": {
     "BANNER_PATH": "/assets/banner-it.png"
   },
   "ADDCARRELLO": "Aggiungi al carrello",
   "NUOVO": "Nuovo",
-  "PREZZO": "A partire da",
   "GIORNI": "Lun–Ven 9:00 – 18:00",
   "MILANO": "Milano",
   "VAI_AL_PAGAMENTO": "Vai al pagamento",

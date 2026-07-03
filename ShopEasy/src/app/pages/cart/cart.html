@@ -25,7 +25,8 @@
                             <i class="pi pi-minus"></i>
                         </button>
                         <span>{{ prodotto.quantita }}</span>
-                        <button (click)="modificaQuantita(prodotto.id, prodotto.quantita + 1)">
+                        <button (click)="modificaQuantita(prodotto.id, prodotto.quantita + 1)"
+                            [disabled]="prodotto.quantita >= prodotto.stockDisponibile">
                             <i class="pi pi-plus"></i>
                         </button>
                     </div>

@@ -26,7 +26,7 @@ public class EmailService {
         context.setVariable("salutoIniziale", "Ciao");
         context.setVariable("messaggioPrincipale", "Benvenuto su <b>ShopEasy</b>! Siamo felici di averti con noi.");
         context.setVariable("messaggioAzione", "Premi il pulsante per iniziare a fare compere!");
-        context.setVariable("linkBottone", "http://localhost:4200/home");
+        context.setVariable("linkBottone", "http://localhost:4200/");
         context.setVariable("testoBottone", "Home");
         context.setVariable("messaggioAssistenza", "Per qualsiasi domanda, contatta il nostro supporto.");
         context.setVariable("salutoFinale", "Team ShopEasy");
@@ -59,7 +59,7 @@ public class EmailService {
         sendHtmlEmail(utente.getEmail(), "ShopEasy - Reset Password", htmlContent);
     }
     public void sendOrderConfirmationEmail(Utente utente, String riepilogoProdotti, String totale) {
-        // Costruiamo l'intero HTML direttamente in una stringa Java (Text Block)
+
         String htmlContent = """
             <!DOCTYPE html>
             <html>

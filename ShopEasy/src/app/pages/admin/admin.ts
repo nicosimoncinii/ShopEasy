@@ -20,7 +20,7 @@ export class Admin implements OnInit {
   prodotti = signal<any[]>([]);
   utenti = signal<any[]>([]);
 
-  // STATI PER AGGIUNTA PRODOTTO
+
   modaleAperta = signal<boolean>(false);
   nuovoProdotto = {
     nome: '',

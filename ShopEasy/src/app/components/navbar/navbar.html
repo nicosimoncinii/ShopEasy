@@ -57,7 +57,9 @@
                 <div class="profilo" (click)="toggleProfilo()">
                     <span class="profilo-email">{{ authService.getEmail() }}</span>
                     <div class="profilo-dropdown" [class.open]="profiloAperto">
-                        <div routerLink="/admin">{{ langService.traduci('DASHBOARD') }}</div>
+                        @if (authService.getEmail() === 'niccoloandreozzi1@gmail.com' ) {
+                            <div routerLink="/admin">{{ langService.traduci('DASHBOARD') }}</div>
+                        }
                         <div routerLink="/personal-area">{{ langService.traduci('AREA_PERSONALE') }}</div>
                         <div routerLink="/storico-ordini">{{ langService.traduci('ORDINI') }}</div>
                         <div (click)="logout()">{{ langService.traduci('LOGOUT') }}</div>

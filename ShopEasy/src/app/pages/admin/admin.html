@@ -3,7 +3,7 @@
     <aside class="sidebar">
         <div class="sidebar-logo">
             <img src="/Logo.png" alt="Logo">
-            <span>Admin</span>
+            <span>{{ langService.traduci('ADMIN') }}</span>
         </div>
 
         <nav class="sidebar-nav">
@@ -11,13 +11,13 @@
                 <i class="pi pi-home"></i> Dashboard
             </button>
             <button [class.active]="sezioneAttiva() === 'prodotti'" (click)="cambiaSezione('prodotti')">
-                <i class="pi pi-box"></i> Prodotti
+                <i class="pi pi-box"></i> {{ langService.traduci('PRODOTTI') }}
             </button>
             <button [class.active]="sezioneAttiva() === 'utenti'" (click)="cambiaSezione('utenti')">
-                <i class="pi pi-users"></i> Utenti
+                <i class="pi pi-users"></i> {{ langService.traduci('UTENTI') }}
             </button>
             <button [class.active]="sezioneAttiva() === 'ordini'" (click)="cambiaSezione('ordini')">
-                <i class="pi pi-shopping-bag"></i> Ordini
+                <i class="pi pi-shopping-bag"></i> {{ langService.traduci('ORDINI') }}
             </button>
         </nav>
 
@@ -36,28 +36,28 @@
                     <div class="stat-card">
                         <i class="pi pi-euro"></i>
                         <div>
-                            <span class="stat-label">Fatturato Totale</span>
+                            <span class="stat-label">{{ langService.traduci('FATTURATO_TOTALE') }}</span>
                             <span class="stat-value">{{ statistiche()?.fatturatoTotale | currency:'EUR':'symbol':'1.2-2' }}</span>
                         </div>
                     </div>
                     <div class="stat-card">
                         <i class="pi pi-users"></i>
                         <div>
-                            <span class="stat-label">Utenti Registrati</span>
+                            <span class="stat-label">{{ langService.traduci('UTENTI_REGISTRATI') }}</span>
                             <span class="stat-value">{{ statistiche()?.utentiRegistrati || utenti().length }}</span>
                         </div>
                     </div>
                     <div class="stat-card">
                         <i class="pi pi-shopping-bag"></i>
                         <div>
-                            <span class="stat-label">Ordini Totali</span>
+                            <span class="stat-label">{{ langService.traduci('ORDINI_TOTALI') }}</span>
                             <span class="stat-value">{{ statistiche()?.ordiniTotali || ordini().length }}</span>
                         </div>
                     </div>
                     <div class="stat-card">
                         <i class="pi pi-box"></i>
                         <div>
-                            <span class="stat-label">Prodotti Totali</span>
+                            <span class="stat-label">{{ langService.traduci('PRODOTTI_TOTALI') }}</span>
                             <span class="stat-value">{{ statistiche()?.prodottiTotali || prodotti().length }}</span>
                         </div>
                     </div>
@@ -68,9 +68,9 @@
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Utente</th>
-                        <th>Totale</th>
-                        <th>Stato</th>
+                        <th>{{ langService.traduci('UTENTE') }}</th>
+                        <th>{{ langService.traduci('TOTALE') }}</th>
+                        <th>{{ langService.traduci('STATO') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -90,9 +90,9 @@
         @if (sezioneAttiva() === 'prodotti') {
             <div class="section">
                 <div class="section-header">
-                    <h1>Prodotti</h1>
+                    <h1>{{ langService.traduci('PRODOTTI') }}</h1>
                     <button class="btn-add" (click)="apriModale()">
-                        <i class="pi pi-plus"></i> Aggiungi Prodotto
+                        <i class="pi pi-plus"></i> {{ langService.traduci('AGGIUNGI_PRODOTTO') }}
                     </button>
                 </div>
 
@@ -100,9 +100,9 @@
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Nome</th>
-                        <th>Prezzo</th>
-                        <th>Azioni</th>
+                        <th>{{ langService.traduci('NOME') }}</th>
+                        <th>{{ langService.traduci('PREZZO') }}</th>
+                        <th>{{ langService.traduci('AZIONI') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -130,10 +130,10 @@
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Nome</th>
+                        <th>{{ langService.traduci('NOME') }}</th>
                         <th>Email</th>
-                        <th>Ruolo</th>
-                        <th>Azioni</th>
+                        <th>{{ langService.traduci('RUOLO') }}</th>
+                        <th>{{ langService.traduci('AZIONI') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -162,10 +162,10 @@
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Utente</th>
-                        <th>Totale</th>
-                        <th>Stato</th>
-                        <th>Azioni</th>
+                        <th>{{ langService.traduci('UTENTE') }}</th>
+                        <th>{{ langService.traduci('TOTALE') }}</th>
+                        <th>{{ langService.traduci('STATO') }}</th>
+                        <th>{{ langService.traduci('AZIONI') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -194,37 +194,37 @@
     <div class="modal-overlay" (click)="chiudiModale()">
         <div class="modal-container" (click)="$event.stopPropagation()">
             <div class="modal-header">
-                <h2>Nuovo Prodotto</h2>
+                <h2>{{ langService.traduci('NUOVO_PRODOTTO') }}</h2>
                 <button class="btn-close" (click)="chiudiModale()">&times;</button>
             </div>
             <form (ngSubmit)="aggiungiProdotto()">
                 <div class="form-group">
-                    <label>Nome Prodotto</label>
+                    <label>{{ langService.traduci('NOME_PRODOTTO') }}</label>
                     <input type="text" [(ngModel)]="nuovoProdotto.nome" name="nome" required placeholder="Es. Scarpe Nike">
                 </div>
                 <div class="form-group">
-                    <label>Prezzo (€)</label>
+                    <label>{{ langService.traduci('PREZZO') }} (€)</label>
                     <input type="number" step="0.01" [(ngModel)]="nuovoProdotto.prezzo" name="prezzo" required placeholder="0.00">
                 </div>
                 <div class="form-group">
-                    <label>Quantità</label>
+                    <label>{{ langService.traduci('QUANTITA') }}</label>
                     <input type="number" step="1" [(ngModel)]="nuovoProdotto.quantita" name="quantita" required placeholder="0">
                 </div>
                 <div class="form-group">
-                    <label>CategoriaId</label>
+                    <label>{{ langService.traduci('CATEGORIA_ID') }}</label>
                     <input type="number" [(ngModel)]="nuovoProdotto.categoriaId" name="categoriaId" required placeholder="0">
                 </div>
                 <div class="form-group">
-                    <label>URL Immagine</label>
+                    <label>{{ langService.traduci('URL_IMMAGINE') }}</label>
                     <input type="text" [(ngModel)]="nuovoProdotto.immagineUrl" name="immagineUrl" placeholder="Es. /public/scarpe.png">
                 </div>
                 <div class="form-group">
-                    <label>Descrizione</label>
+                    <label>{{ langService.traduci('DESCRIZIONE') }}</label>
                     <textarea [(ngModel)]="nuovoProdotto.descrizione" name="descrizione" rows="3" placeholder="Descrivi il prodotto..."></textarea>
                 </div>
                 <div class="modal-actions">
-                    <button type="button" class="btn-secondary" (click)="chiudiModale()">Annulla</button>
-                    <button type="submit" class="btn-primary">Salva Prodotto</button>
+                    <button type="button" class="btn-secondary" (click)="chiudiModale()">{{ langService.traduci('ANNULLA') }}</button>
+                    <button type="submit" class="btn-primary">{{ langService.traduci('SALVA_PRODOTTO') }}</button>
                 </div>
             </form>
         </div>

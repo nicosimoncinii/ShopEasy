@@ -82,7 +82,7 @@ public class AuthService {
         utente.setLanguagePreference(LanguagePreferences.IT);
         utente.setThemePreference(ThemePreferences.LIGHT);
 
-        Utente utenteSalvato =utenteRepository.save(utente);
+        Utente utenteSalvato = utenteRepository.save(utente);
 
         Wishlist wishlist = new Wishlist();
         wishlist.setUtente(utenteSalvato);
@@ -91,29 +91,30 @@ public class AuthService {
         emailService.sendWelcomeEmail(utente);
 
         return new RegisterResponse(
-            "Registrazione completata con successo",
-            utente.getEmail(),
-            utente.getNome()
+                "Registrazione completata con successo",
+                utente.getEmail(),
+                utente.getNome()
         );
     }
 
     public LoginResponse login(LoginRequest request) {
         authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(
-                    request.getEmail().toLowerCase(),
-                    request.getPassword()
-            )
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail().toLowerCase(),
+                        request.getPassword()
+                )
         );
 
         Utente utente = utenteRepository.findByEmail(request.getEmail().toLowerCase())
-        .orElseThrow(() -> new RuntimeException("Utente non trovato"));
+                .orElseThrow(() -> new RuntimeException("Utente non trovato"));
 
         String token = jwtService.generaToken(utente);
 
         return new LoginResponse(
-            token,
-            utente.getEmail(),
-            utente.getRuolo().getNome().name()
+                token,
+                utente.getEmail(),
+                utente.getRuolo().getNome().name(),
+                utente.getStato()
         );
     }
 

@@ -149,6 +149,18 @@ public class UtenteService {
 
         return salvaUtente(utente);
     }
+    public UtenteResponseDTO disattivaUtente(Long id){
+        Utente utente = utenteRepository.findById(id).orElseThrow(() -> new RuntimeException("Utente non trovato"));
+
+        utente.setStato(StatoUtente.DISABILITATO);
+        return toResponse(utenteRepository.save(utente));
+    }
+    public UtenteResponseDTO attivaUtente(Long id){
+        Utente utente = utenteRepository.findById(id).orElseThrow(() -> new RuntimeException("Utente non trovato"));
+
+        utente.setStato(StatoUtente.ATTIVO);
+        return toResponse(utenteRepository.save(utente));
+    }
 
     private UtenteResponseDTO toResponse(Utente utente) {
         return new UtenteResponseDTO(

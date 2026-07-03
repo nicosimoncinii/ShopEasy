@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+
 @Service
 public class EmailService {
 
@@ -39,7 +40,7 @@ public class EmailService {
     }
 
     public void sendPasswordResetEmail(Utente utente, String token) {
-        String resetUrl = "http://localhost:4200/reset-password?token=" + token;
+        String resetUrl = "http://localhost:4200/forgot-password?token=" + token;
 
         Context context = new Context();
         context.setVariable("nomeBrand", "ShopEasy");

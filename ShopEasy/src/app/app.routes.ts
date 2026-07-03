@@ -11,6 +11,7 @@ import { NotFoundComponent } from './pages/not-found/not-found';
 import { PersonalArea } from './pages/personal-area/personal-area';
 import { StoricoOrdini } from './pages/storico-ordini/storico-ordini'; // Importa il componente StoricoOrdini
 import { Admin } from './pages/admin/admin';
+import { ForgotPassword } from './pages/forgot-psw/forgot-psw'; // Importa il componente ForgotPassword
 
 import { ResetpswComponent } from './pages/resetpsw/resetpsw'; // Importa il componente ResetpswComponent
 
@@ -26,6 +27,7 @@ export const routes: Routes = [
     { path: 'checkout', component: Checkout },
     { path: 'reset-password', component: ResetpswComponent },
     { path: 'admin', component: Admin },
+    { path: 'forgot-password', component: ForgotPassword },
     { path: '**', component: NotFoundComponent }
 
 ];

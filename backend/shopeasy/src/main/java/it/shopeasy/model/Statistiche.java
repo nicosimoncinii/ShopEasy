@@ -1,9 +1,13 @@
 package it.shopeasy.model;
 
+import it.shopeasy.dto.UtenteResponseDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 @Entity
 @Table(name = "statistiche")
@@ -26,17 +30,19 @@ public class Statistiche {
 
     @Column(name = "prodotti_totali")
     private Long prodottiTotali;
+    private List<Utente> utentiAmministratori;
 
 
     public Statistiche() {
     }
 
-    public Statistiche(Double fatturatoTotale, Long visualizzazioni, Long utentiRegistrati, Long ordiniTotali,  Long prodottiTotali) {
+    public Statistiche(Double fatturatoTotale, Long visualizzazioni, Long utentiRegistrati, Long ordiniTotali,  Long prodottiTotali, List<Utente> utentiAmministratori) {
         this.fatturatoTotale = fatturatoTotale;
         this.visualizzazioni = visualizzazioni;
         this.utentiRegistrati = utentiRegistrati;
         this.ordiniTotali = ordiniTotali;
         this.prodottiTotali = prodottiTotali;
+        this.utentiAmministratori = utentiAmministratori;
     }
 
     // --- GETTER & SETTER ---
@@ -84,6 +90,14 @@ public class Statistiche {
 
     public void setProdottiTotali(Long prodotti_totali) {
         this.prodottiTotali = prodotti_totali;
+    }
+
+    public List<Utente> getUtentiAmministratori() {
+        return utentiAmministratori;
+    }
+
+    public void setUtentiAmministratori(List<Utente> utentiAmministratori) {
+        this.utentiAmministratori = utentiAmministratori;
     }
 
 }

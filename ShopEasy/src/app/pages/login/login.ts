@@ -48,6 +48,11 @@ export class Login {
     });
   }
 
+  goToResetPassword() {
+    this.router.navigate(['/reset-password']);
+  }
+
+
   goToRegister() { this.router.navigate(['/register']); }
   goBack() { this.router.navigate(['/']); }
 }

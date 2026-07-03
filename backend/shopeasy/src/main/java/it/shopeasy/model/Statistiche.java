@@ -1,9 +1,13 @@
 package it.shopeasy.model;
 
+import it.shopeasy.dto.UtenteResponseDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 @Entity
 @Table(name = "statistiche")
@@ -37,6 +41,7 @@ public class Statistiche {
         this.utentiRegistrati = utentiRegistrati;
         this.ordiniTotali = ordiniTotali;
         this.prodottiTotali = prodottiTotali;
+
     }
 
     // --- GETTER & SETTER ---
@@ -85,5 +90,7 @@ public class Statistiche {
     public void setProdottiTotali(Long prodotti_totali) {
         this.prodottiTotali = prodotti_totali;
     }
+
+
 
 }

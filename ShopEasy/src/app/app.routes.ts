@@ -12,6 +12,7 @@ import { PersonalArea } from './pages/personal-area/personal-area';
 import { StoricoOrdini } from './pages/storico-ordini/storico-ordini'; // Importa il componente StoricoOrdini
 import { Admin } from './pages/admin/admin';
 
+import { ResetpswComponent } from './pages/resetpsw/resetpsw'; // Importa il componente ResetpswComponent
 
 export const routes: Routes = [
     { path: '', component: Home },
@@ -23,6 +24,7 @@ export const routes: Routes = [
     { path: 'personal-area', component: PersonalArea },
     { path: 'storico-ordini', component: StoricoOrdini }, // Aggiunta la rotta per StoricoOrdini (roggi)
     { path: 'checkout', component: Checkout },
+    { path: 'reset-password', component: ResetpswComponent },
     { path: 'admin', component: Admin },
     { path: '**', component: NotFoundComponent }
 

@@ -16,7 +16,7 @@
     <p>Non hai ancora effettuato nessun ordine.</p>
   </div>
 
-  <div class="ordini-list" *ngIf="!loading && ordini.length > 0">
+  <div class="ordini-list">
     <div class="ordine-card" *ngFor="let ordine of ordini">
       
       <div class="ordine-header">
@@ -24,7 +24,7 @@
           <span class="ordine-id">Ordine #{{ ordine.id }}</span>
           <span class="ordine-data"><i class="pi pi-calendar"></i> {{ ordine.data | date:'dd/MM/yyyy HH:mm' }}</span>
         </div>
-        <div class="ordine-stato" [ngClass]="ordine.stato.toLowerCase()">
+        <div class="ordine-stato" >
           {{ ordine.stato }}
         </div>
       </div>

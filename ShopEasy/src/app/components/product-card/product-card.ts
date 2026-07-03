@@ -26,9 +26,8 @@ export class ProductCard {
   ) {}
 
   get disponibileProdotto(): boolean {
-    if (!this.product) return true;
-    const idUnico = this.product.id || this.product._id || 1;
-    return (idUnico % 2 !== 0);
+    if (!this.product) return false;
+    return this.product.quantitaMagazzino > 0;
   }
 
   apriPopUp(event: Event) {
@@ -44,6 +43,10 @@ export class ProductCard {
   }
 
   onAggiungiAlCarrello() {
+    if (!this.disponibileProdotto) {
+      return;
+    }
+
     if (this.authService.isLoggato()) {
       this.aggiungiAlCarrello.emit(this.product);
     } else {

@@ -18,19 +18,31 @@ export class CartService {
     return this.elementiCarrello().reduce((tot, item) => tot + (item.price * item.quantita), 0);
   }
 
-  aggiungiProdotto(prodotto: any) {
-    const lista = this.elementiCarrello();
-    const giaPresente = lista.find(item => item.id === prodotto.id);
+aggiungiProdotto(prodotto: any) {
+  const lista = this.elementiCarrello();
+  const giaPresente = lista.find(item => item.id === prodotto.id);
 
-    if (giaPresente) {
-      giaPresente.quantita += 1;
-    } else {
-      lista.push({ ...prodotto, quantita: 1 });
-    }
-
-    this.elementiCarrello.set([...lista]);
-    this.aggiornaNumero();
+  // Blocco se il prodotto è esaurito
+  if (prodotto.quantitaMagazzino === 0 || prodotto.quantitaMagazzino === undefined) {
+    console.warn('Prodotto esaurito, impossibile aggiungere al carrello');
+    return;
   }
+
+  if (giaPresente) {
+    if (giaPresente.quantita < giaPresente.stockDisponibile) {
+      giaPresente.quantita += 1;
+    }
+  } else {
+    lista.push({
+      ...prodotto,
+      stockDisponibile: prodotto.quantitaMagazzino, // <-- corretto qui
+      quantita: 1
+    });
+  }
+
+  this.elementiCarrello.set([...lista]);
+  this.aggiornaNumero();
+}
 
   rimuoviProdotto(id: number) {
     const lista = this.elementiCarrello().filter(item => item.id !== id);
@@ -46,6 +58,9 @@ export class CartService {
       if (quantita <= 0) {
         this.rimuoviProdotto(id);
         return;
+      }
+      if (quantita > prodotto.stockDisponibile) {
+        quantita = prodotto.stockDisponibile; // non superare lo stock
       }
       prodotto.quantita = quantita;
     }

@@ -20,8 +20,10 @@
     </div>
 
     <div class="product-actions">
-        <button class="add-to-cart-btn" (click)="onAggiungiAlCarrello()">
-            <span>{{ langService.traduci('ADDCARRELLO') }}</span>
+        <button class="add-to-cart-btn"
+            [disabled]="!disponibileProdotto"
+            (click)="onAggiungiAlCarrello()">
+            <span>{{ disponibileProdotto ? langService.traduci('ADDCARRELLO') : langService.traduci('ESAURITO') }}</span>
         </button>
 
         <button class="wishlist-btn" (click)="onToggleWishlist()">

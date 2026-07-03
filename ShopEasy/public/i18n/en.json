@@ -59,11 +59,8 @@
   "INGLESE": "English",
   "CHIARO": "Light",
   "SCURO": "Dark",
-
   "ADMIN": "Admin",
-  "PRODOTTI": "Products",
   "UTENTI": "Users",
-  "ORDINI": "Orders",
   "FATTURATO_TOTALE": "Total Revenue",
   "UTENTI_REGISTRATI": "Registered Users",
   "ORDINI_TOTALI": "Total Orders",
@@ -71,7 +68,7 @@
   "UTENTE": "User",
   "STATO": "Status",
   "AGGIUNGI_PRODOTTO": "Add Product",
-  "PREZZO": "Price",
+  "PREZZO": "Starting from",
   "AZIONI": "Actions",
   "RUOLO": "Role",
   "NUOVO_PRODOTTO": "New Product",
@@ -82,10 +79,6 @@
   "DESCRIZIONE": "Description",
   "ANNULLA": "Cancel",
   "SALVA_PRODOTTO": "Save Product",
-
-
-
-
   "PASSWORDDIMENTICATA": "Forgot password?",
   "PRODOTTO_AGGINUNTO_AL_CARRELLO": "Product added to cart!",
   "HOME": {
@@ -93,7 +86,6 @@
   },
   "ADDCARRELLO": "Add to cart",
   "NUOVO": "New",
-  "PREZZO": "Starting from",
   "GIORNI": "Mon–Fri 9:00 AM – 6:00 PM",
   "MILANO": "Milan",
   "VAI_AL_PAGAMENTO": "Proceed to checkout",

@@ -9,6 +9,7 @@ import it.shopeasy.repository.StatisticheRepository;
 import it.shopeasy.repository.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import it.shopeasy.dto.UtenteResponseDTO;
 
@@ -26,7 +27,7 @@ public class StatisticheService {
         //dichiarazione oggetto statistiche e assegnazione prelevando dal repository tramite id
         Statistiche statistiche = statisticheRepository.findById(1L).orElse(null);
 
-        List<UtenteResponseDTO> utentiAdmin = utenteRepository.findByRuoloNome(RuoloUtente.ADMIN)
+        List<UtenteResponseDTO> utentiAdmin = utenteRepository.findByRuoloNome(RuoloUtente.ADMIN, Sort.by("id").ascending())
                 .stream()
                 .map(this::toResponse)
                 .toList();

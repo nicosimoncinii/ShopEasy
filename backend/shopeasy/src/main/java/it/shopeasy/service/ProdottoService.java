@@ -1,7 +1,5 @@
 package it.shopeasy.service;
 
-import it.shopeasy.dto.OrdineRequestDTO;
-import it.shopeasy.dto.OrdineResponseDTO;
 import it.shopeasy.dto.ProdottoRequestDTO;
 import it.shopeasy.dto.ProdottoResponseDTO;
 import it.shopeasy.model.Categoria;
@@ -11,6 +9,7 @@ import it.shopeasy.repository.CategoriaRepository;
 import it.shopeasy.repository.ProdottoRepository;
 import it.shopeasy.repository.StatisticheRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,7 +26,7 @@ public class ProdottoService {
     private StatisticheRepository statisticheRepository;
 
     public List<ProdottoResponseDTO> prendiTuttiProdotti() {
-        return prodottoRepository.findAll()
+        return prodottoRepository.findAll(Sort.by("id").ascending())
                 .stream()
                 .map(this::toResponse)
                 .toList();

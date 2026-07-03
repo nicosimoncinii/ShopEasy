@@ -1,6 +1,7 @@
 package it.shopeasy.controller;
 
 import it.shopeasy.dto.auth.ForgotPasswordRequest;
+import it.shopeasy.dto.auth.ForgotPasswordResponse;
 import it.shopeasy.dto.auth.ResetPasswordRequest;
 import it.shopeasy.service.ForgotPasswordService;
 import it.shopeasy.service.PasswordResetService;
@@ -12,8 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.HashMap; // <--- Assicurati di importare questo
-import java.util.Map;    // <--- Assicurati di importare questo
+
 
 @RestController
 @RequestMapping("/api/auth")
@@ -27,9 +27,9 @@ public class PasswordResetController {
     private PasswordResetService passwordResetService;
 
     @PostMapping("/forgot-password")
-    public ResponseEntity<String> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
+    public ResponseEntity<ForgotPasswordResponse> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
         forgotPasswordService.creaToken(request);
-        return ResponseEntity.ok(forgotPasswordService.creaToken(request));
+        return ResponseEntity.ok().body(forgotPasswordService.creaToken(request));
     }
 
     @PostMapping("/reset-password")

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -22,7 +22,8 @@ export class ResetpswComponent {
   constructor(
     private router: Router,
     public langService: LangService,
-    private authService: AuthService 
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   onInvia() {
@@ -31,7 +32,6 @@ export class ResetpswComponent {
       this.messaggioSuccesso = '';
       return;
     }
-
     this.isCaricamento = true;
     this.messaggioErrore = '';
     this.messaggioSuccesso = '';
@@ -41,19 +41,20 @@ export class ResetpswComponent {
       .subscribe({
         next: (risposta) => {
           console.log('Risposta dal server:', risposta);
-          this.isCaricamento = false; // Sblocca il tasto se va a buon fine
+          this.isCaricamento = false;
           this.messaggioSuccesso = 'Email di ripristino inviata con successo!';
-          this.email = ''; 
+          this.email = '';
+          this.cdr.detectChanges();
         },
         error: (errore) => {
           console.error('Errore durante il reset:', errore);
-          this.isCaricamento = false; // Sblocca il tasto se va in errore o in timeout
-
+          this.isCaricamento = false;
           if (errore.error && errore.error.message) {
             this.messaggioErrore = errore.error.message;
           } else {
             this.messaggioErrore = 'Il server ha impiegato troppo tempo a rispondere. Controlla il servizio email in Java.';
           }
+          this.cdr.detectChanges();
         }
       });
   }

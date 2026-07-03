@@ -30,19 +30,18 @@ public class Statistiche {
 
     @Column(name = "prodotti_totali")
     private Long prodottiTotali;
-    private List<Utente> utentiAmministratori;
 
 
     public Statistiche() {
     }
 
-    public Statistiche(Double fatturatoTotale, Long visualizzazioni, Long utentiRegistrati, Long ordiniTotali,  Long prodottiTotali, List<Utente> utentiAmministratori) {
+    public Statistiche(Double fatturatoTotale, Long visualizzazioni, Long utentiRegistrati, Long ordiniTotali,  Long prodottiTotali) {
         this.fatturatoTotale = fatturatoTotale;
         this.visualizzazioni = visualizzazioni;
         this.utentiRegistrati = utentiRegistrati;
         this.ordiniTotali = ordiniTotali;
         this.prodottiTotali = prodottiTotali;
-        this.utentiAmministratori = utentiAmministratori;
+
     }
 
     // --- GETTER & SETTER ---
@@ -92,12 +91,6 @@ public class Statistiche {
         this.prodottiTotali = prodotti_totali;
     }
 
-    public List<Utente> getUtentiAmministratori() {
-        return utentiAmministratori;
-    }
 
-    public void setUtentiAmministratori(List<Utente> utentiAmministratori) {
-        this.utentiAmministratori = utentiAmministratori;
-    }
 
 }

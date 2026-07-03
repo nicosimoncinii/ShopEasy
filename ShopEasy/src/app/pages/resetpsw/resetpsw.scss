@@ -3,23 +3,31 @@
   justify-content: center;
   align-items: center;
   min-height: 80vh;
-  background-color: #f8fafc; /* Grigio chiarissimo di sfondo */
-  font-family: sans-serif;
+  background-color: var(--bg-dark); // Segue lo sfondo chiaro/scuro generale
+  color: var(--text-light);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .login-card {
-  background: white;
+  background: var(--bg-card); // Card chiara in light mode, scura in dark-mode
   padding: 40px;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   width: 100%;
   max-width: 450px;
   text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+
+  .dark-mode & {
+    border-color: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
+  }
 
   h2 {
     font-size: 24px;
     font-weight: bold;
-    color: #1e293b;
+    color: var(--block-text-color); // Titolo coordinato (es. verde menta in dark)
     margin-bottom: 24px;
   }
 }
@@ -31,64 +39,73 @@
   label {
     display: block;
     font-size: 14px;
-    color: #64748b;
+    color: var(--text-muted); // Grigio soft / testo secondario
     margin-bottom: 6px;
   }
 
   input {
     width: 100%;
     padding: 12px;
-    border: 1px solid #cbd5e1;
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 6px;
-    background-color: #eff6ff; /* Celeste leggero come nel tuo input */
+    background-color: var(--bg-dark); // Usa lo sfondo alternativo per far staccare l'input
+    color: var(--text-light);
     font-size: 16px;
     box-sizing: border-box;
     outline: none;
+    transition: background-color 0.3s ease, border-color 0.2s ease, color 0.3s ease;
+
+    .dark-mode & {
+      border-color: rgba(255, 255, 255, 0.1);
+    }
 
     &:focus {
-      border-color: #3b82f6;
+      border-color: var(--primary-color); // Focus con il colore primario del brand
     }
   }
 }
 
 .login-btn {
   width: 100%;
-  background-color: #10b981; /* Verde esatto del tuo bottone */
-  color: white;
+  background-color: var(--primary-color); // Verde menta del brand
+  color: #2E2E2E; // Testo scuro leggibile sui pastelli
   border: none;
   padding: 14px;
   border-radius: 6px;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: opacity 0.2s, background-color 0.3s, color 0.3s;
 
   &:hover {
-    background-color: #059669;
+    opacity: 0.85;
   }
 
   &:disabled {
-    background-color: #a7f3d0;
+    opacity: 0.4;
     cursor: not-allowed;
   }
 }
 
+// Allineati con toni di errore/successo adattivi
 .error {
   color: #ef4444;
-  background-color: #fee2e2;
+  background-color: rgba(239, 68, 68, 0.15);
   padding: 10px;
   border-radius: 6px;
   margin-bottom: 15px;
   font-size: 14px;
+  border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
 .success {
   color: #10b981;
-  background-color: #d1fae5;
+  background-color: rgba(16, 185, 129, 0.15);
   padding: 10px;
   border-radius: 6px;
   margin-bottom: 15px;
   font-size: 14px;
+  border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
 .actions {
@@ -97,17 +114,25 @@
   .back-home-btn {
     width: 100%;
     background: transparent;
-    border: 1px solid #cbd5e1;
-    color: #64748b;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: var(--text-muted);
     padding: 12px;
     border-radius: 6px;
     cursor: pointer;
     font-size: 14px;
     transition: all 0.2s;
 
+    .dark-mode & {
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
     &:hover {
-      background-color: #f1f5f9;
-      color: #1e293b;
+      background-color: rgba(0, 0, 0, 0.05);
+      color: var(--text-light);
+
+      .dark-mode & {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
     }
   }
 }
